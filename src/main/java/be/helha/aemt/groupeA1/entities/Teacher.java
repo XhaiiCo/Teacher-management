@@ -21,7 +21,7 @@ public class Teacher implements Serializable{
 	email , 
 
 	//Contains notes/remarks about the teacher
-	note ;
+	note;
 
 	//Uncomment when the class is done
 	//private Attribution attribution ;
@@ -72,7 +72,7 @@ public class Teacher implements Serializable{
 	public int hashCode() {
 		return Objects.hash(email, id);
 	}
-
+	
 	/**
 	 * Equals on the id and email
 	 */
