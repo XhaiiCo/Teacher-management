@@ -27,15 +27,6 @@ public class TeacherDAO  extends AbstractDAO<Teacher>{
 		return super.add(teacher);
 	}
 
-	@Override
-	public Teacher update(Teacher teacher) {
-		if (teacher == null) return teacher ;
-
-		Teacher result = em.merge(teacher) ;
-
-		return result;
-	}
-
 	/**
 	 * Find the teacher based on his email
 	 * 

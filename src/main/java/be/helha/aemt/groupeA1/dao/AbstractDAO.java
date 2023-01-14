@@ -64,4 +64,13 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 
 		return t;
 	}
+	
+	@Override
+	public T update(T t) {
+		if (t == null) return null ;
+
+		T result = em.merge(t) ;
+
+		return result;
+	}
 }
