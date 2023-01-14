@@ -2,6 +2,10 @@ package be.helha.aemt.groupeA1.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import be.helha.aemt.groupeA1.exception.InvalidEmailException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +35,7 @@ public class Teacher implements Serializable{
 	public Teacher(String lastName, String firstName, String email, String note) {
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.email = email;
+		this.setEmail(email);
 		this.note = note;
 	}
 
@@ -64,8 +68,13 @@ public class Teacher implements Serializable{
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String email) throws InvalidEmailException{
+		 Pattern p = Pattern.compile(email);
+		 Matcher m = p.matcher("aaaaab");
+		 if(m.matches())
+			 this.email = email;
+		 else
+			 throw new InvalidEmailException() ;
 	}
 
 	public String getNote() {

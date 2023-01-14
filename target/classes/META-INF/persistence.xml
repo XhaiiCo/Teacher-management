@@ -7,7 +7,6 @@
 	<persistence-unit name="groupeA1-JTA"
 		transaction-type="JTA">
 		<jta-data-source>jdbc/groupeA1</jta-data-source>
-		<class>be.helha.aemt.groupeA1.entities.Utilisateur</class>
 		<class>be.helha.aemt.groupeA1.entities.Teacher</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
