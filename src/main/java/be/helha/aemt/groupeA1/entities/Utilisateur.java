@@ -2,7 +2,9 @@ package be.helha.aemt.groupeA1.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
+import be.helha.aemt.groupeA1.exception.InvalidEmailException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,10 +28,10 @@ public class Utilisateur implements Serializable
 
 	public Utilisateur() {}
 
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartment departement) {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartment departement) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
-		this.email = email;
+		this.setEmail(email);
 		this.password = password;
 		this.role = role;
 		this.departement = departement;
@@ -63,9 +65,21 @@ public class Utilisateur implements Serializable
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String email) throws InvalidEmailException{
+		
+		if(isValidEmail(email)) this.email = email;
+
+		else throw new InvalidEmailException() ;
 	}
+	
+	public boolean isValidEmail(String email) {
+	    String emailRegex = "^[a-zA-Z0-9._%+-]+@helha\\.be$";
+	    Pattern pat = Pattern.compile(emailRegex);
+	    if (email == null)
+	        return false;
+	    return pat.matcher(email).matches();
+	}
+	
 
 	public String getPassword() {
 		return password;

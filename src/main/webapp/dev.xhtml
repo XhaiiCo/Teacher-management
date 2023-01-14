@@ -9,8 +9,15 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:button action="#{ fillDatabaseControl.doAddTestTeacher() }"
-			value="Ajouter prof" />
+		<h:commandButton value="Ajouter prof"
+			action="#{ fillDatabaseControl.doAddTestTeacher() }" />
+			
+	</h:form>
+	
+	<h:form>
+			
+		<h:commandButton value="Ajouter utilisateurs"
+			action="#{ fillDatabaseControl.doAddMockUtilisateur() }" />
 	</h:form>
 </h:body>
 </html>
