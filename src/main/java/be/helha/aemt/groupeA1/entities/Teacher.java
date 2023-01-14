@@ -72,8 +72,6 @@ public class Teacher implements Serializable{
 		if(isValidEmail(email)) this.email = email;
 
 		else throw new InvalidEmailException() ;
-
-			
 	}
 	
 	public boolean isValidEmail(String email) {
