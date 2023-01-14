@@ -1,5 +1,6 @@
 package be.helha.aemt.groupeA1.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -8,22 +9,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Utilisateur {
+public class Utilisateur implements Serializable
+{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
 
-	private String lastName,
-	firstName,
+	private String nom,
+	prenom,
 	email,
 	password ;
 	
 	private ERole role ;
-	private EDepartment departement ;
+	private EDepartement departement ;
 
 	public Utilisateur() {}
 
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartement departement) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.departement = departement;
+	}	
+	
 	public int getId() {
 		return id;
 	}
@@ -32,20 +43,20 @@ public class Utilisateur {
 		this.id = id;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getPrenom() {
+		return prenom;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 
 	public String getEmail() {
@@ -72,11 +83,11 @@ public class Utilisateur {
 		this.role = role;
 	}
 
-	public EDepartment getDepartement() {
+	public EDepartement getDepartement() {
 		return departement;
 	}
 
-	public void setDepartement(EDepartment departement) {
+	public void setDepartement(EDepartement departement) {
 		this.departement = departement;
 	}
 

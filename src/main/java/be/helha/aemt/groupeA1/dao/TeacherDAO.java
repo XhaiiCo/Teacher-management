@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 
 @Stateless//Used to do independent operations, it does not have any associated client state
 @LocalBean
-public class TeacherDAO  extends AbstractDAO<Teacher>{
+public class TeacherDAO extends AbstractDAO<Teacher>{
 
 	public TeacherDAO() {
 		super(Teacher.class) ;

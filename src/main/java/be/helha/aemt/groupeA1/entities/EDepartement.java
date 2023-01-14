@@ -1,6 +1,6 @@
 package be.helha.aemt.groupeA1.entities;
 
-public enum EDepartment {
+public enum EDepartement {
 	D1,
 	D2,
 	D3,

@@ -28,6 +28,16 @@ public class Teacher implements Serializable{
 
 	public Teacher() {}
 
+	
+	
+	public Teacher(String lastName, String firstName, String email, String note) {
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.note = note;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
