@@ -27,8 +27,6 @@ public class Teacher implements Serializable{
 	//private Attribution attribution ;
 
 	public Teacher() {}
-
-	
 	
 	public Teacher(String lastName, String firstName, String email, String note) {
 		this.lastName = lastName;
@@ -96,5 +94,10 @@ public class Teacher implements Serializable{
 			return false;
 		Teacher other = (Teacher) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id);
+	}
+	
+	@Override
+	public String toString() {
+		return this.lastName + " " + this.firstName + " " + this.email + " " + this.note ;
 	}
 }
