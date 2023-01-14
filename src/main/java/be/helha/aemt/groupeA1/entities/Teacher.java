@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import be.helha.aemt.groupeA1.exception.InvalidEmailException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Teacher implements Serializable{
 
 	public Teacher() {}
 	
-	public Teacher(String lastName, String firstName, String email, String note) {
+	public Teacher(String lastName, String firstName, String email, String note)  throws InvalidEmailException{
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.setEmail(email);
@@ -66,12 +67,12 @@ public class Teacher implements Serializable{
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email) throws InvalidEmailException{
 		
-		if(isValidEmail(email))
-		{
-			this.email = email;
-		}
+		if(isValidEmail(email)) this.email = email;
+
+		else throw new InvalidEmailException() ;
+
 			
 	}
 	
