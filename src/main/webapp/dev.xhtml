@@ -2,14 +2,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<title>Groupe A1</title>
 	<meta name="author" content="The Author"></meta>
 </h:head>
 <h:body>
 	<h:form>
-		<p:button action="#{ fillDatabaseControl.doAddTestTeacher() }"
+		<p:commandButton action="#{ fillDatabaseControl.doAddTestTeacher() }"
 			value="Ajouter prof" />
 	</h:form>
 </h:body>
