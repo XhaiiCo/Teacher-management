@@ -12,6 +12,9 @@
 	<h:form>
 		<p:commandButton action="#{ fillDatabaseControl.doAddTestTeacher() }"
 			value="Ajouter prof" />
+
+		<p:commandButton value="Ajouter utilisateurs"
+			action="#{ fillDatabaseControl.doAddMockUtilisateur() }" />
 	</h:form>
 </h:body>
 </html>
