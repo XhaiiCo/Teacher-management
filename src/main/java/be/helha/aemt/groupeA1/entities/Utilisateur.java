@@ -22,11 +22,11 @@ public class Utilisateur implements Serializable
 	password ;
 	
 	private ERole role ;
-	private EDepartement departement ;
+	private EDepartment departement ;
 
 	public Utilisateur() {}
 
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartement departement) {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartment departement) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -83,11 +83,11 @@ public class Utilisateur implements Serializable
 		this.role = role;
 	}
 
-	public EDepartement getDepartement() {
+	public EDepartment getDepartement() {
 		return departement;
 	}
 
-	public void setDepartement(EDepartement departement) {
+	public void setDepartement(EDepartment departement) {
 		this.departement = departement;
 	}
 

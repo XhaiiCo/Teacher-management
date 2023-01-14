@@ -2,6 +2,8 @@ package be.helha.aemt.groupeA1.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.regex.Pattern;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -65,9 +67,22 @@ public class Teacher implements Serializable{
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		
+		if(isValidEmail(email))
+		{
+			this.email = email;
+		}
+			
 	}
-
+	
+	public boolean isValidEmail(String email) {
+	    String emailRegex = "^[a-zA-Z0-9._%+-]+@helha\\.be$";
+	    Pattern pat = Pattern.compile(emailRegex);
+	    if (email == null)
+	        return false;
+	    return pat.matcher(email).matches();
+	}
+	
 	public String getNote() {
 		return note;
 	}
