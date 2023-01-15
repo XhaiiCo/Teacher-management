@@ -8,6 +8,7 @@ import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupeA1.ejb.TeacherEJB;
 import be.helha.aemt.groupeA1.entities.Teacher;
+import be.helha.aemt.groupeA1.exception.NotAvailableEmailException;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -31,18 +32,21 @@ public class TeacherControl implements Serializable{
 		this.teachers = this.teacherEJB.findAll() ;
 	}
 
+	public void showInfoToast(String summary, String detail ) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
+	}
+
+	public void showErrorToast(String summary, String detail ) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
+	}
+
 	public void onRowEdit(RowEditEvent<Teacher> event) {
 		Teacher updatedTeacher = event.getObject() ;
-		String resultMsg = "Erreur lors de la modification";
 
-		if(this.teacherEJB.update(updatedTeacher) != null) {
-			resultMsg = "Enseignant modifié";
-		}
-		else {
-			resultMsg = "Erreur lors de la modification de l'enseignant" ;
-		}
-
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(resultMsg));
+		if(this.teacherEJB.update(updatedTeacher) != null) 
+			this.showInfoToast("Modifié", "Enseignant modifié" );
+		else
+			this.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
 	}
 
 	public void onRowCancel(RowEditEvent<Teacher> event) {

@@ -3,11 +3,8 @@ package be.helha.aemt.groupeA1.dao;
 import java.util.List;
 
 import be.helha.aemt.groupeA1.entities.Teacher;
-import be.helha.aemt.groupeA1.util.Environment;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 @Stateless//Used to do independent operations, it does not have any associated client state
