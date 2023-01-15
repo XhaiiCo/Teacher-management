@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import be.helha.aemt.groupeA1.exception.InvalidEmailException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,12 +21,12 @@ public class Teacher implements Serializable{
 	private String lastName,
 	firstName,
 
-	//	Unique Id and check for pattern "@helha.be"
-	email , 
-
 	//Contains notes/remarks about the teacher
 	note;
-
+	
+	@Column(unique = true)
+	private String email;
+	
 	//Uncomment when the class is done
 	//private Attribution attribution ;
 
