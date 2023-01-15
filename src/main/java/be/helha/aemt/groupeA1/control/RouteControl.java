@@ -24,11 +24,11 @@ public class RouteControl implements Serializable {
 	
 	public String doGoToDDE()
 	{
-		return "DDE/ddeTest.xhtml";
+		return "DDE/ddeTest.xhtml?faces-redirect=true";
 	}
 	
 	public String doGoToDDOM()
 	{
-		return "DDOM/ddomTest.xhtml";
+		return "DDOM/ddomTest.xhtml?faces-redirect=true";
 	}
 }
