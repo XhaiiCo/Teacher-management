@@ -11,4 +11,9 @@ public class NavigationControl implements Serializable {
 	public String example() {
 		return "test.xhtml?faces-redirect=true" ;//For redirect to the page, useful for auth
 	}
+	
+	public String doNext()
+	{
+		return "S/teacherCRUD.xhtml";
+	}
 }
