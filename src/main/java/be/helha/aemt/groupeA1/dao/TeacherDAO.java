@@ -35,6 +35,8 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
 	 */
 	public Teacher update(Teacher teacher) {
+
+		//Find the old teacher
 		Teacher oldTeacher = findById(teacher.getId()) ;
 		if(oldTeacher == null) return null ;
 		

@@ -7,17 +7,25 @@
 	<meta name="author" content="The Author"></meta>
 </h:head>
 <h:body>
-	<div class="card" style="padding: 60px;">
-		<h:form>
-			<p:dataTable var="teacher" value="#{ teacherControl.doFindAll() }"
-				rows="10" paginator="true" paginatorPosition="both"
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div class="card" style="padding: 60px;">
+			<p:dataTable id="teachers" var="teacher" editable="true"
+				value="#{ teacherControl.teachers }" rows="10" paginator="true"
+				paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
-				rowsPerPageTemplate="5,10,{ShowAll|'Tous'}" editable="true"
-				scrollable="true" scrollHeight="450">
+				rowsPerPageTemplate="5,10,{ShowAll|'Tous'}" scrollable="true"
+				scrollHeight="450">
 
-				<p:column headerText="id" sortBy="#{teacher.id}"
-					filterBy="#{teacher.id}" filterMatchMode="contains">
+				<p:ajax event="rowEdit" listener="#{teacherControl.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel"
+					listener="#{teacherControl.onRowCancel}" update=":form:msgs" />
+
+
+				<p:column headerText="ID">
 					<h:outputText value="#{teacher.id}" />
 				</p:column>
 
@@ -28,7 +36,7 @@
 							<h:outputText value="#{teacher.lastName}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText id="modelInput" value="#{teacher.lastName}"
+							<p:inputText value="#{teacher.lastName}" label="LastName"
 								style="width:100%" />
 						</f:facet>
 					</p:cellEditor>
@@ -41,7 +49,7 @@
 							<h:outputText value="#{teacher.firstName}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText id="modelInput" value="#{teacher.firstName}"
+							<p:inputText value="#{teacher.firstName}" label="FirstName"
 								style="width:100%" />
 						</f:facet>
 					</p:cellEditor>
@@ -54,7 +62,7 @@
 							<h:outputText value="#{teacher.email}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText id="modelInput" value="#{teacher.email}"
+							<p:inputText value="#{teacher.email}" label="Email"
 								style="width:100%" />
 						</f:facet>
 					</p:cellEditor>
@@ -66,7 +74,7 @@
 						saveTitle="Save Row" />
 				</p:column>
 			</p:dataTable>
-		</h:form>
-	</div>
+		</div>
+	</h:form>
 </h:body>
 </html>
