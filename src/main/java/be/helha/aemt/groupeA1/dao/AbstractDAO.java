@@ -30,7 +30,7 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 	}
 
 	@Override
-	public T add(T t) {
+	public T add(T t){
 		if(t == null) return t ;
 		
 		em.persist(t);
