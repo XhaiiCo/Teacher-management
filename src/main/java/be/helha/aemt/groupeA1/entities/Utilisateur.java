@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 import be.helha.aemt.groupeA1.exception.InvalidEmailException;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,9 +25,12 @@ public class Utilisateur implements Serializable
 	email,
 	password ;
 	
+	@Enumerated(EnumType.STRING)
 	private ERole role ;
+	
+	@Enumerated(EnumType.STRING)
 	private EDepartment departement ;
-
+	
 	public Utilisateur() {}
 
 	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartment departement) throws InvalidEmailException {
