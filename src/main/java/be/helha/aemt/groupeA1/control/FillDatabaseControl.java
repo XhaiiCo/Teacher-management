@@ -2,13 +2,16 @@ package be.helha.aemt.groupeA1.control;
 
 import java.io.Serializable;
 
+import be.helha.aemt.groupeA1.ejb.MissionEJB;
 import be.helha.aemt.groupeA1.ejb.TeacherEJB;
 import be.helha.aemt.groupeA1.ejb.UtilisateurEJB;
 import be.helha.aemt.groupeA1.entities.EDepartment;
 import be.helha.aemt.groupeA1.entities.ERole;
+import be.helha.aemt.groupeA1.entities.Mission;
 import be.helha.aemt.groupeA1.entities.Teacher;
 import be.helha.aemt.groupeA1.entities.Utilisateur;
 import be.helha.aemt.groupeA1.exception.InvalidEmailException;
+import be.helha.aemt.groupeA1.exception.InvalidHoursException;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -22,6 +25,9 @@ public class FillDatabaseControl implements Serializable{
 	
 	@EJB 
 	private UtilisateurEJB utilisateurEJB;
+	
+	@EJB
+	private MissionEJB missionEJB;
 
 	public void doAddTestTeacher() {
 
@@ -74,8 +80,25 @@ public class FillDatabaseControl implements Serializable{
 			}*/
 			
 		}
-		
 	}
+		
+	public void doAddTestMission() {
+			
+		for(int i=1 ; i <= 10 ; i++)
+		{
+			try {	
+				Mission m=new Mission("2022-2023", "t" + i , i * 100);
+					
+				missionEJB.add(m);
+					
+			}catch (InvalidHoursException e) {
+				e.printStackTrace();
+			}
+				
+		}
+	}
+		
+	
 	
 	
 	
