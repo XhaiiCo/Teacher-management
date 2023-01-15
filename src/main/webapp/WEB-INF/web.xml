@@ -26,7 +26,7 @@
 	<security-constraint>
 		<display-name>Logged users pages</display-name>
 		<web-resource-collection>
-			<web-resource-name>Protected Admin Area</web-resource-name>
+			<web-resource-name>Logged User Area</web-resource-name>
 			<description></description>
 			<url-pattern>/loggedUser/index.xhtml</url-pattern>
 			<http-method>GET</http-method>
@@ -44,6 +44,7 @@
 			<role-name>DDOM</role-name>
 		</auth-constraint>
 	</security-constraint>
+	
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<realm-name>groupeA1Realm</realm-name>
@@ -52,4 +53,68 @@
 			<form-error-page>/login/loginerror.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
+	
+	<security-constraint>
+    	<display-name>Secretary access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Secretary Area</web-resource-name>
+            <description/>
+            <url-pattern>/loggedUser/S/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description />
+            <role-name>S</role-name>
+            <role-name>DDE</role-name>
+            <role-name>DDOM</role-name>
+        </auth-constraint>
+    </security-constraint>
+	
+	<security-constraint>
+    	<display-name>Department Director access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Department Director Area</web-resource-name>
+            <description/>
+            <url-pattern>/loggedUser/DDE/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description />
+            <role-name>DDE</role-name>
+            <role-name>DDOM</role-name>
+        </auth-constraint>
+    </security-constraint>
+	
+	<security-constraint>
+    	<display-name>Domain Director access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Domain Director Area</web-resource-name>
+            <description/>
+            <url-pattern>/loggedUser/DDOM/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description />
+            <role-name>DDOM</role-name>
+        </auth-constraint>
+    </security-constraint>
+	
 </web-app>

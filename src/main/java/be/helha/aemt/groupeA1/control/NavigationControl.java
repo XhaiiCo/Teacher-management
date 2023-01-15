@@ -12,8 +12,18 @@ public class NavigationControl implements Serializable {
 		return "test.xhtml?faces-redirect=true" ;//For redirect to the page, useful for auth
 	}
 	
-	public String doNext()
+	public String doGoToSecretary()
 	{
 		return "S/teacherCRUD.xhtml";
+	}
+	
+	public String doGoToDDE()
+	{
+		return "DDE/ddeTest.xhtml";
+	}
+	
+	public String doGoToDDOM()
+	{
+		return "DDOM/ddomTest.xhtml";
 	}
 }
