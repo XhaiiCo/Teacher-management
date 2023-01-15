@@ -1,11 +1,17 @@
-<html xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:h="http://xmlns.jcp.org/jsf/html">
-<head>
-<title>HomePage</title>
-<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8"/>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>HomePage</title>
+	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+	<ui:include src="navbar.xhtml" />
+
 	<a href="#{navigationControl.doGoToSecretary()}">Secrétaire</a>
 	<a href="#{navigationControl.doGoToDDE()}">DDE</a>
 	<a href="#{navigationControl.doGoToDDOM()}">DDOM</a>
-</body>
+</h:body>
 </html>

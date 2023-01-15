@@ -6,7 +6,7 @@ import jakarta.inject.Named;
 
 @Named
 @SessionScoped
-public class NavigationControl implements Serializable {
+public class RouteControl implements Serializable {
 	
 	public String example() {
 		return "test.xhtml?faces-redirect=true" ;//For redirect to the page, useful for auth
@@ -14,7 +14,12 @@ public class NavigationControl implements Serializable {
 	
 	public String doGoToSecretary()
 	{
-		return "S/teacherCRUD.xhtml";
+		return "S/teacherCRUD.xhtml?faces-redirect=true";
+	}
+	
+	public String doIndex()
+	{
+		return "index.xhtml?faces-redirect=true";
 	}
 	
 	public String doGoToDDE()
