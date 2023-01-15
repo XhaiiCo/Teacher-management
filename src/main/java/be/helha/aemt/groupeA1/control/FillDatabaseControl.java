@@ -49,7 +49,7 @@ public class FillDatabaseControl implements Serializable{
 			Utilisateur secr;
 			try 
 			{
-				dde = new Utilisateur("NDirDept" + i , "NDirDept" + i, "ndirdept" + i + "p@helha.be", 
+				dde = new Utilisateur("NDirDept" + i , "PDirDept" + i, "ndirdept" + i + "p@helha.be", 
 						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDE, EDepartment.values()[i-1]);
 				
 				secr = new Utilisateur("SDept" + i , "PDept" + i, "sdept" + i + "p@helha.be", 

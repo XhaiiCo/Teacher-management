@@ -14,4 +14,8 @@ public class UtilisateurEJB {
 	public Utilisateur add(Utilisateur utilisateur) {
 		return utilisateurDAO.add(utilisateur) ;
 	}
+	
+	public Utilisateur find(Utilisateur utilisateur) {
+		return utilisateurDAO.find(utilisateur) ;
+	}
 }
