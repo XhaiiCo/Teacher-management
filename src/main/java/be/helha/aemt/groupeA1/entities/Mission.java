@@ -81,6 +81,9 @@ public class Mission implements Serializable {
 	}
 
 	@Override
+	/**
+	 * Equals on the id ,entitle and academicYear
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
