@@ -66,7 +66,18 @@ public class TeacherControl implements Serializable{
 		this.newTeacher = new Teacher() ;
 	}
 
+	/**
+	 * Save the new teacher in db
+	 * Used when the use click on the add button
+	 */
 	public void saveNewTeacher() {
-		System.out.println(newTeacher);
+		Teacher addedTeacher = this.teacherEJB.add(newTeacher) ;
+
+		if(addedTeacher != null) {
+			this.teachers.add(addedTeacher) ;
+			this.showInfoToast("Ajouté", "Enseignant ajouté");
+		}
+		else
+			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cet enseignant est peut être déjà présent");
 	}
 }
