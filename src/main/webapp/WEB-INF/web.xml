@@ -4,7 +4,7 @@
 	version="5.0">
 	<display-name>groupeA1</display-name>
 	<welcome-file-list>
-		<welcome-file>/loggedUser/index.xhtml</welcome-file>
+		<welcome-file>loggedUser/index.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
@@ -38,7 +38,7 @@
 			<http-method>DELETE</http-method>
 		</web-resource-collection>
 		<auth-constraint>
-			<description />
+			<description/>
 			<role-name>S</role-name>
 			<role-name>DDE</role-name>
 			<role-name>DDOM</role-name>
