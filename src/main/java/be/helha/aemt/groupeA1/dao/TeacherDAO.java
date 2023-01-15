@@ -19,12 +19,32 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 	}
 
 	@Override
+	/**
+	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
+	 */
 	public Teacher add(Teacher teacher) {
 		if(teacher == null) return null ;
 
 		if(find(teacher) != null) return null ;
 
 		return super.add(teacher);
+	}
+	
+	@Override
+	/**
+	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
+	 */
+	public Teacher update(Teacher teacher) {
+		Teacher oldTeacher = findById(teacher.getId()) ;
+		if(oldTeacher == null) return null ;
+		
+		if(oldTeacher.getEmail().equals(teacher.getEmail()))
+			return super.update(teacher);
+
+		if(find(teacher) == null)
+			return super.update(teacher);
+		
+		return null ;
 	}
 
 	/**

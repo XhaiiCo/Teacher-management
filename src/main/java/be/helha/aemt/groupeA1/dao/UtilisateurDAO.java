@@ -2,6 +2,7 @@ package be.helha.aemt.groupeA1.dao;
 
 import java.util.List;
 
+import be.helha.aemt.groupeA1.entities.Teacher;
 import be.helha.aemt.groupeA1.entities.Utilisateur;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -16,6 +17,9 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 	}
 	
 	@Override
+	/**
+	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
+	 */
 	public Utilisateur add(Utilisateur utilisateur) {
 		if(utilisateur == null) return null ;
 
@@ -23,6 +27,24 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
 		return super.add(utilisateur);
 	}
+	
+	@Override
+	/**
+	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
+	 */
+	public Utilisateur update(Utilisateur utilisateur) {
+		Utilisateur oldUtilisateur = findById(utilisateur.getId()) ;
+		if(oldUtilisateur == null) return null ;
+		
+		if(oldUtilisateur.getEmail().equals(utilisateur.getEmail()))
+			return super.update(utilisateur);
+
+		if(find(utilisateur) == null)
+			return super.update(utilisateur);
+		
+		return null ;
+	}
+
 	
 	
 	/**
