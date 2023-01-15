@@ -24,6 +24,10 @@ public class TeacherControl implements Serializable{
 	public List<Teacher> getTeachers() { return teachers; }
 	public void setTeachers(List<Teacher> teachers) {this.teachers = teachers; }
 
+	private Teacher newTeacher ;//Used when create a new teacher
+	public Teacher getNewTeacher() {return newTeacher;}
+	public void setNewTeacher(Teacher newTeacher) {this.newTeacher = newTeacher;}
+
 	@EJB
 	private TeacherEJB teacherEJB ;
 
@@ -52,5 +56,17 @@ public class TeacherControl implements Serializable{
 	public void onRowCancel(RowEditEvent<Teacher> event) {
 		FacesMessage msg = new FacesMessage("Modification annulée");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+
+	/**
+	 * create a new teacher, called when the user click on the new button
+	 */
+	public void openNewTeacher() {
+		this.newTeacher = new Teacher() ;
+	}
+
+	public void saveNewTeacher() {
+		System.out.println(newTeacher);
 	}
 }
