@@ -52,7 +52,7 @@
 						listener="#{utilisateurControl.onRowCancel}" update=":form:msgs" />
 
 					<p:column headerText="Nom" sortBy="#{user.nom}"
-						filterBy="#{user.prenom}" filterMatchMode="contains">
+						filterBy="#{user.nom}" filterMatchMode="contains">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{user.nom}" />
@@ -152,9 +152,20 @@
 
 						<div class="field">
 							<p:outputLabel for="password">Mot de passe</p:outputLabel>
-							<p:inputText id="password" required="true"
-								value="#{utilisateurControl.newUser.password}" />
+							<p:password id="password" match="passwordConfirm" required="true"
+								value="#{utilisateurControl.newUser.password}" feedback="true"
+								promptLabel="Veuillez entrer un mot de passe" weakLabel="Faible"
+								goodLabel="Moyen" strongLabel="Fort" inline="true"
+								toggleMask="true" redisplay="true" />
 						</div>
+
+						<div class="field">
+							<p:outputLabel for="passwordConfirm">Confirmer votre mot de passe</p:outputLabel>
+							<p:password id="passwordConfirm" required="true"
+								value="#{utilisateurControl.newUser.password}" toggleMask="true"
+								redisplay="true" />
+						</div>
+
 
 					</p:outputPanel>
 				</p:outputPanel>
