@@ -1,15 +1,18 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Teacher implements Serializable {
@@ -26,10 +29,10 @@ public class Teacher implements Serializable {
 	
 	@Column(unique = true)
 	private String email;
+		
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private List<Assignment> assignments ;
 	
-	//Uncomment when the class is done
-	private Assignment assignment ;
-
 	public Teacher() {}
 	
 	public Teacher(String lastName, String firstName, String email, String note)  throws InvalidEmailException{
@@ -89,6 +92,14 @@ public class Teacher implements Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public List<Assignment> getAssignments() {
+		return assignments;
+	}
+
+	public void setAssignments(List<Assignment> assignments) {
+		this.assignments = assignments;
 	}
 
 	@Override
