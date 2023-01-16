@@ -1,8 +1,12 @@
 package be.helha.aemt.groupea1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Assignment;
 import be.helha.aemt.groupea1.entities.Teacher;
+import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -65,4 +69,13 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return result.get(0) ; 
 	}
+	
+	public List<AA> getAllAasOfTeacher(Teacher teacher) {
+		if(teacher == null) return null ;
+
+		// Récupérer chaque AA
+		List<Assignment> ass = teacher.getAssignments();
+		List<AA> aas = new ArrayList<AA>();
+		ass.forEach(e -> aas.addAll(e.getAas()));
+		return aas;
 }
