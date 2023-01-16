@@ -144,7 +144,7 @@
 				<f:facet name="footer">
 					<p:commandButton value="Ajouter" icon="pi pi-check"
 						actionListener="#{teacherControl.saveNewTeacher}"
-						onclick="PF('addTeacherDialog').hide()" update=":form:msgs" />
+						onclick="PF('addTeacherDialog').hide()" update=":form:msgs, :form:teachers" />
 					<p:commandButton value="Annuler" icon="pi pi-times"
 						onclick="PF('addTeacherDialog').hide()"
 						class="ui-button-secondary" type="button" />
@@ -156,6 +156,7 @@
 				header="Confirmation" severity="warn">
 				<p:commandButton value="Oui" icon="pi pi-check"
 					actionListener="#{teacherControl.removeTeacher}" process="@this"
+					update=":form:teachers, :form:msgs"
 					oncomplete="PF('deleteTeacherDialog').hide()" />
 				<p:commandButton value="Non" type="button"
 					styleClass="ui-button-secondary" icon="pi pi-times"

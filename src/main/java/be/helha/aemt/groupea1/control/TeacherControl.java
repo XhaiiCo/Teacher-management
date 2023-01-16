@@ -91,6 +91,9 @@ public class TeacherControl implements Serializable{
 		Teacher removedTeacher = this.teacherEJB.delete(this.removeTeacher) ; 
 		if(removedTeacher != null) {
 			this.teachers.remove(removedTeacher) ;
+			this.showInfoToast("Supprimé", "Enseignant supprimé");
 		}
+		else
+			this.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
 }
