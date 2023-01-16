@@ -3,7 +3,6 @@ package be.helha.aemt.groupea1.dao;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.Department;
-import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.Utilisateur;
 import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
@@ -67,7 +66,7 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 		if(utilisateur == null) return null ;
 
 		String rq = "SELECT u FROM Utilisateur u where u.email = ?1" ;
-
+		
 		TypedQuery<Utilisateur> query = em.createQuery(rq, Utilisateur.class);
 		query.setParameter(1, utilisateur.getEmail()) ;
 

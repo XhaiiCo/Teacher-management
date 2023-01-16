@@ -2,19 +2,24 @@ package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
 
+import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.ejb.UtilisateurEJB;
+import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.EFraction;
 import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.Utilisateur;
+import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
+import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -38,6 +43,9 @@ public class FillDatabaseControl implements Serializable{
 	@EJB
 	private SectionEJB sectionEJB;
 
+	@EJB
+	private AAEJB aaEJB;
+	
 	public void doAddTestTeacher() {
 
 		for(int i = 1 ; i <= 20 ; i++) {
@@ -91,19 +99,19 @@ public class FillDatabaseControl implements Serializable{
 				e.printStackTrace();
 			}
 			
-			/*
+			
 			Utilisateur ddom;
 			try 
 			{
 				ddom = new Utilisateur("NDirDom", "PDirDom", "ndirdomp@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDOM, );
+						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDOM, new Department("Departement" + i));
 				
 				utilisateurEJB.add(ddom);
 			} 
 			catch (InvalidEmailException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 		}
 	}
@@ -123,6 +131,32 @@ public class FillDatabaseControl implements Serializable{
 				
 		}
 	}
+		
+	public void doAddTestAA() {
+			for (int i= 1 ; i <= 5 ; i++)
+			{
+				try {
+					AA aa= new AA("2022-2023", "code" + i ,"title" + i, i,60, 30, 30, i, i,  EFraction.f480);
+					if(aa.getNbGroup()>=1)
+					{
+						for(int y=1 ; y<=aa.getNbGroup();y++)
+						{
+							AA aaCreate = new AA("2022-2023", "code" + i +""+ y,"title" + i, i,60, 30, 30, i, i,  EFraction.f480); 
+							aaEJB.add(aaCreate);
+						}
+					}else {
+						aaEJB.add(aa);
+					}
+					
+				}catch (NumberNegatifException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}catch (HoursNotWantedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	
 		
 	
 	

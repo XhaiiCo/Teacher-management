@@ -47,9 +47,9 @@ public class AA implements Serializable{
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
-		setHours(hours);
 		setHoursQ1(hoursQ1);
 		setHoursQ2(hoursQ2);
+		setHours(hours);
 		setNbGroup(nbGroup);
 		setNbStudent(nbStudent);
 		this.fraction = fraction;
