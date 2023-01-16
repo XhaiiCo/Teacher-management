@@ -93,7 +93,7 @@ public class Teacher implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
+	
 	public List<Assignment> getAssignments() {
 		return assignments;
 	}
@@ -126,4 +126,5 @@ public class Teacher implements Serializable {
 	public String toString() {
 		return this.id + " " +  this.lastName + " " + this.firstName + " " + this.email + " " + this.note ;
 	}
+	
 }

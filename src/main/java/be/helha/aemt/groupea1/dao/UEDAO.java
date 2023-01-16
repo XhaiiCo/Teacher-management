@@ -6,26 +6,33 @@ import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.UE;
 import jakarta.persistence.TypedQuery;
 
-public class UEDAO extends AbstractDAO<UE>{
 
-	public UEDAO () {
+public class UEDAO extends AbstractDAO<UE> {
+	
+	public UEDAO() {
 		super(UE.class);
 	}
 	
+	/**find the ue on his code
+	 * 
+	 * @return ue or null is not found
+	 */
 	public UE find(UE ue) {
 		if(ue==null) return null;
 		
-		String rq = "Select u From ue u where u.code=?1" ;
+		String rq = "Select ue From UE ue where ue.code=?1" ;
 		
-		TypedQuery<UE>query = em.createQuery(rq,UE.class);
-		query.setParameter(1,ue.getCode());
+		TypedQuery<UE>query = em.createQuery(rq, UE.class);
+		query.setParameter(1, ue.getCode());
 		
-		List<UE> result=query.getResultList();
+		List<UE> result = query.getResultList();
+
 		
 		if (result.isEmpty()) return null;
 		return result.get(0);
 	}
 	
+
 	public UE add (UE ue) {
 		if (ue == null) return null;
 		
@@ -33,7 +40,8 @@ public class UEDAO extends AbstractDAO<UE>{
 			
 		return super.add(ue);	
 	}
-	
+
+
 	public UE update (UE ue) {
 		
 		UE oldUE = findById(ue.getId()) ;
@@ -47,6 +55,5 @@ public class UEDAO extends AbstractDAO<UE>{
 		
 		return null ;
 	}
-	
-	
+
 }
