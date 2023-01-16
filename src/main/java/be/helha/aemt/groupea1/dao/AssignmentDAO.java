@@ -11,7 +11,7 @@ public class AssignmentDAO extends AbstractDAO<Assignment> {
 	public AssignmentDAO() {
 		super(Assignment.class) ;
 	}
-	
+
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the id
@@ -21,6 +21,4 @@ public class AssignmentDAO extends AbstractDAO<Assignment> {
 
 		return super.add(assignment);
 	}
-	
-	
 }
