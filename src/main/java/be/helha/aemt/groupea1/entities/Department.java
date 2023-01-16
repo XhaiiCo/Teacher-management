@@ -12,13 +12,13 @@ public class Department {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id  ;
+	private int id ;
 
 	private String name ;
 	
 	private List<Section> sections ;
 	
-	private 	List<Mission> missions ;
+	private List<Mission> missions ;
 
 
 	public Department() {}
