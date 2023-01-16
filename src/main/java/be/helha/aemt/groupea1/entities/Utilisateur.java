@@ -34,22 +34,18 @@ public class Utilisateur implements Serializable
 	
 	@Enumerated(EnumType.STRING)
 	private ERole role ;
-	
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private Department departement ;
-	
+		
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Section section;
 	
 	public Utilisateur() {}
 
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Department departement, Section section) throws InvalidEmailException {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Section section) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.setEmail(email);
 		this.setPassword(password);
 		this.role = role;
-		this.departement = departement;
 		this.section = section;
 	}	
 	
@@ -125,14 +121,6 @@ public class Utilisateur implements Serializable
 		this.role = role;
 	}
 
-	public Department getDepartement() {
-		return departement;
-	}
-
-	public void setDepartement(Department departement) {
-		this.departement = departement;
-	}
-
 	public Section getSection() {
 		return section;
 	}
@@ -145,7 +133,7 @@ public class Utilisateur implements Serializable
 	public int hashCode() {
 		return Objects.hash(email);
 	}
-
+	
 	@Override
 	/**
 	 * Equals on the email
