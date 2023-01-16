@@ -4,7 +4,9 @@ import be.helha.aemt.groupea1.dao.UEDAO;
 import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.UE;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
+@Stateless
 public class UEEJB {
 
 	@EJB

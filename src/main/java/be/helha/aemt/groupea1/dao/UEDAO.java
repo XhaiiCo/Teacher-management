@@ -4,9 +4,12 @@ import java.util.List;
 
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.UE;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 
-
+@Stateless
+@LocalBean
 public class UEDAO extends AbstractDAO<UE> {
 	
 	public UEDAO() {
