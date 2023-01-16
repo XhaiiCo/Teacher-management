@@ -28,7 +28,7 @@ public class Teacher implements Serializable{
 	private String email;
 	
 	//Uncomment when the class is done
-	//private Attribution attribution ;
+	private Assignment assignment ;
 
 	public Teacher() {}
 	
