@@ -10,16 +10,16 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:commandButton action="#{ fillDatabaseControl.doAddTestTeacher() }"
+		<h:commandButton action="#{ fillDatabaseControl.doAddTestTeacher() }"
 			value="Ajouter prof" />
 
-		<p:commandButton value="Ajouter utilisateurs"
+		<h:commandButton value="Ajouter utilisateurs"
 			action="#{ fillDatabaseControl.doAddMockUtilisateur() }" />
 			
-		<p:commandButton value="Ajouter missions"
+		<h:commandButton value="Ajouter missions"
 			action="#{ fillDatabaseControl.doAddTestMission() }" />	
 			
-		<p:commandButton value="Ajouter départements"
+		<h:commandButton value="Ajouter départements"
 			action="#{ fillDatabaseControl.doAddMockDepartment() }" />	
 				
 		<h:commandButton value="Ajouter sections"

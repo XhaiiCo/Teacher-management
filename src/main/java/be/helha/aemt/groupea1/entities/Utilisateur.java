@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Utilisateur implements Serializable
@@ -31,6 +33,7 @@ public class Utilisateur implements Serializable
 	@Enumerated(EnumType.STRING)
 	private ERole role ;
 	
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Department departement ;
 	
 	public Utilisateur() {}

@@ -1,24 +1,30 @@
 package be.helha.aemt.groupea1.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class Section {
+public class Section implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
 	
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Department department ;
 	
 	private String name;
 	
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Mission> missions ;
 	
 	public Section() {}

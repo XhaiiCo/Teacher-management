@@ -64,8 +64,6 @@ public class FillDatabaseControl implements Serializable{
 		{
 			Section s = new Section(new Department("Departement1"), "Section" + i);
 			
-			
-			
 			sectionEJB.add(s);
 		}
 	}

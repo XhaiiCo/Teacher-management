@@ -1,5 +1,6 @@
 package be.helha.aemt.groupea1.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
@@ -11,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class AA {
+public class AA implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
