@@ -91,19 +91,19 @@ public class FillDatabaseControl implements Serializable{
 				e.printStackTrace();
 			}
 			
-			/*
+			
 			Utilisateur ddom;
 			try 
 			{
 				ddom = new Utilisateur("NDirDom", "PDirDom", "ndirdomp@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDOM, );
+						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDOM, new Department("Departement" + i));
 				
 				utilisateurEJB.add(ddom);
 			} 
 			catch (InvalidEmailException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 			
 		}
 	}
