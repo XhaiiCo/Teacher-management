@@ -79,3 +79,4 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 		ass.forEach(e -> aas.addAll(e.getAas()));
 		return aas;
 }
+}
