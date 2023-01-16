@@ -13,5 +13,12 @@
 	<a href="#{routeControl.doGoToSecretary()}">Secrétaire</a>
 	<a href="#{routeControl.doGoToDDE()}">DDE</a>
 	<a href="#{routeControl.doGoToDDOM()}">DDOM</a>
+	
+	<br/>
+	<h:outputText value="Prénom : #{utilisateurControl.utilisateur.prenom}"></h:outputText><br/>
+	<h:outputText value="Nom : #{utilisateurControl.utilisateur.nom}"></h:outputText><br/>
+	<h:outputText value="Role : #{utilisateurControl.utilisateur.role}"></h:outputText><br/>
+	<h:outputText value="Département : #{utilisateurControl.utilisateur.departement}"></h:outputText><br/>
+	
 </h:body>
 </html>

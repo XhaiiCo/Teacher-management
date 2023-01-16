@@ -45,6 +45,10 @@ public class Utilisateur implements Serializable
 		this.departement = departement;
 	}	
 	
+	public Utilisateur(String email) throws InvalidEmailException {
+		this.setEmail(email);
+	}
+	
 	public int getId() {
 		return id;
 	}
