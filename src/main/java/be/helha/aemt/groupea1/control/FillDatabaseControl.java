@@ -88,10 +88,10 @@ public class FillDatabaseControl implements Serializable{
 			try 
 			{
 				dde = new Utilisateur("NDirDept" + i , "PDirDept" + i, "ndirdept" + i + "p@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDE, new Section(department, "Section" + i));
+						"helha", ERole.DDE, new Section(department, "Section" + i));
 				
 				secr = new Utilisateur("SDept" + i , "PDept" + i, "sdept" + i + "p@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.S, new Section(department, "Section" + i));
+						"helha", ERole.S, new Section(department, "Section" + i));
 				
 				utilisateurEJB.add(dde);
 				utilisateurEJB.add(secr);
@@ -107,7 +107,7 @@ public class FillDatabaseControl implements Serializable{
 			try 
 			{
 				ddom = new Utilisateur("NDirDom", "PDirDom", "ndirdomp@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDOM, new Section(department, "Section" + i));
+						"helha", ERole.DDOM, new Section(department, "Section" + i));
 				
 				utilisateurEJB.add(ddom);
 			} 
