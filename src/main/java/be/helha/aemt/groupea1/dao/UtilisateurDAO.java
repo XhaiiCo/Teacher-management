@@ -3,6 +3,7 @@ package be.helha.aemt.groupea1.dao;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Utilisateur;
 import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
@@ -16,13 +17,17 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 	@EJB
 	private DepartmentDAO departmentDAO;
 	
+	@EJB
+	private SectionDAO sectionDAO;
+	
 	public UtilisateurDAO() {
 		super(Utilisateur.class);
 	}
 	
 	@Override
 	/**
-	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
+	 * Redefinition of the method to add a condition to check that there are no duplicates on the email,
+	 * no duplicates with the department and the section
 	 */
 	public Utilisateur add(Utilisateur utilisateur) {
 		if(utilisateur == null) return null ;
@@ -34,7 +39,17 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 		if(department != null) {
 			utilisateur.setDepartement(department);
 		}
-
+		
+		Section section = sectionDAO.find(utilisateur.getSection());
+				
+		if(section != null) {
+			utilisateur.setSection(section);
+		}
+		
+		if(department != null) {
+			utilisateur.getSection().setDepartment(department);
+		}
+		
 		return super.add(utilisateur);
 	}
 	

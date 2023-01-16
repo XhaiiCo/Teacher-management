@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.exception.PasswordHashingException;
+import be.helha.aemt.groupea1.util.PasswordHash;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,15 +38,19 @@ public class Utilisateur implements Serializable
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Department departement ;
 	
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private Section section;
+	
 	public Utilisateur() {}
 
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Department departement) throws InvalidEmailException {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Department departement, Section section) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.setEmail(email);
-		this.password = password;
+		this.setPassword(password);
 		this.role = role;
 		this.departement = departement;
+		this.section = section;
 	}	
 	
 	public Utilisateur(String email) throws InvalidEmailException {
@@ -100,9 +106,17 @@ public class Utilisateur implements Serializable
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		
+		try 
+		{
+			this.password = PasswordHash.hashPassword(password);
+		} 
+		catch (PasswordHashingException e) 
+		{
+			e.printStackTrace();
+		}
 	}
-
+	
 	public ERole getRole() {
 		return role;
 	}
@@ -117,6 +131,14 @@ public class Utilisateur implements Serializable
 
 	public void setDepartement(Department departement) {
 		this.departement = departement;
+	}
+
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
 	}
 
 	@Override

@@ -11,8 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "section", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "department_id"})
+})
 public class Section implements Serializable {
 
 	@Id
@@ -28,7 +33,7 @@ public class Section implements Serializable {
 	private List<Mission> missions ;
 	
 	public Section() {}
-
+	
 	public Section(Department department, String name) {
 		this.department = department;
 		this.name = name;
@@ -38,7 +43,7 @@ public class Section implements Serializable {
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
