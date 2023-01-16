@@ -3,7 +3,6 @@ package be.helha.aemt.groupea1.dao;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.AA;
-import be.helha.aemt.groupea1.entities.Mission;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -16,11 +15,11 @@ public class AADAO extends AbstractDAO<AA>{
 	{
 		super(AA.class);
 	}
+	
 	/**find the aa on his code
 	 * 
 	 * @return aa or null is not found
 	 */
-	
 	public AA find(AA aa) {
 		if(aa==null) return null;
 		

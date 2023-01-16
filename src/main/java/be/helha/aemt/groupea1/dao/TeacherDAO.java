@@ -6,7 +6,6 @@ import java.util.List;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Assignment;
 import be.helha.aemt.groupea1.entities.Teacher;
-import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
