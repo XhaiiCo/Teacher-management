@@ -27,25 +27,25 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email,
-	 * no duplicates with the department and the section
+	 * no duplicates with the section
 	 */
 	public Utilisateur add(Utilisateur utilisateur) {
 		if(utilisateur == null) return null ;
 
 		if(find(utilisateur) != null) return null ;
 			
+		Department department = departmentDAO.find(utilisateur.getSection().getDepartment());
+		
+		if(department != null) {
+			utilisateur.getSection().setDepartment(department);
+		}
+		
 		Section section = sectionDAO.find(utilisateur.getSection());
-				
+		
 		if(section != null) {
 			utilisateur.setSection(section);
-			
-			Department department = departmentDAO.find(utilisateur.getSection().getDepartment());
-			
-			if(department != null) {
-				utilisateur.getSection().setDepartment(department);
-			}
 		}
-				
+		
 		return super.add(utilisateur);
 	}
 	

@@ -44,6 +44,7 @@ public class SectionDAO extends AbstractDAO<Section> {
 	 * @return the sec or null if not found
 	 */
 	public Section find(Section section) {
+		
 		if(section == null) return null ;
 
 		String rq = "SELECT s FROM Section s where s.name = ?1 and s.department.id = ?2";

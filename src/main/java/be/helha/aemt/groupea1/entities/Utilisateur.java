@@ -3,7 +3,6 @@ package be.helha.aemt.groupea1.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.PasswordHashingException;
 import be.helha.aemt.groupea1.util.PasswordHash;
@@ -37,9 +36,9 @@ public class Utilisateur implements Serializable
 		
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Section section;
-	
+		
 	public Utilisateur() {}
-
+	
 	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Section section) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
