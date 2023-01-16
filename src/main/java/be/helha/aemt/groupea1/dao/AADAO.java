@@ -51,7 +51,7 @@ public class AADAO extends AbstractDAO<AA>{
 	 */
 	public AA update(AA aa) {
 
-		//Find the old Mission
+		//Find the old AA
 		AA oldAA = findById(aa.getId()) ;
 		if(aa == null) return null ;
 		

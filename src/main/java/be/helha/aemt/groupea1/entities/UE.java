@@ -1,12 +1,18 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import be.helha.aemt.groupea1.exception.NumberNegatifException;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class UE implements Serializable {
@@ -23,15 +29,29 @@ public class UE implements Serializable {
 	
 	private String bloc ;
 	
+	@Column(unique=true)
 	private String code ;
 	
 	private String entitled ;
 	
 	private int credit ;
 	
+	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<AA> aas ;
 	
 	public UE() {}
+
+	public UE(String academicYear, Department department, Section section, String bloc, String code, String entitled,
+			int credit) throws NumberNegatifException {
+		this.academicYear = academicYear;
+		this.department = department;
+		this.section = section;
+		this.bloc = bloc;
+		this.code = code;
+		this.entitled = entitled;
+		setCredit(credit);
+		this.aas= new ArrayList<AA>();
+	}
 
 	public int getId() {
 		return id;
@@ -93,8 +113,10 @@ public class UE implements Serializable {
 		return credit;
 	}
 
-	public void setCredit(int credit) {
-		this.credit = credit;
+	public void setCredit(int credit) throws NumberNegatifException {
+		if( credit >= 0 ) this.credit = credit;
+		
+		else throw new NumberNegatifException();
 	}
 
 	public List<AA> getAas() {
@@ -104,6 +126,36 @@ public class UE implements Serializable {
 	public void setAas(List<AA> aas) {
 		this.aas = aas;
 	}
+
+
+	@Override
+	public String toString() {
+		return "UE [id=" + id + ", academicYear=" + academicYear + ", department=" + department + ", section=" + section
+				+ ", bloc=" + bloc + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", aas=" + aas
+				+ "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(code, id);
+	}
+
+	/**
+	 * Equals on the id and the code
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UE other = (UE) obj;
+		return Objects.equals(code, other.code) && id == other.id;
+	}
+	
+
 	
 }
 
