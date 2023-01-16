@@ -20,7 +20,7 @@
 					<p:toolbarGroup>
 						<p:commandButton value="Ajouter" icon="pi pi-plus"
 							update=":dialogs:add-user-content"
-							action="#{utilisateurControl.openNewTeacher()}"
+							action="#{ utilisateurControl.openNewUser }"
 							oncomplete="PF('addUserDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 							<p:resetInput target=":dialogs:add-user-content" />
@@ -95,10 +95,10 @@
 								<h:outputText value="#{user.role.text}" />
 							</f:facet>
 							<f:facet name="input">
-								<h:selectOneMenu value="#{user.role}" style="width:100%">
+								<p:selectOneMenu value="#{user.role}" style="width:100%">
 									<f:selectItems value="#{utilisateurControl.roles}" var="role"
 										itemLabel="#{role.text}" itemValue="#{role}" />
-								</h:selectOneMenu>
+								</p:selectOneMenu>
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
@@ -122,12 +122,13 @@
 				modal="true" widgetVar="addUserDialog" responsive="true">
 				<p:outputPanel id="add-user-content" class="ui-fluid">
 					<p:outputPanel rendered="#{not empty utilisateurControl.newUser}">
+
 						<div class="field">
 							<p:outputLabel for="nom">Nom</p:outputLabel>
 							<p:inputText id="nom" required="true"
 								value="#{utilisateurControl.newUser.nom}" />
 						</div>
-						<!--
+
 						<div class="field">
 							<p:outputLabel for="firstName">Prénom</p:outputLabel>
 							<p:inputText id="firstName" required="true"
@@ -139,7 +140,22 @@
 							<p:inputText id="email" required="true"
 								value="#{utilisateurControl.newUser.email}" />
 						</div>
-						-->
+
+						<div class="field">
+							<p:outputLabel for="role">Role</p:outputLabel>
+							<p:selectOneMenu id="role"
+								value="#{utilisateurControl.newUser.role}" style="width:100%">
+								<f:selectItems value="#{utilisateurControl.roles}" var="role"
+									itemLabel="#{role.text}" itemValue="#{role}" />
+							</p:selectOneMenu>
+						</div>
+
+						<div class="field">
+							<p:outputLabel for="password">Mot de passe</p:outputLabel>
+							<p:inputText id="password" required="true"
+								value="#{utilisateurControl.newUser.password}" />
+						</div>
+
 					</p:outputPanel>
 				</p:outputPanel>
 
