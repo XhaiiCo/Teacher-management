@@ -13,8 +13,6 @@ public interface IDAO<T> {
 
 	public T add(T t) ;
 
-	public T find(T t) ;
-
 	public T findById(Integer id) ;
 
 	public List<T> findAll() ;

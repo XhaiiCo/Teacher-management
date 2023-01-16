@@ -3,7 +3,6 @@ package be.helha.aemt.groupea1.control;
 import java.io.Serializable;
 import java.util.List;
 
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.TeacherEJB;

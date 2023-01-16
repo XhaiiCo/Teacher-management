@@ -2,12 +2,15 @@ package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
 
+import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.MissionEJB;
+import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.ejb.UtilisateurEJB;
-import be.helha.aemt.groupea1.entities.EDepartment;
+import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.Utilisateur;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
@@ -26,8 +29,14 @@ public class FillDatabaseControl implements Serializable{
 	@EJB 
 	private UtilisateurEJB utilisateurEJB;
 	
+	@EJB 
+	private DepartmentEJB departmentEJB;
+	
 	@EJB
 	private MissionEJB missionEJB;
+	
+	@EJB
+	private SectionEJB sectionEJB;
 
 	public void doAddTestTeacher() {
 
@@ -41,6 +50,26 @@ public class FillDatabaseControl implements Serializable{
 		}
 	}
 	
+	public void doAddMockDepartment() {
+		for(int i = 1 ; i <= 6 ; i++)
+		{
+			Department d = new Department("Departement" + i);
+			
+			departmentEJB.add(d);
+		}
+	}
+	
+	public void doAddMockSection() {
+		for(int i = 1 ; i <= 6 ; i++)
+		{
+			Section s = new Section(new Department("Departement1"), "Section" + i);
+			
+			
+			
+			sectionEJB.add(s);
+		}
+	}
+	
 	public void doAddMockUtilisateur() {
 		
 		for(int i = 1 ; i <= 6 ; i++)
@@ -50,10 +79,10 @@ public class FillDatabaseControl implements Serializable{
 			try 
 			{
 				dde = new Utilisateur("NDirDept" + i , "PDirDept" + i, "ndirdept" + i + "p@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDE, EDepartment.values()[i-1]);
+						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.DDE, new Department());
 				
 				secr = new Utilisateur("SDept" + i , "PDept" + i, "sdept" + i + "p@helha.be", 
-						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.S, EDepartment.values()[i-1]);
+						"d+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=", ERole.S, new Department());
 				
 				
 				utilisateurEJB.add(dde);

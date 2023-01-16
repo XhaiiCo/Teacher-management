@@ -52,7 +52,6 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 	 * 
 	 * @return the user or null if not found
 	 */
-	@Override
 	public Utilisateur find(Utilisateur utilisateur) {
 		if(utilisateur == null) return null ;
 
