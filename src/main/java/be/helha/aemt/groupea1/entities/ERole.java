@@ -2,17 +2,17 @@ package be.helha.aemt.groupea1.entities;
 
 public enum ERole {
 
-	S("S"),
-	DDE("DDE"),
-	DDOM("DDOM");
-	
-	private String role;
+	S("Secrétaire"),
+	DDE("Directeur de département"),
+	DDOM("Directeur de domaine");
 
-	private ERole(String role) {
-		this.role = role;
+	private String text;
+
+	private ERole(String text) {
+		this.text = text;
 	}
 
-	public String getRole() {
-		return role;
+	public String getText() {
+		return text;
 	}
 }

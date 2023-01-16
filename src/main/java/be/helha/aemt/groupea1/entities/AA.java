@@ -42,14 +42,14 @@ public class AA implements Serializable{
 	public  AA() {}
 
 	public AA(String academicYear, String code, String entitled, int credit, int hours, int hoursQ1, int hoursQ2,
-			int nbGroup, int nbStudent, EFraction fraction) throws NumberNegatifException,HoursNotWantedException{
+			int nbGroup, int nbStudent, EFraction fraction) throws NumberNegatifException,HoursNotWantedException {
 		this.academicYear = academicYear;
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
-		setHours(hours);
 		setHoursQ1(hoursQ1);
 		setHoursQ2(hoursQ2);
+		setHours(hours);
 		setNbGroup(nbGroup);
 		setNbStudent(nbStudent);
 		this.fraction = fraction;

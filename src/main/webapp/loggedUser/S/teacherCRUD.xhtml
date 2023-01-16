@@ -51,11 +51,6 @@
 					<p:ajax event="rowEditCancel"
 						listener="#{teacherControl.onRowCancel}" update=":form:msgs" />
 
-					<p:column headerText="ID" sortBy="#{teacher.id}"
-						filterBy="#{teacher.id}" filterMatchMode="contains">
-						<h:outputText value="#{teacher.id}" />
-					</p:column>
-
 					<p:column headerText="Nom" sortBy="#{teacher.lastName}"
 						filterBy="#{teacher.lastName}" filterMatchMode="contains">
 						<p:cellEditor>
