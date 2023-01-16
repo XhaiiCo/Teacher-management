@@ -27,7 +27,7 @@ public class TeacherControl implements Serializable{
 	private Teacher newTeacher ;//Used when create a new teacher
 	public Teacher getNewTeacher() {return newTeacher;}
 	public void setNewTeacher(Teacher newTeacher) {this.newTeacher = newTeacher;}
-	
+
 	private Teacher removeTeacher ;
 	public Teacher getRemoveTeacher() {return removeTeacher;}
 	public void setRemoveTeacher(Teacher removeTeacher) {this.removeTeacher = removeTeacher;}
@@ -83,5 +83,14 @@ public class TeacherControl implements Serializable{
 		}
 		else
 			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cet enseignant est peut être déjà présent");
+	}
+
+	public void removeTeacher() {
+		if(this.removeTeacher == null) return ;
+
+		Teacher removedTeacher = this.teacherEJB.delete(this.removeTeacher) ; 
+		if(removedTeacher != null) {
+			this.teachers.remove(removedTeacher) ;
+		}
 	}
 }
