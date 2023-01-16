@@ -12,6 +12,11 @@ public class RouteControl implements Serializable {
 		return "test.xhtml?faces-redirect=true" ;//For redirect to the page, useful for auth
 	}
 	
+	public String doTeacher()
+	{
+		return "S/teacherCRUD.xhtml?faces-redirect=true";
+	}
+
 	public String doGoToSecretary()
 	{
 		return "S/teacherCRUD.xhtml?faces-redirect=true";

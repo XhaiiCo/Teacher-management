@@ -99,6 +99,13 @@
 					<p:column style="width:6rem">
 						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 							saveTitle="Save Row" />
+
+						<p:commandButton class="ui-button-warning rounded-button"
+							icon="pi pi-trash" process="@this"
+							oncomplete="PF('deleteProductDialog').show()">
+							<f:setPropertyActionListener value="#{teacher}"
+								target="#{teacherControl.removeTeacher}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</div>
