@@ -1,11 +1,8 @@
 package be.helha.aemt.groupea1.dao;
 
-import java.util.List;
-
 import be.helha.aemt.groupea1.entities.Assignment;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
-import jakarta.persistence.TypedQuery;
 
 @Stateless//Used to do independent operations, it does not have any associated client state
 @LocalBean
@@ -24,5 +21,4 @@ public class AssignmentDAO extends AbstractDAO<Assignment> {
 
 		return super.add(assignment);
 	}
-
 }
