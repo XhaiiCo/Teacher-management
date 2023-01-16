@@ -55,5 +55,18 @@ public class UEDAO extends AbstractDAO<UE> {
 		
 		return null ;
 	}
+	
+	public UE fetchAllByAA(AA aa) {
+		String rq = "SELECT ue FROM Ue ue where ue.code = ?1";
+
+		TypedQuery<UE> query = em.createQuery(rq, UE.class);
+		query.setParameter(1, aa.getCode());
+
+		List<UE> result = query.getResultList();
+
+		if(result.isEmpty()) return null ;
+
+		return result.get(0);
+	}
 
 }
