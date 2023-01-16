@@ -2,8 +2,10 @@ package be.helha.aemt.groupea1.dao;
 
 import java.util.List;
 
+import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.Utilisateur;
+import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -12,6 +14,9 @@ import jakarta.persistence.TypedQuery;
 @LocalBean
 public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
+	@EJB
+	private DepartmentDAO departmentDAO;
+	
 	public UtilisateurDAO() {
 		super(Utilisateur.class);
 	}
@@ -24,6 +29,12 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 		if(utilisateur == null) return null ;
 
 		if(find(utilisateur) != null) return null ;
+		
+		Department department = departmentDAO.find(utilisateur.getDepartement());
+		
+		if(department != null) {
+			utilisateur.setDepartement(department);
+		}
 
 		return super.add(utilisateur);
 	}
