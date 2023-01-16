@@ -12,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Teacher implements Serializable{
+public class Teacher implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Teacher implements Serializable{
 	private String email;
 	
 	//Uncomment when the class is done
-	//private Attribution attribution ;
+	private Assignment assignment ;
 
 	public Teacher() {}
 	

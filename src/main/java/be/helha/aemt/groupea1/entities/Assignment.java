@@ -21,5 +21,39 @@ public class Assignment implements Serializable {
 
 	private List<Mission> missions ;
 
-	public Assignment() {} 
+	public Assignment() {}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
+
+	public List<AA> getAas() {
+		return aas;
+	}
+
+	public void setAas(List<AA> aas) {
+		this.aas = aas;
+	}
+
+	public List<Mission> getMissions() {
+		return missions;
+	}
+
+	public void setMissions(List<Mission> missions) {
+		this.missions = missions;
+	} 
+	
+	
 }
