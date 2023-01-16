@@ -77,5 +77,5 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 		List<AA> aas = new ArrayList<AA>();
 		ass.forEach(e -> aas.addAll(e.getAas()));
 		return aas;
-}
+	}
 }
