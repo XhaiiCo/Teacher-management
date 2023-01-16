@@ -19,11 +19,11 @@
 				<p:toolbar>
 					<p:toolbarGroup>
 						<p:commandButton value="Ajouter" icon="pi pi-plus"
-							update=":dialogs:add-teacher-content"
-							action="#{teacherControl.openNewTeacher()}"
-							oncomplete="PF('addTeacherDialog').show()"
+							update=":dialogs:add-user-content"
+							action="#{utilisateurControl.openNewTeacher()}"
+							oncomplete="PF('addUserDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
-							<p:resetInput target=":dialogs:add-teacher-content" />
+							<p:resetInput target=":dialogs:add-user-content" />
 						</p:commandButton>
 					</p:toolbarGroup>
 					<!-- 
@@ -32,68 +32,75 @@
 							chooseIcon="pi pi-download" />
 						<p:commandButton value="Export" icon="pi pi-upload"
 							styleClass="ui-button-help" ajax="false">
-							<p:dataExporter type="pdf" target="teachers" fileName="products" />
+							<p:dataExporter type="pdf" target="users" fileName="products" />
 						</p:commandButton>
 					</p:toolbarGroup>
 					-->
 				</p:toolbar>
 
-				<p:dataTable id="teachers" var="teacher" editable="true"
-					value="#{ teacherControl.teachers }" rows="10" paginator="true"
-					paginatorPosition="bottom"
+				<p:dataTable id="users" var="user" editable="true"
+					widgetVar="usersTable" value="#{ utilisateurControl.users }"
+					rows="10" paginator="true" paginatorPosition="bottom"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
+					currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} utilisateurs"
 					rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}" scrollable="true"
 					scrollHeight="600">
 
-					<p:ajax event="rowEdit" listener="#{teacherControl.onRowEdit}"
+					<p:ajax event="rowEdit" listener="#{utilisateurControl.onRowEdit}"
 						update=":form:msgs" />
 					<p:ajax event="rowEditCancel"
-						listener="#{teacherControl.onRowCancel}" update=":form:msgs" />
+						listener="#{utilisateurControl.onRowCancel}" update=":form:msgs" />
 
-					<p:column headerText="ID" sortBy="#{teacher.id}"
-						filterBy="#{teacher.id}" filterMatchMode="contains">
-						<h:outputText value="#{teacher.id}" />
-					</p:column>
-
-					<p:column headerText="Nom" sortBy="#{teacher.lastName}"
-						filterBy="#{teacher.lastName}" filterMatchMode="contains">
+					<p:column headerText="Nom" sortBy="#{user.nom}"
+						filterBy="#{user.prenom}" filterMatchMode="contains">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{teacher.lastName}" />
+								<h:outputText value="#{user.nom}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{teacher.lastName}" label="LastName"
+								<p:inputText value="#{user.nom}" label="LastName"
 									style="width:100%" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Prénom" sortBy="#{teacher.firstName}"
-						filterBy="#{teacher.firstName}" filterMatchMode="contains">
+					<p:column headerText="Prénom" sortBy="#{user.firstName}"
+						filterBy="#{user.prenom}" filterMatchMode="contains">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{teacher.firstName}" />
+								<h:outputText value="#{user.prenom}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{teacher.firstName}" label="FirstName"
+								<p:inputText value="#{user.prenom}" label="FirstName"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Email" sortBy="#{user.email}"
+						filterBy="#{user.email}" filterMatchMode="contains">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.email}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{user.email}" label="Email"
 									style="width:100%" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Email" sortBy="#{teacher.email}"
-						filterBy="#{teacher.email}" filterMatchMode="contains">
+					<p:column headerText="Role" filterMatchMode="contains">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{teacher.email}" />
+								<h:outputText value="#{user.role.text}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{teacher.email}" label="Email"
-									style="width:100%" />
+								<h:selectOneMenu value="#{user.role}" style="width:100%">
+									<f:selectItems value="#{utilisateurControl.roles}" var="role"
+										itemLabel="#{role.text}" itemValue="#{role}" />
+								</h:selectOneMenu>
 							</f:facet>
 						</p:cellEditor>
-
 					</p:column>
 
 					<p:column style="width:6rem">
@@ -102,7 +109,7 @@
 
 						<p:commandButton class="ui-button-warning rounded-button"
 							icon="pi pi-trash" process="@this"
-							action="#{teacherControl.setRemoveTeacher(teacher)}"
+							action="#{utilisateurControl.setRemoveUser(user)}"
 							oncomplete="PF('deleteTeacherDialog').show()">
 						</p:commandButton>
 					</p:column>
@@ -111,43 +118,39 @@
 		</h:form>
 
 		<h:form id="dialogs">
-			<p:dialog header="Ajouter un enseignant" showEffect="fade"
-				modal="true" widgetVar="addTeacherDialog" responsive="true">
-				<p:outputPanel id="add-teacher-content" class="ui-fluid">
-					<p:outputPanel rendered="#{not empty teacherControl.newTeacher}">
+			<p:dialog header="Ajouter un utilisateur" showEffect="fade"
+				modal="true" widgetVar="addUserDialog" responsive="true">
+				<p:outputPanel id="add-user-content" class="ui-fluid">
+					<p:outputPanel rendered="#{not empty utilisateurControl.newUser}">
 						<div class="field">
-							<p:outputLabel for="lastName">Nom</p:outputLabel>
-							<p:inputText id="lastName" required="true"
-								value="#{teacherControl.newTeacher.lastName}" />
+							<p:outputLabel for="nom">Nom</p:outputLabel>
+							<p:inputText id="nom" required="true"
+								value="#{utilisateurControl.newUser.nom}" />
 						</div>
-
+						<!--
 						<div class="field">
 							<p:outputLabel for="firstName">Prénom</p:outputLabel>
 							<p:inputText id="firstName" required="true"
-								value="#{teacherControl.newTeacher.firstName}" />
+								value="#{utilisateurControl.newUser.prenom}" />
 						</div>
 
 						<div class="field">
 							<p:outputLabel for="email">Email</p:outputLabel>
 							<p:inputText id="email" required="true"
-								value="#{teacherControl.newTeacher.email}" />
+								value="#{utilisateurControl.newUser.email}" />
 						</div>
-
-						<div class="field">
-							<p:outputLabel for="note">Note</p:outputLabel>
-							<p:inputTextarea id="note" required="false" rows="6" cols="33"
-								value="#{teacherControl.newTeacher.note}" />
-						</div>
+						-->
 					</p:outputPanel>
 				</p:outputPanel>
 
 				<f:facet name="footer">
 					<p:commandButton value="Ajouter" icon="pi pi-check"
-						actionListener="#{teacherControl.saveNewTeacher}"
-						onclick="PF('addTeacherDialog').hide()" update=":form:msgs, :form:teachers" />
+						actionListener="#{utilisateurControl.saveNewUser}"
+						onclick="PF('addUserDialog').hide()"
+						update=":form:msgs, :form:users" />
 					<p:commandButton value="Annuler" icon="pi pi-times"
-						onclick="PF('addTeacherDialog').hide()"
-						class="ui-button-secondary" type="button" />
+						onclick="PF('addUserDialog').hide()" class="ui-button-secondary"
+						type="button" />
 				</f:facet>
 			</p:dialog>
 
@@ -155,8 +158,8 @@
 				width="300" message="Voulez-vous vraiment supprimer cet enseignant?"
 				header="Confirmation" severity="warn">
 				<p:commandButton value="Oui" icon="pi pi-check"
-					actionListener="#{teacherControl.removeTeacher}" process="@this"
-					update=":form:teachers, :form:msgs"
+					actionListener="#{utilisateurControl.removeUser}" process="@this"
+					update=":form:users, :form:msgs"
 					oncomplete="PF('deleteTeacherDialog').hide()" />
 				<p:commandButton value="Non" type="button"
 					styleClass="ui-button-secondary" icon="pi pi-times"
