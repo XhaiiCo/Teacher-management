@@ -51,7 +51,6 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 	 * 
 	 * @return  the teacher or null if not found
 	 */
-	@Override
 	public Teacher find(Teacher teacher) {
 		if(teacher == null) return null ;
 

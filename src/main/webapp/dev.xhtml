@@ -16,8 +16,14 @@
 		<p:commandButton value="Ajouter utilisateurs"
 			action="#{ fillDatabaseControl.doAddMockUtilisateur() }" />
 			
-		<h:commandButton value="Ajouter missions"
+		<p:commandButton value="Ajouter missions"
 			action="#{ fillDatabaseControl.doAddTestMission() }" />	
+			
+		<p:commandButton value="Ajouter départements"
+			action="#{ fillDatabaseControl.doAddMockDepartment() }" />	
+				
+		<h:commandButton value="Ajouter sections"
+			action="#{ fillDatabaseControl.doAddMockSection() }" />	
 	</h:form>
 </h:body>
 </html>

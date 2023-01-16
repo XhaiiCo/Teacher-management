@@ -31,12 +31,11 @@ public class Utilisateur implements Serializable
 	@Enumerated(EnumType.STRING)
 	private ERole role ;
 	
-	@Enumerated(EnumType.STRING)
-	private EDepartment departement ;
+	private Department departement ;
 	
 	public Utilisateur() {}
 
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, EDepartment departement) throws InvalidEmailException {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Department departement) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.setEmail(email);
@@ -109,11 +108,11 @@ public class Utilisateur implements Serializable
 		this.role = role;
 	}
 
-	public EDepartment getDepartement() {
+	public Department getDepartement() {
 		return departement;
 	}
 
-	public void setDepartement(EDepartment departement) {
+	public void setDepartement(Department departement) {
 		this.departement = departement;
 	}
 
