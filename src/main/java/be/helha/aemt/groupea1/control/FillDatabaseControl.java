@@ -2,11 +2,13 @@ package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
 
+import be.helha.aemt.groupea1.dao.UEDAO;
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.ejb.UEEJB;
 import be.helha.aemt.groupea1.ejb.UtilisateurEJB;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Department;
@@ -15,6 +17,7 @@ import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
+import be.helha.aemt.groupea1.entities.UE;
 import be.helha.aemt.groupea1.entities.Utilisateur;
 import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
@@ -45,6 +48,9 @@ public class FillDatabaseControl implements Serializable{
 
 	@EJB
 	private AAEJB aaEJB;
+	
+	@EJB
+	private UEEJB ueEJB;
 	
 	public void doAddTestTeacher() {
 
@@ -159,6 +165,22 @@ public class FillDatabaseControl implements Serializable{
 				}
 			}
 		}
+	
+	public void doAddTestUE() {
+		for (int i=1 ; i<=5;i++)
+		{
+			try {
+				Department dep =new Department ("Dep"+i);
+				Section sec = new Section(dep, "Section"+i);
+					UE ue=new UE ("2022-2023", dep, sec, "bloc"+i,"code"+i,"title"+i,i);
+					ueEJB.add(ue);
+			}catch (NumberNegatifException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 		
 	
