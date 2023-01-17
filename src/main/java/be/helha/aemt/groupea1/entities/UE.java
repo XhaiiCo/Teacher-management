@@ -15,42 +15,41 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
+
 public class UE implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
-	
+
 	private String academicYear ;
 
-	private Department department ;
-	
-	private Section section ;
-	
 	private String bloc ;
-	
+
 	@Column(unique=true)
 	private String code ;
-	
+
 	private String entitled ;
-	
+
 	private int credit ;
-	
+
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<AA> aas ;
-	
+
 	public UE() {}
 
-	public UE(String academicYear, Department department, Section section, String bloc, String code, String entitled,
+	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit) throws NumberNegatifException {
 		this.academicYear = academicYear;
-		this.department = department;
-		this.section = section;
 		this.bloc = bloc;
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
 		this.aas= new ArrayList<AA>();
+	}
+	
+	public void addAA(AA aa) {
+		this.aas.add(aa) ;
 	}
 
 	public int getId() {
@@ -67,22 +66,6 @@ public class UE implements Serializable {
 
 	public void setAcademicYear(String academicYear) {
 		this.academicYear = academicYear;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
 	}
 
 	public String getBloc() {
@@ -115,7 +98,7 @@ public class UE implements Serializable {
 
 	public void setCredit(int credit) throws NumberNegatifException {
 		if( credit >= 0 ) this.credit = credit;
-		
+
 		else throw new NumberNegatifException();
 	}
 
@@ -130,8 +113,7 @@ public class UE implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UE [id=" + id + ", academicYear=" + academicYear + ", department=" + department + ", section=" + section
-				+ ", bloc=" + bloc + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", aas=" + aas
+		return "UE [id=" + id + ", academicYear=" + academicYear + ", bloc=" + bloc + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", aas=" + aas
 				+ "]";
 	}
 
@@ -154,8 +136,5 @@ public class UE implements Serializable {
 		UE other = (UE) obj;
 		return Objects.equals(code, other.code) && id == other.id;
 	}
-	
-
-	
 }
 

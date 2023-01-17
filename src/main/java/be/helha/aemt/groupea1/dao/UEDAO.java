@@ -3,7 +3,10 @@ package be.helha.aemt.groupea1.dao;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.UE;
+import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -11,6 +14,12 @@ import jakarta.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class UEDAO extends AbstractDAO<UE> {
+	
+	@EJB
+	public DepartmentDAO departmentDAO;
+	
+	@EJB
+	public SectionDAO sectionDAO;
 	
 	public UEDAO() {
 		super(UE.class);

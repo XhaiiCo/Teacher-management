@@ -1,10 +1,7 @@
 package be.helha.aemt.groupea1.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import be.helha.aemt.groupea1.entities.AA;
-import be.helha.aemt.groupea1.entities.Assignment;
 import be.helha.aemt.groupea1.entities.Teacher;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -29,7 +26,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return super.add(teacher);
 	}
-	
+
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
@@ -39,13 +36,13 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 		//Find the old teacher
 		Teacher oldTeacher = findById(teacher.getId()) ;
 		if(oldTeacher == null) return null ;
-		
+
 		if(oldTeacher.getEmail().equals(teacher.getEmail()))
 			return super.update(teacher);
 
 		if(find(teacher) == null)
 			return super.update(teacher);
-		
+
 		return null ;
 	}
 
@@ -68,7 +65,8 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return result.get(0) ; 
 	}
-	
+
+	/* SAUTED
 	public List<AA> getAllAasOfTeacher(Teacher teacher) {
 		if(teacher == null) return null ;
 
@@ -77,5 +75,5 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 		List<AA> aas = new ArrayList<AA>();
 		ass.forEach(e -> aas.addAll(e.getAas()));
 		return aas;
-	}
+	}*/
 }

@@ -6,13 +6,11 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Teacher implements Serializable {
@@ -26,15 +24,17 @@ public class Teacher implements Serializable {
 
 	//Contains notes/remarks about the teacher
 	note;
-	
+
 	@Column(unique = true)
 	private String email;
-		
+
+	/*SAUTED
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Assignment> assignments ;
-	
+	 */
+
 	public Teacher() {}
-	
+
 	public Teacher(String lastName, String firstName, String email, String note)  throws InvalidEmailException{
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -72,20 +72,20 @@ public class Teacher implements Serializable {
 	}
 
 	public void setEmail(String email) throws InvalidEmailException{
-		
+
 		if(isValidEmail(email)) this.email = email;
 
 		else throw new InvalidEmailException() ;
 	}
-	
+
 	public boolean isValidEmail(String email) {
-	    String emailRegex = "^[a-zA-Z0-9._%+-]+@helha\\.be$";
-	    Pattern pat = Pattern.compile(emailRegex);
-	    if (email == null)
-	        return false;
-	    return pat.matcher(email).matches();
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@helha\\.be$";
+		Pattern pat = Pattern.compile(emailRegex);
+		if (email == null)
+			return false;
+		return pat.matcher(email).matches();
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -93,20 +93,12 @@ public class Teacher implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	public List<Assignment> getAssignments() {
-		return assignments;
-	}
-
-	public void setAssignments(List<Assignment> assignments) {
-		this.assignments = assignments;
-	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, id);
 	}
-	
+
 	/**
 	 * Equals on the id and email
 	 */
@@ -121,10 +113,10 @@ public class Teacher implements Serializable {
 		Teacher other = (Teacher) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.id + " " +  this.lastName + " " + this.firstName + " " + this.email + " " + this.note ;
 	}
-	
+
 }

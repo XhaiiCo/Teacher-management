@@ -1,3 +1,4 @@
+/* SAUTED
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
@@ -57,3 +58,4 @@ public class Assignment implements Serializable {
 	
 	
 }
+*/
