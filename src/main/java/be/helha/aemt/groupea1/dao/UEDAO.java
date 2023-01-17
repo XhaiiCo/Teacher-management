@@ -47,19 +47,6 @@ public class UEDAO extends AbstractDAO<UE> {
 
 	public UE add (UE ue) {
 		if (ue == null) return null;
-
-		Department department = departmentDAO.find(ue.getDepartment());
-		
-		if(department != null) {
-			ue.setDepartment(department);
-		}
-		
-		Section section = sectionDAO.find(ue.getSection());
-		
-		if(section != null) {
-			ue.setSection(section);
-		}
-		
 		
 		if (find(ue)!=null) return null;
 			

@@ -37,6 +37,11 @@ public class Department implements Serializable {
 		this.missions = new ArrayList<Mission>();
 	}
 	
+	
+	public void addSection(Section section) {	
+		this.sections.add(section) ;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -1,8 +1,9 @@
 package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import be.helha.aemt.groupea1.dao.UEDAO;
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.MissionEJB;
@@ -33,25 +34,26 @@ public class FillDatabaseControl implements Serializable{
 
 	@EJB
 	private TeacherEJB teacherEJB ;
-	
+
 	@EJB 
 	private UtilisateurEJB utilisateurEJB;
-	
+
 	@EJB 
 	private DepartmentEJB departmentEJB;
-	
+
 	@EJB
 	private MissionEJB missionEJB;
-	
+
 	@EJB
 	private SectionEJB sectionEJB;
 
 	@EJB
 	private AAEJB aaEJB;
-	
+
 	@EJB
 	private UEEJB ueEJB;
-	
+
+	//Ok
 	public void doAddTestTeacher() {
 
 		for(int i = 1 ; i <= 20 ; i++) {
@@ -63,42 +65,49 @@ public class FillDatabaseControl implements Serializable{
 			}
 		}
 	}
-	
-	public void doAddMockDepartment() {
+
+	public void doAddDatas() throws NumberNegatifException, HoursNotWantedException {
+
+		//Departments
+		List<Department> departments = new ArrayList<>() ;
 		for(int i = 1 ; i <= 6 ; i++)
 		{
 			Department d = new Department("Departement" + i);
-			
-			departmentEJB.add(d);
+			for(int j = 1 ; j <= 3 ; j++) {
+				Section s = new Section(d, "D"+i +"-Section"+j) ;
+				for(int k = 1 ; k <= 3 ; k++) {
+					UE ue = new UE("2022-2023", "1Bi", "Code"+ i+j+k, "UE"+i+j+k, 6) ;
+					for(int l = 1 ; l <= 2 ; l++) {
+						AA aa = new AA("Code"+i+j+k+l, "AA"+i+j+k+l, 3, 50, 20, 30, 1, 20, EFraction.f480) ; 
+						ue.addAA(aa);
+					}
+					s.addUe(ue);
+				}
+				d.addSection(s);
+			}
+
+			departments.add(departmentEJB.add(d)) ;
 		}
 	}
-	
-	public void doAddMockSection() {
-		for(int i = 1 ; i <= 6 ; i++)
-		{
-			Section s = new Section(new Department("Departement1"), "Section" + i);
-			
-			sectionEJB.add(s);
-		}
-	}
-	
+
+	//OK
 	public void doAddMockUtilisateur() {
-		
+
 		for(int i = 1 ; i <= 6 ; i++)
 		{
 			Utilisateur dde;
 			Utilisateur secr;
-			
+
 			Department department = new Department("Departement" + i);
-			
+
 			try 
 			{
 				dde = new Utilisateur("NDirDept" + i , "PDirDept" + i, "ndirdept" + i + "p@helha.be", 
 						"helha", ERole.DDE, new Section(department, "Section" + i));
-				
+
 				secr = new Utilisateur("SDept" + i , "PDept" + i, "sdept" + i + "p@helha.be", 
 						"helha", ERole.S, new Section(department, "Section" + i));
-				
+
 				utilisateurEJB.add(dde);
 				utilisateurEJB.add(secr);
 			} 
@@ -107,85 +116,37 @@ public class FillDatabaseControl implements Serializable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
+
 			Utilisateur ddom;
 			try 
 			{
 				ddom = new Utilisateur("NDirDom", "PDirDom", "ndirdomp@helha.be", 
 						"helha", ERole.DDOM, new Section(department, "Section" + i));
-				
+
 				utilisateurEJB.add(ddom);
 			} 
 			catch (InvalidEmailException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
-		
+
 	public void doAddTestMission() {
-			
+
 		for(int i=1 ; i <= 10 ; i++)
 		{
 			try {	
 				Mission m=new Mission("2022-2023", "t" + i , i * 100);
-					
+
 				missionEJB.add(m);
-					
+
 			}catch (InvalidHoursException e) {
 				e.printStackTrace();
 			}
-				
+
 		}
 	}
-		
-	public void doAddTestAA() {
-			for (int i= 1 ; i <= 5 ; i++)
-			{
-				try {
-					AA aa= new AA("2022-2023", "code" + i ,"title" + i, i,60, 30, 30, i, i,  EFraction.f480);
-					if(aa.getNbGroup()>=1)
-					{
-						for(int y=1 ; y<=aa.getNbGroup();y++)
-						{
-							AA aaCreate = new AA("2022-2023", "code" + i +""+ y,"title" + i, i,60, 30, 30, i, i,  EFraction.f480); 
-							aaEJB.add(aaCreate);
-						}
-					}else {
-						aaEJB.add(aa);
-					}
-					
-				}catch (NumberNegatifException e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}catch (HoursNotWantedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	
-	public void doAddTestUE() {
-		for (int i=1 ; i<=5;i++)
-		{
-			try {
-				Department dep =new Department ("Dep"+i);
-				Section sec = new Section(dep, "Section"+i);
-					UE ue=new UE ("2022-2023", dep, sec, "bloc"+i,"code"+i,"title"+i,i);
-					ueEJB.add(ue);
-			}catch (NumberNegatifException e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-		
-	
-	
-	
-	
-	
 }

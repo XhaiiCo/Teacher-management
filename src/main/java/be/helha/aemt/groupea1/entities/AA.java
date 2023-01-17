@@ -18,8 +18,6 @@ public class AA implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
 	
-	private String academicYear ;
-	
 	@Column(unique=true)
 	private String code ;
 	
@@ -41,9 +39,8 @@ public class AA implements Serializable{
 	
 	public  AA() {}
 
-	public AA(String academicYear, String code, String entitled, int credit, int hours, int hoursQ1, int hoursQ2,
+	public AA(String code, String entitled, int credit, int hours, int hoursQ1, int hoursQ2,
 			int nbGroup, int nbStudent, EFraction fraction) throws NumberNegatifException,HoursNotWantedException {
-		this.academicYear = academicYear;
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
@@ -61,14 +58,6 @@ public class AA implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getAcademicYear() {
-		return academicYear;
-	}
-
-	public void setAcademicYear(String academicYear) {
-		this.academicYear = academicYear;
 	}
 
 	public String getCode() {
@@ -170,7 +159,7 @@ public class AA implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AA [id=" + id + ", academicYear=" + academicYear + ", code=" + code + ", entitled=" + entitled
+		return "AA [id=" + id + ", code=" + code + ", entitled=" + entitled
 				+ ", credit=" + credit + ", hours=" + hours + ", hoursQ1=" + hoursQ1 + ", hoursQ2=" + hoursQ2
 				+ ", nbGroup=" + nbGroup + ", nbStudent=" + nbStudent + ", fraction=" + fraction + "]";
 	}

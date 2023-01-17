@@ -32,12 +32,28 @@ public class Section implements Serializable {
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Mission> missions ;
 	
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private List<UE> ues ;
+	
+	public List<UE> getUes() {
+		return ues;
+	}
+	
+	public void setUes(List<UE> ues) {
+		this.ues = ues;
+	}
+
 	public Section() {}
 	
 	public Section(Department department, String name) {
 		this.department = department;
 		this.name = name;
 		this.missions = new ArrayList<Mission>();
+		this.ues = new ArrayList<UE>() ;
+	}
+	
+	public void addUe(UE ue) {
+		this.ues.add(ue) ;
 	}
 	
 	public int getId() {
