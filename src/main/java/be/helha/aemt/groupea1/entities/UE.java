@@ -20,21 +20,21 @@ public class UE implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id  ;
+	private int id ;
 
-	private String academicYear ;
+	private String academicYear;
 
-	private String bloc ;
+	private String bloc;
 
 	@Column(unique=true)
-	private String code ;
+	private String code;
 
-	private String entitled ;
+	private String entitled;
 
-	private int credit ;
+	private int credit;
 
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<AA> aas ;
+	private List<AA> aas;
 
 	public UE() {}
 
