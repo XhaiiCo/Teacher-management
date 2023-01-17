@@ -161,8 +161,5 @@ public class UE implements Serializable {
 		UE other = (UE) obj;
 		return Objects.equals(code, other.code) && id == other.id;
 	}
-	
-
-	
 }
 

@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Project Name</title>
+	<title>Gestion enseignant</title>
 	<meta name="author" content="The Author"></meta>
 	<link rel="stylesheet" href="../../style.css" />
 </h:head>
@@ -105,6 +105,10 @@
 								action="#{teacherControl.setRemoveTeacher(teacher)}"
 								oncomplete="PF('deleteTeacherDialog').show()">
 							</p:commandButton>
+						</p:column>
+
+						<p:column style="width:3rem;text-align: center">
+							<h:commandLink action="#{teacherControl.goToDetailPage(teacher)}">Detail</h:commandLink>
 						</p:column>
 					</p:dataTable>
 				</div>

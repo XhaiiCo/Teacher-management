@@ -31,12 +31,23 @@ public class TeacherControl implements Serializable{
 	public Teacher getRemoveTeacher() {return removeTeacher;}
 	public void setRemoveTeacher(Teacher removeTeacher) {this.removeTeacher = removeTeacher;}
 
+	private Teacher selectedTeacher ;
+	public Teacher getSelectedTeacher() {return selectedTeacher;}
+	public void setSelectedTeacher(Teacher selectedTeacher) {this.selectedTeacher = selectedTeacher;}
+
 	@EJB
 	private TeacherEJB teacherEJB ;
 
 	@PostConstruct
 	public void init() {
 		this.teachers = this.teacherEJB.findAll() ;
+	}
+	
+	public String goToDetailPage(Teacher selectedTeacher) {
+		
+		this.setSelectedTeacher(selectedTeacher);
+		
+		return "/S/teacherDetail" ;
 	}
 
 	public void showInfoToast(String summary, String detail ) {
