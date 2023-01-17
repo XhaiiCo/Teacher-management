@@ -26,7 +26,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return super.add(teacher);
 	}
-
+	
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email

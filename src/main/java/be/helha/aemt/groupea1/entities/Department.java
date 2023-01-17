@@ -74,6 +74,11 @@ public class Department implements Serializable {
 		this.missions = missions;
 	}
 
+	@Override
+	public String toString() {
+		return "Department [id=" + id + ", name=" + name + ", sections=" + sections + ", missions=" + missions + "]";
+	}
+
 	
 	
 	
