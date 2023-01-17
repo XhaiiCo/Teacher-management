@@ -26,5 +26,14 @@
 			<from-outcome>/index</from-outcome>
 			<to-view-id>/loggedUser/index.xhtml</to-view-id>
 		</navigation-case>
+
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/loggedUser/*</from-view-id>
+		<navigation-case>
+			<from-outcome>/S/teacherDetail</from-outcome>
+			<to-view-id>/loggedUser/S/teacherDetail.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 </faces-config>
