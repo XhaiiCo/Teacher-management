@@ -1,22 +1,5 @@
 package be.helha.aemt.groupea1.util;
 
-import be.helha.aemt.groupea1.entities.Department;
-import be.helha.aemt.groupea1.entities.Section;
-import be.helha.aemt.groupea1.exception.PasswordHashingException;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -66,23 +49,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		
-		ExcelReader excelReader = new ExcelReader();
-		
-		try 
-		{
-			excelReader.chooseExcelFile();
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-
-
-		
+	
 		
 	}
 }

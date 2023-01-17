@@ -3,16 +3,14 @@ package be.helha.aemt.groupea1.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.Section;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -35,7 +33,7 @@ public class ExcelReaderControl implements Serializable {
     	this.uploadFile();
     	
     	this.importDepartment();
-    	
+    	this.importSection();
     }
     
     public void uploadFile() 
@@ -73,9 +71,21 @@ public class ExcelReaderControl implements Serializable {
     		departmentEJB.add(new Department(departmentName));
 		}
     }
-    /*
+    
     public void importSection() {
+    	//gérer ça car si feuille existe pas renvoie null
+    	Sheet sheet = workbook.getSheet("Section");
     	
-    }*/
+    	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
+		{
+    		Row row = sheet.getRow(i);
+    		
+    		String departmentName = row.getCell(0).getStringCellValue();
+    		String sectionName = row.getCell(1).getStringCellValue();
+    		
+    		Department sectionDepartment = new Department(departmentName);
+    		sectionEJB.add(new Section(sectionDepartment, sectionName));
+		}
+    }
     
 }
