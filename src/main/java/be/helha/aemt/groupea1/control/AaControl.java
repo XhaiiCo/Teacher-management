@@ -5,6 +5,7 @@ import java.util.List;
 
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Teacher;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -24,6 +25,8 @@ public class AaControl implements Serializable {
 	
 	private AA selected ;
 	public AA getSelected() {return selected ;	}
+	
+	public List<Teacher> getSelectedTeachers(){return selected.getTeachers() ;}
 
 	@PostConstruct
 	public void init() {
