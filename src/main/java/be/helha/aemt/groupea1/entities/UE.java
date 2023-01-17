@@ -32,12 +32,12 @@ public class UE implements Serializable {
 	private String entitled;
 
 	private int credit;
-
+	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<AA> aas;
-
+	
 	public UE() {}
-
+	
 	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit) throws NumberNegatifException {
 		this.academicYear = academicYear;

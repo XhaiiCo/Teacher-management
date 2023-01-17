@@ -42,7 +42,7 @@ public class AA implements Serializable{
 	private int nbStudent ;
 
 	private EFraction fraction ;
-
+	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<Teacher> teachers = new ArrayList<>();
 

@@ -12,10 +12,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.ejb.UEEJB;
 import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
+import be.helha.aemt.groupea1.entities.UE;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -37,12 +40,16 @@ public class ExcelReaderControl implements Serializable {
     @EJB
     private TeacherEJB teacherEJB;
     
+    @EJB
+    private UEEJB ueEJB; 
+    
     public void doImportDatasFromExcel() {
     	this.uploadFile();
     	
-    	this.importDepartment();
-    	this.importSection();
-    	this.importTeacher();
+    	this.importDepartments();
+    	this.importSections();
+    	this.importTeachers();
+    	this.importUEs();
     }
     
     public void uploadFile() 
@@ -78,7 +85,7 @@ public class ExcelReaderControl implements Serializable {
     	}
     }
     
-    public void importDepartment() {
+    public void importDepartments() {
     	
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Départements");
@@ -93,7 +100,7 @@ public class ExcelReaderControl implements Serializable {
 		}
     }
     
-    public void importSection() {
+    public void importSections() {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Sections");
     	
@@ -109,7 +116,7 @@ public class ExcelReaderControl implements Serializable {
 		}
     }
     
-    public void importTeacher() {
+    public void importTeachers() {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Enseignants");
     	
@@ -128,6 +135,32 @@ public class ExcelReaderControl implements Serializable {
 			} 
     		catch (InvalidEmailException e) 
     		{
+				e.printStackTrace();
+			}
+		}
+    }
+    
+    public void importUEs() {
+    	//gérer ça car si feuille existe pas renvoie null
+    	Sheet sheet = workbook.getSheet("UEs");
+    	
+    	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
+		{
+    		Row row = sheet.getRow(i);
+    		
+    		String yearRangeUE = row.getCell(0).getStringCellValue();
+    		String blocUE = row.getCell(1).getStringCellValue();
+    		String codeUE = row.getCell(2).getStringCellValue();
+    		int creditsUE = (int) row.getCell(3).getNumericCellValue();
+    		String entitledUE = row.getCell(4).getStringCellValue();
+    		
+    		try 
+    		{
+				ueEJB.add(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE));
+			} 
+    		catch (NumberNegatifException e) 
+    		{
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
