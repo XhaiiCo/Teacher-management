@@ -1,0 +1,145 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Project Name</title>
+	<meta name="author" content="The Author"></meta>
+</h:head>
+<h:body>
+	<ui:include src="../navbar.xhtml" />
+
+	<div class="card crud-demo">
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+
+			<div class="card" style="padding: 60px;">
+
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Ajouter" icon="pi pi-plus"
+							update=":dialogs:add-mission-content"
+							action="#{missionControl.openNewMission()}"
+							oncomplete="PF('addMissionDialog').show()"
+							styleClass="ui-button-success" style="margin-right: .5rem">
+							<p:resetInput target=":dialogs:add-mission-content" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+
+				<p:dataTable id="missions" var="mission" editable="true"
+					value="#{ missionControl.missions }" rows="10" paginator="true"
+					paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
+					rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}" scrollable="true"
+					scrollHeight="600">
+
+					<p:ajax event="rowEdit" listener="#{missionControl.onRowEdit}"
+						update=":form:msgs" />
+					<p:ajax event="rowEditCancel"
+						listener="#{missionControl.onRowCancel}" update=":form:msgs" />
+
+					<p:column headerText="Année académique" sortBy="#{ mission.academicYear }"
+						filterBy="#{ mission.academicYear }" filterMatchMode="contains">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{ mission.academicYear }" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{ mission.academicYear }" label="AnneeAcademique"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Intitulé" sortBy="#{ mission.entitled }"
+						filterBy="#{ mission.entitled }" filterMatchMode="contains">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{ mission.entitled }" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{ mission.entitled }" label="Intitule"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Heures" sortBy="#{ mission.hours }"
+						filterBy="#{ mission.hours }" filterMatchMode="contains">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{ mission.hours }" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{ mission.hours }" label="Heure"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:6rem">
+						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+							saveTitle="Save Row" />
+
+						<p:commandButton class="ui-button-warning rounded-button"
+							icon="pi pi-trash" process="@this"
+							action="#{missionControl.setRemoveMission(mission)}"
+							oncomplete="PF('deleteMissionDialog').show()">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+
+		<h:form id="dialogs">
+			<p:dialog header="Ajouter une mission" showEffect="fade"
+				modal="true" widgetVar="addMissionDialog" responsive="true">
+				
+				<p:outputPanel id="add-mission-content" class="ui-fluid">
+					<p:outputPanel rendered="#{not empty missionControl.newMission}">
+						<div class="field">
+							<p:outputLabel for="academicYear">Année académique</p:outputLabel>
+							<p:inputText id="academicYear" required="true"
+								value="#{missionControl.newMission.academicYear}" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="entitled">Intitulé</p:outputLabel>
+							<p:inputText id="entitled" required="true"
+								value="#{missionControl.newMission.entitled}" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="hours">Heures</p:outputLabel>
+							<p:inputText id="hours" required="true"
+								value="#{missionControl.newMission.hours}" />
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+
+				<f:facet name="footer">
+					<p:commandButton value="Ajouter" icon="pi pi-check"
+						actionListener="#{missionControl.saveNewMission}"
+						onclick="PF('addMissionDialog').hide()" update=":form:msgs, :form:missions" />
+					<p:commandButton value="Annuler" icon="pi pi-times"
+						onclick="PF('addMissionDialog').hide()"
+						class="ui-button-secondary" type="button" />
+				</f:facet>
+			</p:dialog>
+
+			<p:confirmDialog widgetVar="deleteMissionDialog" showEffect="fade"
+				width="300" message="Voulez-vous vraiment supprimer cette mission ?"
+				header="Confirmation" severity="warn">
+				<p:commandButton value="Oui" icon="pi pi-check"
+					actionListener="#{missionControl.removeMission}" process="@this"
+					update=":form:missions, :form:msgs"
+					oncomplete="PF('deleteMissionDialog').hide()" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteMissionDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+	</div>
+</h:body>
+</html>

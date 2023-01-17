@@ -44,7 +44,7 @@ public class AA implements Serializable{
 	private EFraction fraction ;
 
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<Teacher> teachers ;
+	private List<Teacher> teachers = new ArrayList<>();
 
 	private UE ue ;
 
@@ -68,7 +68,6 @@ public class AA implements Serializable{
 		this.nbGroup = nbGroup;
 		this.setNbStudent(nbStudent);
 		this.fraction = fraction;
-		this.teachers = new ArrayList<>();
 		this.ue = ue;
 		this.section = section;
 		this.department = department;

@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Attribution</title>
+	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../style.css" />
+</h:head>
+<h:body>
+	<ui:include src="../navbar.xhtml" />
+
+	<div class="card" style="padding: 60px;">
+		<h:form>
+			<h1>#{aaControl.selected.entitled}</h1>
+			<h:form>
+
+				<div class="card">
+					<h2>Enseignant(s) attribué(s) pour cette ue</h2>
+
+					<h3>Ajouter un enseignant</h3>
+					<div class="card">
+
+
+					</div>
+
+					<p:dataTable var="teacher"
+						value="#{aaControl.getSelectedTeachers()}">
+						<p:column headerText="Nom">
+							<h:outputText value="#{teacher.lastName}" />
+						</p:column>
+
+						<p:column headerText="Prénom">
+							<h:outputText value="#{teacher.firstName}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputText value="#{teacher.email}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
+		</h:form>
+	</div>
+</h:body>
+</html>

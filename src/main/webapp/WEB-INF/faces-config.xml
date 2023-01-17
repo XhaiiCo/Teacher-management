@@ -28,7 +28,7 @@
 		</navigation-case>
 
 	</navigation-rule>
-	
+
 	<navigation-rule>
 		<from-view-id>/loggedUser/*</from-view-id>
 		<navigation-case>
@@ -36,4 +36,21 @@
 			<to-view-id>/loggedUser/S/teacherDetail.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loggedUser/*</from-view-id>
+		<navigation-case>
+			<from-outcome>/DDE/assignation</from-outcome>
+			<to-view-id>/loggedUser/DDE/assignation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loggedUser/*</from-view-id>
+		<navigation-case>
+			<from-outcome>/DDE/aaDetail</from-outcome>
+			<to-view-id>/loggedUser/DDE/aaDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>
