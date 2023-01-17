@@ -5,19 +5,25 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>HomePage</title>
-	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../style.css" />
 </h:head>
 <h:body>
 	<ui:include src="navbar.xhtml" />
 
+	<h1>Accueil</h1>
 	<a href="#{routeControl.doGoToSecretary()}">Secrétaire</a>
 	<a href="#{routeControl.doGoToDDE()}">DDE</a>
 	<a href="#{routeControl.doGoToDDOM()}">DDOM</a>
-	
-	<br/>
-	<h:outputText value="Prénom : #{utilisateurControl.connectedUser.prenom}"></h:outputText><br/>
-	<h:outputText value="Nom : #{utilisateurControl.connectedUser.nom}"></h:outputText><br/>
-	<h:outputText value="Role : #{utilisateurControl.connectedUser.role}"></h:outputText><br/>
-	
+
+	<br />
+	<h:outputText
+		value="Prénom : #{utilisateurControl.connectedUser.prenom}"></h:outputText>
+	<br />
+	<h:outputText value="Nom : #{utilisateurControl.connectedUser.nom}"></h:outputText>
+	<br />
+	<h:outputText value="Role : #{utilisateurControl.connectedUser.role}"></h:outputText>
+	<br />
+
 </h:body>
 </html>

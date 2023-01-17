@@ -6,27 +6,32 @@
 <h:head>
 	<title>Project Name</title>
 	<meta name="author" content="The Author"></meta>
+	<link rel="stylesheet" href="../../style.css" />
 </h:head>
 <h:body>
 	<ui:include src="../navbar.xhtml" />
+	<div style="padding: 60px;">
+		<div class="card">
+			<h1>Gestion des enseignants</h1>
+		</div>
 
-	<div class="card crud-demo">
-		<h:form id="form">
-			<p:growl id="msgs" showDetail="true" />
+		<div class="card crud-demo">
+			<h:form id="form">
+				<p:growl id="msgs" showDetail="true" />
 
-			<div class="card" style="padding: 60px;">
+				<div class="card">
 
-				<p:toolbar>
-					<p:toolbarGroup>
-						<p:commandButton value="Ajouter" icon="pi pi-plus"
-							update=":dialogs:add-teacher-content"
-							action="#{teacherControl.openNewTeacher()}"
-							oncomplete="PF('addTeacherDialog').show()"
-							styleClass="ui-button-success" style="margin-right: .5rem">
-							<p:resetInput target=":dialogs:add-teacher-content" />
-						</p:commandButton>
-					</p:toolbarGroup>
-					<!-- 
+					<p:toolbar>
+						<p:toolbarGroup>
+							<p:commandButton value="Ajouter" icon="pi pi-plus"
+								update=":dialogs:add-teacher-content"
+								action="#{teacherControl.openNewTeacher()}"
+								oncomplete="PF('addTeacherDialog').show()"
+								styleClass="ui-button-success" style="margin-right: .5rem">
+								<p:resetInput target=":dialogs:add-teacher-content" />
+							</p:commandButton>
+						</p:toolbarGroup>
+						<!-- 
 					<p:toolbarGroup align="right">
 						<p:fileUpload mode="simple" skinSimple="true" label="Import"
 							chooseIcon="pi pi-download" />
@@ -36,128 +41,131 @@
 						</p:commandButton>
 					</p:toolbarGroup>
 					-->
-				</p:toolbar>
+					</p:toolbar>
 
-				<p:dataTable id="teachers" var="teacher" editable="true"
-					value="#{ teacherControl.teachers }" rows="10" paginator="true"
-					paginatorPosition="bottom"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
-					rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}" scrollable="true"
-					scrollHeight="600">
+					<p:dataTable id="teachers" var="teacher" editable="true"
+						value="#{ teacherControl.teachers }" rows="10" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
+						rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}"
+						scrollable="true" scrollHeight="600">
 
-					<p:ajax event="rowEdit" listener="#{teacherControl.onRowEdit}"
-						update=":form:msgs" />
-					<p:ajax event="rowEditCancel"
-						listener="#{teacherControl.onRowCancel}" update=":form:msgs" />
+						<p:ajax event="rowEdit" listener="#{teacherControl.onRowEdit}"
+							update=":form:msgs" />
+						<p:ajax event="rowEditCancel"
+							listener="#{teacherControl.onRowCancel}" update=":form:msgs" />
 
-					<p:column headerText="Nom" sortBy="#{teacher.lastName}"
-						filterBy="#{teacher.lastName}" filterMatchMode="contains">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{teacher.lastName}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{teacher.lastName}" label="LastName"
-									style="width:100%" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
+						<p:column headerText="Nom" sortBy="#{teacher.lastName}"
+							filterBy="#{teacher.lastName}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{teacher.lastName}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{teacher.lastName}" label="LastName"
+										style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 
-					<p:column headerText="Prénom" sortBy="#{teacher.firstName}"
-						filterBy="#{teacher.firstName}" filterMatchMode="contains">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{teacher.firstName}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{teacher.firstName}" label="FirstName"
-									style="width:100%" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
+						<p:column headerText="Prénom" sortBy="#{teacher.firstName}"
+							filterBy="#{teacher.firstName}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{teacher.firstName}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{teacher.firstName}" label="FirstName"
+										style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 
-					<p:column headerText="Email" sortBy="#{teacher.email}"
-						filterBy="#{teacher.email}" filterMatchMode="contains">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{teacher.email}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{teacher.email}" label="Email"
-									style="width:100%" />
-							</f:facet>
-						</p:cellEditor>
+						<p:column headerText="Email" sortBy="#{teacher.email}"
+							filterBy="#{teacher.email}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{teacher.email}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{teacher.email}" label="Email"
+										style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
 
-					</p:column>
+						</p:column>
 
-					<p:column style="width:6rem">
-						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
-							saveTitle="Save Row" />
+						<p:column style="width:6rem">
+							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+								saveTitle="Save Row" />
 
-						<p:commandButton class="ui-button-warning rounded-button"
-							icon="pi pi-trash" process="@this"
-							action="#{teacherControl.setRemoveTeacher(teacher)}"
-							oncomplete="PF('deleteTeacherDialog').show()">
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
-			</div>
-		</h:form>
+							<p:commandButton class="ui-button-warning rounded-button"
+								icon="pi pi-trash" process="@this"
+								action="#{teacherControl.setRemoveTeacher(teacher)}"
+								oncomplete="PF('deleteTeacherDialog').show()">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
 
-		<h:form id="dialogs">
-			<p:dialog header="Ajouter un enseignant" showEffect="fade"
-				modal="true" widgetVar="addTeacherDialog" responsive="true">
-				<p:outputPanel id="add-teacher-content" class="ui-fluid">
-					<p:outputPanel rendered="#{not empty teacherControl.newTeacher}">
-						<div class="field">
-							<p:outputLabel for="lastName">Nom</p:outputLabel>
-							<p:inputText id="lastName" required="true"
-								value="#{teacherControl.newTeacher.lastName}" />
-						</div>
+			<h:form id="dialogs">
+				<p:dialog header="Ajouter un enseignant" showEffect="fade"
+					modal="true" widgetVar="addTeacherDialog" responsive="true">
+					<p:outputPanel id="add-teacher-content" class="ui-fluid">
+						<p:outputPanel rendered="#{not empty teacherControl.newTeacher}">
+							<div class="field">
+								<p:outputLabel for="lastName">Nom</p:outputLabel>
+								<p:inputText id="lastName" required="true"
+									value="#{teacherControl.newTeacher.lastName}" />
+							</div>
 
-						<div class="field">
-							<p:outputLabel for="firstName">Prénom</p:outputLabel>
-							<p:inputText id="firstName" required="true"
-								value="#{teacherControl.newTeacher.firstName}" />
-						</div>
+							<div class="field">
+								<p:outputLabel for="firstName">Prénom</p:outputLabel>
+								<p:inputText id="firstName" required="true"
+									value="#{teacherControl.newTeacher.firstName}" />
+							</div>
 
-						<div class="field">
-							<p:outputLabel for="email">Email</p:outputLabel>
-							<p:inputText id="email" required="true"
-								value="#{teacherControl.newTeacher.email}" />
-						</div>
+							<div class="field">
+								<p:outputLabel for="email">Email</p:outputLabel>
+								<p:inputText id="email" required="true"
+									value="#{teacherControl.newTeacher.email}" />
+							</div>
 
-						<div class="field">
-							<p:outputLabel for="note">Note</p:outputLabel>
-							<p:inputTextarea id="note" required="false" rows="6" cols="33"
-								value="#{teacherControl.newTeacher.note}" />
-						</div>
+							<div class="field">
+								<p:outputLabel for="note">Note</p:outputLabel>
+								<p:inputTextarea id="note" required="false" rows="6" cols="33"
+									value="#{teacherControl.newTeacher.note}" />
+							</div>
+						</p:outputPanel>
 					</p:outputPanel>
-				</p:outputPanel>
 
-				<f:facet name="footer">
-					<p:commandButton value="Ajouter" icon="pi pi-check"
-						actionListener="#{teacherControl.saveNewTeacher}"
-						onclick="PF('addTeacherDialog').hide()" update=":form:msgs, :form:teachers" />
-					<p:commandButton value="Annuler" icon="pi pi-times"
-						onclick="PF('addTeacherDialog').hide()"
-						class="ui-button-secondary" type="button" />
-				</f:facet>
-			</p:dialog>
+					<f:facet name="footer">
+						<p:commandButton value="Ajouter" icon="pi pi-check"
+							actionListener="#{teacherControl.saveNewTeacher}"
+							onclick="PF('addTeacherDialog').hide()"
+							update=":form:msgs, :form:teachers" />
+						<p:commandButton value="Annuler" icon="pi pi-times"
+							onclick="PF('addTeacherDialog').hide()"
+							class="ui-button-secondary" type="button" />
+					</f:facet>
+				</p:dialog>
 
-			<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
-				width="300" message="Voulez-vous vraiment supprimer cet enseignant?"
-				header="Confirmation" severity="warn">
-				<p:commandButton value="Oui" icon="pi pi-check"
-					actionListener="#{teacherControl.removeTeacher}" process="@this"
-					update=":form:teachers, :form:msgs"
-					oncomplete="PF('deleteTeacherDialog').hide()" />
-				<p:commandButton value="Non" type="button"
-					styleClass="ui-button-secondary" icon="pi pi-times"
-					onclick="PF('deleteTeacherDialog').hide()" />
-			</p:confirmDialog>
-		</h:form>
+				<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
+					width="300"
+					message="Voulez-vous vraiment supprimer cet enseignant?"
+					header="Confirmation" severity="warn">
+					<p:commandButton value="Oui" icon="pi pi-check"
+						actionListener="#{teacherControl.removeTeacher}" process="@this"
+						update=":form:teachers, :form:msgs"
+						oncomplete="PF('deleteTeacherDialog').hide()" />
+					<p:commandButton value="Non" type="button"
+						styleClass="ui-button-secondary" icon="pi pi-times"
+						onclick="PF('deleteTeacherDialog').hide()" />
+				</p:confirmDialog>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>
