@@ -17,15 +17,26 @@
 		<h:form>
 			<div class="card">
 				<p:dataTable var="aa" value="#{aaControl.aas}">
+					<p:column headerText="Bloc" sortBy="#{aa.ue.bloc}"
+						filterBy="#{aa.ue.bloc}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.bloc}" />
+					</p:column>
+					
+					<p:column headerText="Intitulé UE" sortBy="#{aa.ue.entitled}"
+						filterBy="#{aa.ue.entitled}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.entitled}" />
+					</p:column>
+					
+					<p:column headerText="Intitulé AA" sortBy="#{aa.entitled}"
+						filterBy="#{aa.entitled}" filterMatchMode="contains">
+						<h:outputText value="#{aa.entitled}" />
+					</p:column>
+					
 					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
 						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.academicYear}" />
 					</p:column>
-
-					<p:column headerText="Intitulé cours" sortBy="#{aa.ue.entitled}"
-						filterBy="#{aa.ue.entitled}" filterMatchMode="contains">
-						<h:outputText value="#{aa.ue.entitled}" />
-					</p:column>
+					
 
 					<p:column style="width:3rem;text-align: center">
 						<h:commandLink action="#{aaControl.openDetail(aa)}">Detail</h:commandLink>

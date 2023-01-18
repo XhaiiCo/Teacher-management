@@ -1,20 +1,18 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class AA implements Serializable{
@@ -36,15 +34,12 @@ public class AA implements Serializable{
 
 	private int nbGroup ;
 
-	private int nbAssignements ;
-
 	private int nbStudent ;
 
 	private EFraction fraction ;
 	
-	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<Teacher> teachers = new ArrayList<>();
-
+	private Map<Teacher, Integer> teachers = new HashMap<>();
+	
 	private UE ue ;
 
 	public  AA() {}
@@ -64,42 +59,23 @@ public class AA implements Serializable{
 		this.ue = ue;
 	}
 
-	public void addTeacher(Teacher teacher) {
-		this.teachers.add(teacher) ;	
+	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement{
+		if(nbAssignements + computeNbAssignements() > nbGroup)
+			throw new OutOfBoundNbAssignement() ;
+
+		this.teachers.put(teacher, nbAssignements) ;	
+	}
+	
+	public void removeTeachers(Teacher teacher) {
+		this.teachers.remove(teacher) ;	
 	}
 
-	public List<Teacher> getTeachers() {
+	public Map<Teacher, Integer> getTeachers() {
 		return teachers;
 	}
 
-	public int getNbAssignements() {
-		return nbAssignements;
-	}
-
-	public void setNbAssignements(int nbAssignements) throws NumberNegatifException, OutOfBoundNbAssignement {
-		if(nbAssignements <0) 
-			throw new NumberNegatifException()  ;
-
-		if(nbAssignements < nbGroup){
-			throw new OutOfBoundNbAssignement() ;
-		}
-
-		this.nbAssignements = nbAssignements;
-	}
-	
-	public void addAssignements(int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{
-		if(nbAssignements <0) 
-			throw new NumberNegatifException()  ;
-
-		if(this.nbAssignements + nbAssignements < nbGroup){
-			throw new OutOfBoundNbAssignement() ;
-		}
-		
-		this.nbAssignements += nbAssignements ;
-	}
-
-	public void setTeachers(List<Teacher> teachers) {
-		this.teachers = teachers;
+	public int computeNbAssignements() {
+		return this.teachers.values().stream().reduce(0, (a,b) -> a + b) ;
 	}
 
 	public UE getUe() {

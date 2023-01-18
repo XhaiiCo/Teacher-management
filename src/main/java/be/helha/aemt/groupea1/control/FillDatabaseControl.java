@@ -16,6 +16,9 @@ import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.EFraction;
 import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.MissionDepartment;
+import be.helha.aemt.groupea1.entities.MissionSection;
+import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.UE;
@@ -85,7 +88,7 @@ public class FillDatabaseControl implements Serializable{
 				for(int k = 1 ; k <= 3 ; k++) {
 					UE ue = new UE("2022-2023", "1Bi", "Code"+ i+j+k, "UE"+i+j+k, 6, s) ;
 					for(int l = 1 ; l <= 2 ; l++) {
-						AA aa = new AA( "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 20, 20, 1, 20, EFraction.f480, ue ) ; 
+						AA aa = new AA( "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 20, 20, 2, 20, EFraction.f480, ue ) ; 
 						ue.addAA(aa) ;
 					}
 					s.addUe(ue);
@@ -143,17 +146,27 @@ public class FillDatabaseControl implements Serializable{
 
 	public void doAddTestMission() {
 
-		for(int i=1 ; i <= 10 ; i++)
+		for(int i=1 ; i <= 3 ; i++)
 		{
-			try {	
-				Mission m=new Mission("2022-2023", "t" + i , i * 100);
+			Department d = new Department("Departement" + i);
+			Section section = new Section(d, "Section" + i);
+			List<Teacher> teachers = new ArrayList<Teacher>();
+			
+			try {
+				Mission mt = new MissionTransversale("2022-2023", "mt" + i , i * 100, teachers);
+				missionEJB.add(mt);
 
-				missionEJB.add(m);
+				Mission md = new MissionDepartment("2022-2023", "md" + i , i * 100, teachers, d);
+				missionEJB.add(md);
+
+				Mission ms = new MissionSection("2022-2023", "ms" + i , i * 100, teachers, section);
+				missionEJB.add(ms);
 
 			}catch (InvalidHoursException e) {
 				e.printStackTrace();
 			}
 
 		}
+		
 	}
 }

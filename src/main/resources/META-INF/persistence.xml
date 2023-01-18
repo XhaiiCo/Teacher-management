@@ -13,6 +13,9 @@
 		<class>be.helha.aemt.groupea1.entities.Assignment</class>
 		<class>be.helha.aemt.groupea1.entities.Department</class>
 		<class>be.helha.aemt.groupea1.entities.Mission</class>
+		<class>be.helha.aemt.groupea1.entities.MissionDepartment</class>
+		<class>be.helha.aemt.groupea1.entities.MissionSection</class>
+		<class>be.helha.aemt.groupea1.entities.MissionTransversale</class>
 		<class>be.helha.aemt.groupea1.entities.Section</class>
 		<class>be.helha.aemt.groupea1.entities.UE</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
@@ -32,6 +35,9 @@
 		<class>be.helha.aemt.groupea1.entities.Assignment</class>
 		<class>be.helha.aemt.groupea1.entities.Department</class>
 		<class>be.helha.aemt.groupea1.entities.Mission</class>
+		<class>be.helha.aemt.groupea1.entities.MissionDepartment</class>
+		<class>be.helha.aemt.groupea1.entities.MissionSection</class>
+		<class>be.helha.aemt.groupea1.entities.MissionTransversale</class>
 		<class>be.helha.aemt.groupea1.entities.Section</class>
 		<class>be.helha.aemt.groupea1.entities.UE</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

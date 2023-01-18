@@ -1,8 +1,16 @@
 package be.helha.aemt.groupea1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.MissionDepartment;
+import be.helha.aemt.groupea1.entities.MissionSection;
+import be.helha.aemt.groupea1.entities.MissionTransversale;
+import be.helha.aemt.groupea1.entities.Section;
+import be.helha.aemt.groupea1.entities.Teacher;
+import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -10,7 +18,15 @@ import jakarta.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class MissionDAO extends AbstractDAO<Mission>{
+
+	@EJB
+	private DepartmentDAO departmentDAO;
+
+	@EJB
+	private SectionDAO sectionDAO;
 	
+	@EJB
+	private TeacherDAO teacherDAO;
 
 	public MissionDAO() {
 		super(Mission.class);
@@ -41,11 +57,54 @@ public class MissionDAO extends AbstractDAO<Mission>{
 	 */
 	@Override
 	public Mission add(Mission mission) {
-		if (mission==null) return null;
+		if(mission == null) return null ;
+
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		List<Teacher> ts = mission.getTeachers();
 		
-		if(find(mission)!=null) return null;
+		Teacher teacher;
+		for (int i=0; i<ts.size(); i++) {
+			teacher = teacherDAO.find(ts.get(i));
+			if(teacher != null)
+				teachers.add(teacher);
+		}
+		mission.setTeachers(teachers);
 		
-		return super.add(mission);
+		if (mission instanceof MissionDepartment) {
+			MissionDepartment missionDep = (MissionDepartment) mission;
+			Department department = departmentDAO.find(missionDep.getDepartment());
+			
+			if(department != null)
+				missionDep.setDepartment(department);
+			
+			if(find(missionDep) != null) return null ;
+			return super.add(missionDep);
+			
+		}
+		else if (mission instanceof MissionSection) {
+			MissionSection missionSec = (MissionSection) mission;
+			
+			Department department = departmentDAO.find(missionSec.getSection().getDepartment());
+			
+			if(department != null)
+				missionSec.getSection().setDepartment(department);
+			
+			Section section = sectionDAO.find(missionSec.getSection());
+						
+			if(section != null)
+				missionSec.setSection(section);
+			
+			if(find(missionSec) != null) return null ;
+			return super.add(missionSec);
+		}
+		else if (mission instanceof MissionTransversale) {
+			MissionTransversale missionTrans = (MissionTransversale) mission;
+			if(find(missionTrans) != null) return null ;
+			return super.add(missionTrans);
+		}
+
+		return null;
+	
 	}
 	
 	/**
@@ -55,7 +114,7 @@ public class MissionDAO extends AbstractDAO<Mission>{
 
 		//Find the old Mission
 		Mission oldMission = findById(mission.getId()) ;
-		if(mission == null) return null ;
+		if(mission == null) return null;
 		
 		if(oldMission.getEntitled().equals(mission.getEntitled()) && oldMission.getAcademicYear().equals(mission.getAcademicYear()))
 			return super.update(mission);
