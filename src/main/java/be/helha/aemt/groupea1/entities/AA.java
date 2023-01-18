@@ -39,9 +39,9 @@ public class AA implements Serializable{
 	private int nbStudent ;
 
 	private EFraction fraction ;
-	
+
 	private Map<Teacher, Integer> teachers = new HashMap<>();
-	
+
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private UE ue;
 	
@@ -67,9 +67,19 @@ public class AA implements Serializable{
 
 		this.teachers.put(teacher, nbAssignements) ;	
 	}
-	
+
 	public void removeTeachers(Teacher teacher) {
 		this.teachers.remove(teacher) ;	
+	}
+
+	public String assignStatus() {
+		if(this.computeNbAssignements() == this.nbGroup) 
+			return EAssignationStatus.Done.getText() ;
+
+		if(this.computeNbAssignements() > 0)
+			return EAssignationStatus.InProgress.getText() ;
+
+		return EAssignationStatus.Nothing.getText() ;
 	}
 
 	public Map<Teacher, Integer> getTeachers() {
