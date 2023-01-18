@@ -1,17 +1,27 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class Mission implements Serializable {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
+public abstract class Mission implements Serializable {
 
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
 	
@@ -21,14 +31,21 @@ public class Mission implements Serializable {
 	
 	private int hours ;
 
+	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	private List<Teacher> teachers;
+	
 	public Mission (){
 	}
 	
-	public Mission(String academicYear, String entitled, int hours) throws InvalidHoursException {
+	public Mission(String academicYear, String entitled, int hours, List<Teacher> teachers) throws InvalidHoursException {
 		this.academicYear = academicYear;
 		this.entitled = entitled;
 		setHours(hours);
+		this.teachers = teachers;
 	}
+	
+	public abstract String getType();
+	public abstract String getName();
 
 	public int getId() {
 		return id;
@@ -64,6 +81,14 @@ public class Mission implements Serializable {
 		else throw new InvalidHoursException();	
 	}
 
+	public List<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<Teacher> teachers) {
+		this.teachers = teachers;
+	}
+
 	@Override
 	public String toString() {
 		return "Mission [id=" + id + ", academicYear=" + academicYear + ", entitled=" + entitled + ", hours=" + hours
@@ -80,10 +105,10 @@ public class Mission implements Serializable {
 		return result;
 	}
 
-	@Override
 	/**
-	 * Equals on the id ,entitle and academicYear
+	 * Equals on the id, entitle and academicYear
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
