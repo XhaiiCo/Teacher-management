@@ -43,6 +43,8 @@ public class ExcelReaderControl implements Serializable {
     @EJB
     private UEEJB ueEJB; 
     
+    /*Function to upload the excel file that will be save in the workbook variable
+    and then the different import function will convert datas in each page in entities*/ 
     public void doImportDatasFromExcel() {
     	this.uploadFile();
     	
@@ -73,6 +75,8 @@ public class ExcelReaderControl implements Serializable {
         this.file = file;
     }
     
+    /*Function to check if a cell is empty, we do this because if we try
+    getStringCellValue() on an empty cell it will make an error*/
     public String checkBlankCell(Row row, int index) {
     	Cell cell = row.getCell(index);
     	if(cell == null) 
@@ -85,6 +89,10 @@ public class ExcelReaderControl implements Serializable {
     	}
     }
     
+    /* Get the sheet based on it's name so we don't need to use index and so have
+    the sheet don't have to be in the same place in the workbook, otherwise
+    we use index to get the row cell. After that we get the value in the cell
+    and we can create an instance of Department with this information*/
     public void importDepartments() {
     	
     	//gérer ça car si feuille existe pas renvoie null
