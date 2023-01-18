@@ -17,6 +17,17 @@
 		<h:form>
 			<div class="card">
 				<p:dataTable var="aa" value="#{aaControl.aas}" stripedRows="true">
+				
+					<p:column headerText="Departement" sortBy="#{aa.ue.section.department.name}"
+						filterBy="#{aa.ue.section.department.name}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.section.department.name}" />
+					</p:column>
+					
+					<p:column headerText="Section" sortBy="#{aa.ue.section.name}"
+						filterBy="#{aa.ue.section.name}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.section.name}" />
+					</p:column>
+					
 					<p:column headerText="Bloc" sortBy="#{aa.ue.bloc}"
 						filterBy="#{aa.ue.bloc}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.bloc}" />
