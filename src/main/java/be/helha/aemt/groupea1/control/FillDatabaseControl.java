@@ -53,6 +53,13 @@ public class FillDatabaseControl implements Serializable{
 	@EJB
 	private UEEJB ueEJB;
 
+	public void doAddAll() throws NumberNegatifException, HoursNotWantedException {
+		this.doAddDatas();
+		this.doAddMockUtilisateur();
+		this.doAddTestMission();
+		this.doAddTestTeacher();
+	}
+
 	//Ok
 	public void doAddTestTeacher() {
 
@@ -78,7 +85,7 @@ public class FillDatabaseControl implements Serializable{
 				for(int k = 1 ; k <= 3 ; k++) {
 					UE ue = new UE("2022-2023", "1Bi", "Code"+ i+j+k, "UE"+i+j+k, 6) ;
 					for(int l = 1 ; l <= 2 ; l++) {
-						AA aa = new AA("2022-2023", "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 40, 20, 20, 1, 20, EFraction.f480, ue, s, d) ; 
+						AA aa = new AA( "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 20, 20, 1, 20, EFraction.f480, ue, s) ; 
 						ue.addAA(aa) ;
 					}
 					s.addUe(ue);

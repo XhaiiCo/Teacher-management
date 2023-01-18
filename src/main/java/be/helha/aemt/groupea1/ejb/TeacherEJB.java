@@ -16,6 +16,10 @@ public class TeacherEJB {
 	public List<Teacher> findAll() {
 		return teacherDAO.findAll() ;
 	}
+	
+	public Teacher findByEmail(Teacher teacher) {
+		return teacherDAO.find(teacher) ;
+	}
 
 	public Teacher add(Teacher enseignant) {
 		return teacherDAO.add(enseignant) ;
