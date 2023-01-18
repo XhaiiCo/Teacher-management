@@ -6,12 +6,24 @@ public enum EFraction {
 	f750(750);
 	
 	private int fraction;
-
-	 EFraction(int fraction) {
+	
+	EFraction(int fraction) {
 		this.fraction = fraction;
 	}
 	 
-	 int getFraction(){
-		 return this.fraction;
-	 }
+	int getFraction(){
+		return this.fraction;
+	}
+	
+	public static EFraction findByNumber(int intValue) {
+		
+		for(EFraction fraction : EFraction.values()) {
+			
+			if(fraction.getFraction() == intValue)
+			{
+				return fraction;
+			}
+		}
+		return null;
+	}
 }

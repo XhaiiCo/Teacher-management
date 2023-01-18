@@ -44,6 +44,11 @@ public class UE implements Serializable {
 	
 	public UE() {}
 	
+	public UE(String academicYear, Section section) {
+		this.academicYear = academicYear;
+		this.section = section;
+	}
+	
 	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit, Section section) throws NumberNegatifException {
 		this.academicYear = academicYear;
