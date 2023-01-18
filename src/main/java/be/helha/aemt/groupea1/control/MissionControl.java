@@ -7,6 +7,7 @@ import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -62,7 +63,7 @@ public class MissionControl implements Serializable {
 	}
 	
 	public void openNewMission() {
-		this.newMission = new Mission() ;
+		this.newMission = new MissionTransversale() ; // TODO
 	}
 	
 	public void saveNewMission() {
@@ -73,7 +74,7 @@ public class MissionControl implements Serializable {
 			this.showInfoToast("Ajouté", "Mission ajoutée");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cette mission est peut être déjà présent");
+			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cette mission est peut être déjà présente");
 	}
 
 	public void removeMission() {
