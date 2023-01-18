@@ -35,6 +35,8 @@ public class UE implements Serializable {
 	private String entitled;
 	
 	private int credit;
+
+	private Section section;
 	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<AA> aas;
@@ -42,15 +44,24 @@ public class UE implements Serializable {
 	public UE() {}
 	
 	public UE(String academicYear, String bloc, String code, String entitled,
-			int credit) throws NumberNegatifException {
+			int credit, Section section) throws NumberNegatifException {
 		this.academicYear = academicYear;
 		this.bloc = bloc;
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
 		this.aas= new ArrayList<AA>();
+		this.section = section ;
 	}
 	
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
+
 	public void addAA(AA aa) {
 		this.aas.add(aa) ;
 	}

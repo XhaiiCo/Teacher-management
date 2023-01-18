@@ -47,12 +47,10 @@ public class AA implements Serializable{
 
 	private UE ue ;
 
-	private Section section ;
-
 	public  AA() {}
 
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
-			int nbGroup, int nbStudent, EFraction fraction, UE ue, Section section
+			int nbGroup, int nbStudent, EFraction fraction, UE ue
 			) throws NumberNegatifException, HoursNotWantedException {
 		super();
 		this.code = code;
@@ -64,7 +62,6 @@ public class AA implements Serializable{
 		this.setNbStudent(nbStudent);
 		this.fraction = fraction;
 		this.ue = ue;
-		this.section = section;
 	}
 
 	public void addTeacher(Teacher teacher) {
@@ -111,14 +108,6 @@ public class AA implements Serializable{
 
 	public void setUe(UE ue) {
 		this.ue = ue;
-	}
-
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
 	}
 
 	public int getId() {
