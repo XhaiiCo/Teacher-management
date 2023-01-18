@@ -58,8 +58,9 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 	@Override
 	public T delete(T t) {
 		if(t == null) return t;
+
+		T toRemove = em.merge(t);
 		
-		T toRemove = em.merge(t) ;
 		em.remove(toRemove);
 
 		return t;

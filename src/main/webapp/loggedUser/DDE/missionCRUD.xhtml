@@ -6,6 +6,19 @@
 <h:head>
 	<title>Project Name</title>
 	<meta name="author" content="The Author"></meta>
+	<style type="text/css">
+		.ui-orderlist .ui-orderlist-list {
+		    height: 105px;
+		}
+		
+		.field {
+			margin-top: 15px;
+		}
+		
+		.field > input {
+			margin-top: 4px;
+		}
+	</style>
 </h:head>
 <h:body>
 	<ui:include src="../navbar.xhtml" />
@@ -24,6 +37,7 @@
 							oncomplete="PF('addMissionDialog').show()"
 							styleClass="ui-button-success" style="margin-right: .5rem">
 							<p:resetInput target=":dialogs:add-mission-content" />
+							
 						</p:commandButton>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -79,6 +93,21 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
+					
+					<p:column headerText="Enseignants">
+				        <p:orderList value="#{mission.teachers}" controlsLocation="none" var="teacher"
+				        converter="teacherConverter" itemValue="#{teacher}" itemLabel="#{teacher}" />
+					</p:column>
+
+					<p:column headerText="Type" sortBy="#{ mission.getType() }"
+						filterBy="#{ mission.getType() }" filterMatchMode="contains">
+						<h:outputText value="#{ mission.getType() }" />
+					</p:column>
+					
+					<p:column headerText="Département ou Séction" sortBy="#{ mission.getName() }"
+						filterBy="#{ mission.getName() }" filterMatchMode="contains">
+						<h:outputText value="#{ mission.getName() }" />
+					</p:column>
 
 					<p:column style="width:6rem">
 						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
@@ -96,7 +125,7 @@
 
 		<h:form id="dialogs">
 			<p:dialog header="Ajouter une mission" showEffect="fade"
-				modal="true" widgetVar="addMissionDialog" responsive="true">
+				modal="true" widgetVar="addMissionDialog" responsive="true" id="add-mission-dialog">
 				
 				<p:outputPanel id="add-mission-content" class="ui-fluid">
 					<p:outputPanel rendered="#{not empty missionControl.newMission}">
@@ -115,13 +144,32 @@
 							<p:inputText id="hours" required="true"
 								value="#{missionControl.newMission.hours}" />
 						</div>
+						
+						<div class="field">
+							<p:outputLabel for="teachers">Enseignants</p:outputLabel>
+					        <p:selectManyMenu id="teachers" value="#{ missionControl.newMission.teachers }" var="t" 
+					        	filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced" converter="teacherConverter">
+					           <f:selectItems value="#{ teacherControl.getTeachers() }" var="teacher" itemLabel="#{teacher.lastName}"
+					           		itemValue="#{teacher}"/>
+					
+					           <p:column>
+					               <span class="flag flag-#{t.id}" style="width: 30px; height: 20px"/>
+					           </p:column>
+					
+					           <p:column>
+					               <h:outputText value="#{t.lastName} #{t.firstName}"/>
+					           </p:column>
+					        </p:selectManyMenu>
+					    </div>
+					    
 					</p:outputPanel>
 				</p:outputPanel>
 
 				<f:facet name="footer">
 					<p:commandButton value="Ajouter" icon="pi pi-check"
 						actionListener="#{missionControl.saveNewMission}"
-						onclick="PF('addMissionDialog').hide()" update=":form:msgs, :form:missions" />
+						onclick="PF('addMissionDialog').hide()" update=":form:msgs, :form:missions">
+					</p:commandButton>
 					<p:commandButton value="Annuler" icon="pi pi-times"
 						onclick="PF('addMissionDialog').hide()"
 						class="ui-button-secondary" type="button" />

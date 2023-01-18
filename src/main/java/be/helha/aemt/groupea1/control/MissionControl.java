@@ -1,13 +1,18 @@
-package be.helha.aemt.groupea1.control;
+ package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.MissionEJB;
+import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.MissionTransversale;
+import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -23,7 +28,7 @@ public class MissionControl implements Serializable {
 	private List<Mission> missions;
 	public List<Mission> getMissions() { return missions ;}
 	public void setMissions(List<Mission> missions) {this.missions=missions;}
-		
+
 	private Mission newMission ;//Used when create a new mission
 	public Mission getNewMission() {return newMission;}
 	public void setNewMission(Mission newMission) {this.newMission = newMission;}
@@ -67,8 +72,8 @@ public class MissionControl implements Serializable {
 	}
 	
 	public void saveNewMission() {
-		Mission missionAdd = this.missionEJB.add(newMission) ;
-
+		Mission missionAdd = this.missionEJB.add(newMission);
+		
 		if(missionAdd != null) {
 			this.missions.add(missionAdd) ;
 			this.showInfoToast("Ajouté", "Mission ajoutée");
