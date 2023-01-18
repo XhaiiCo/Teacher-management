@@ -162,6 +162,7 @@ public class ExcelReaderControl implements Serializable {
     		int creditsUE = (int) row.getCell(3).getNumericCellValue();
     		String entitledUE = row.getCell(4).getStringCellValue();
     		
+    		/*
     		try 
     		{
 				ueEJB.add(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE));
@@ -171,6 +172,7 @@ public class ExcelReaderControl implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
 		}
     }
 }

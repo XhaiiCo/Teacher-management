@@ -74,6 +74,10 @@ public class AaControl implements Serializable {
 		}
 	}
 
+	public int findNbGroup(Teacher teacher) {
+		return this.selected.getTeachers().get(teacher) ;
+	}
+
 	public String openDetail(AA aa) {
 		this.selected = aa ;
 		this.selectedNbAssignements =  1 ;

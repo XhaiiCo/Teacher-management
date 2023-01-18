@@ -31,17 +31,21 @@
 
 				<p:panel header="Ajouter un enseignant" style="margin-bottom:10px;">
 
-					<p:outputLabel for="teacherSelect" value="Enseigant" />
-					<p:selectOneMenu id="teacherSelect"
-						value="#{aaControl.selectedTeacherEmail}">
-						<f:selectItems value="#{aaControl.teachersMap}" />
-					</p:selectOneMenu>
+					<div class="field">
+						<p:outputLabel for="teacherSelect" value="Enseigant" />
+						<p:selectOneMenu id="teacherSelect"
+							value="#{aaControl.selectedTeacherEmail}">
+							<f:selectItems value="#{aaControl.teachersMap}" />
+						</p:selectOneMenu>
+					</div>
 
-					<span class="ui-floatllabel"> <p:inputText
-							id="nbAssignementsInput"
-							value="#{aaControl.selectedNbAssignements}" /> <p:outputLabel
-							for="@previous" value="Nombre de groupe" />
-					</span>
+					<div class="field">
+						<span class="ui-floatllabel"> <p:outputLabel for="@next"
+								value="Nombre de groupe" /> <p:inputText
+								id="nbAssignementsInput"
+								value="#{aaControl.selectedNbAssignements}" />
+						</span>
+					</div>
 
 					<p:divider />
 
@@ -68,6 +72,11 @@
 					<p:column headerText="Email">
 						<h:outputText value="#{teacher.email}" />
 					</p:column>
+
+					<p:column headerText="Nb groupes">
+						<h:outputText value="#{aaControl.findNbGroup(teacher)}" />
+					</p:column>
+
 					<p:column>
 						<p:commandButton class="ui-button-warning rounded-button"
 							icon="pi pi-trash" process="@this"
