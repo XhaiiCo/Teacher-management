@@ -8,11 +8,13 @@ import java.util.Objects;
 import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class AA implements Serializable{
@@ -40,14 +42,14 @@ public class AA implements Serializable{
 
 	private Map<Teacher, Integer> teachers = new HashMap<>();
 
-	private UE ue ;
-
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private UE ue;
+	
 	public  AA() {}
 
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
 			int nbGroup, int nbStudent, EFraction fraction, UE ue
 			) throws NumberNegatifException, HoursNotWantedException {
-		super();
 		this.code = code;
 		this.entitled = entitled;
 		this.credit = credit;

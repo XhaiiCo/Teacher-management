@@ -9,6 +9,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
@@ -45,6 +47,9 @@ public class ExcelReaderControl implements Serializable {
     
     @EJB
     private UEEJB ueEJB; 
+    
+    @EJB
+    private AAEJB aaEJB;
     
     /*Function to upload the excel file that will be save in the workbook variable
     and then the different import function will convert datas in each page in entities*/ 
@@ -101,6 +106,8 @@ public class ExcelReaderControl implements Serializable {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Départements");
     	
+    	if(sheet == null) return;
+    	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
     		Row row = sheet.getRow(i);
@@ -114,6 +121,8 @@ public class ExcelReaderControl implements Serializable {
     public void importSections() {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Sections");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -130,6 +139,8 @@ public class ExcelReaderControl implements Serializable {
     public void importTeachers() {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Enseignants");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -154,6 +165,8 @@ public class ExcelReaderControl implements Serializable {
     public void importUEs() {
     	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("UEs");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
