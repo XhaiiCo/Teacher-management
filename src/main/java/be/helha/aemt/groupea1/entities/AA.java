@@ -1,19 +1,18 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
-import jakarta.persistence.CascadeType;
+import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class AA implements Serializable{
@@ -22,16 +21,12 @@ public class AA implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
 
-	private String academicYear ;
-
 	@Column(unique=true)
 	private String code ;
 
 	private String entitled ;
 
 	private int credit ;
-
-	private int hours ;
 
 	private int hoursQ1 ;
 
@@ -42,87 +37,56 @@ public class AA implements Serializable{
 	private int nbStudent ;
 
 	private EFraction fraction ;
-
-	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<Teacher> teachers ;
+	
+	//@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
+	private Map<Teacher, Integer> teachers = new HashMap<>();
+	
 
 	private UE ue ;
 
-	private Section section ;
-
-	private Department department ;
-
 	public  AA() {}
 
-	public AA(String academicYear, String code, String entitled, int credit, int hours, int hoursQ1, int hoursQ2,
-			int nbGroup, int nbStudent, EFraction fraction, UE ue, Section section,
-			Department department) throws NumberNegatifException, HoursNotWantedException {
+	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
+			int nbGroup, int nbStudent, EFraction fraction, UE ue
+			) throws NumberNegatifException, HoursNotWantedException {
 		super();
-		this.academicYear = academicYear;
 		this.code = code;
 		this.entitled = entitled;
 		this.credit = credit;
-		this.setHours(hours);
 		this.setHoursQ1(hoursQ1);
 		this.setHoursQ2(hoursQ2);
 		this.nbGroup = nbGroup;
 		this.setNbStudent(nbStudent);
 		this.fraction = fraction;
-		this.teachers = new ArrayList<>();
 		this.ue = ue;
-		this.section = section;
-		this.department = department;
 	}
 
+	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement{
+		if(nbAssignements + computeNbAssignements() > nbGroup)
+			throw new OutOfBoundNbAssignement() ;
 
+		this.teachers.put(teacher, nbAssignements) ;	
+	}
+	
+	public void removeTeachers(Teacher teacher) {
+		this.teachers.remove(teacher) ;	
+	}
 
-	public List<Teacher> getTeachers() {
+	public Map<Teacher, Integer> getTeachers() {
 		return teachers;
 	}
 
-
-
-	public void setTeachers(List<Teacher> teachers) {
-		this.teachers = teachers;
+	public int computeNbAssignements() {
+		return this.teachers.values().stream().reduce(0, (a,b) -> a + b) ;
 	}
-
-
 
 	public UE getUe() {
 		return ue;
 	}
 
-
-
 	public void setUe(UE ue) {
 		this.ue = ue;
 	}
-
-
-
-	public Section getSection() {
-		return section;
-	}
-
-
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
-
-
-	public Department getDepartment() {
-		return department;
-	}
-
-
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-
 
 	public int getId() {
 		return id;
@@ -130,14 +94,6 @@ public class AA implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getAcademicYear() {
-		return academicYear;
-	}
-
-	public void setAcademicYear(String academicYear) {
-		this.academicYear = academicYear;
 	}
 
 	public String getCode() {
@@ -164,20 +120,6 @@ public class AA implements Serializable{
 		if( credit >= 0 ) this.credit = credit;
 
 		else throw new NumberNegatifException();
-	}
-
-	public int getHours() {
-		return hours;
-	}
-
-	public void setHours(int hours) throws NumberNegatifException,HoursNotWantedException {
-		if( hours >= 0 ) 
-		{
-			this.hours = hours;
-		}
-		else {
-			throw new NumberNegatifException();
-		}
 	}
 
 	public int getHoursQ1() {
@@ -232,8 +174,8 @@ public class AA implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AA [id=" + id + ", academicYear=" + academicYear + ", code=" + code + ", entitled=" + entitled
-				+ ", credit=" + credit + ", hours=" + hours + ", hoursQ1=" + hoursQ1 + ", hoursQ2=" + hoursQ2
+		return "AA [id=" + id +  ", code=" + code + ", entitled=" + entitled
+				+ ", credit=" + credit + ", hoursQ1=" + hoursQ1 + ", hoursQ2=" + hoursQ2
 				+ ", nbGroup=" + nbGroup + ", nbStudent=" + nbStudent + ", fraction=" + fraction + "]";
 	}
 
@@ -255,9 +197,4 @@ public class AA implements Serializable{
 		AA other = (AA) obj;
 		return Objects.equals(code, other.code) && id == other.id;
 	}
-
-
-
-
-
 }

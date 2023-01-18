@@ -111,7 +111,7 @@ public class Teacher implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Teacher other = (Teacher) obj;
-		return Objects.equals(email, other.email) && Objects.equals(id, other.id);
+		return Objects.equals(email, other.email);
 	}
 
 	@Override

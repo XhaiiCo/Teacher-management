@@ -87,6 +87,12 @@ public class Section implements Serializable {
 	public void setMissions(List<Mission> missions) {
 		this.missions = missions;
 	}
+
+	@Override
+	public String toString() {
+		return "Section [id=" + id + ", department=" + department + ", name=" + name + ", missions=" + missions
+				+ ", ues=" + ues + "]";
+	}
 	
 	
 	

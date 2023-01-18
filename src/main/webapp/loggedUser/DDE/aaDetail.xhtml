@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Attribution</title>
+	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../style.css" />
+</h:head>
+<h:body>
+	<ui:include src="../navbar.xhtml" />
+
+	<div class="card" style="padding: 60px;">
+		<h:form id="infos">
+			<h1>#{aaControl.selected.entitled}</h1>
+			<p>#{aaControl.selected.nbGroup} groupes</p>
+			<p:outputLabel id="nbAssignements"
+				value="#{aaControl.selected.computeNbAssignements()}
+				attributions" />
+		</h:form>
+
+		<div class="card">
+			<h2>Enseignant(s) attribué(s) pour cette ue</h2>
+
+			<h3>Ajouter un enseignant</h3>
+			<h:form id="formAddTeacher">
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:panel header="Ajouter un enseignant" style="margin-bottom:10px;">
+
+					<p:outputLabel for="teacherSelect" value="Enseigant" />
+					<p:selectOneMenu id="teacherSelect"
+						value="#{aaControl.selectedTeacherEmail}">
+						<f:selectItems value="#{aaControl.teachersMap}" />
+					</p:selectOneMenu>
+
+					<span class="ui-floatllabel"> <p:inputText
+							id="nbAssignementsInput"
+							value="#{aaControl.selectedNbAssignements}" /> <p:outputLabel
+							for="@previous" value="Nombre de groupe" />
+					</span>
+
+					<p:divider />
+
+					<div class="field">
+						<p:commandButton value="Ajouter"
+							update=":form:teacherTable, :formAddTeacher:msgs, :infos:nbAssignements"
+							action="#{aaControl.addTeacher()}" />
+					</div>
+				</p:panel>
+			</h:form>
+			<br />
+
+			<h:form id="form">
+				<p:dataTable var="teacher" id="teacherTable"
+					value="#{aaControl.getSelectedTeachers()}">
+					<p:column headerText="Nom">
+						<h:outputText value="#{teacher.lastName}" />
+					</p:column>
+
+					<p:column headerText="Prénom">
+						<h:outputText value="#{teacher.firstName}" />
+					</p:column>
+
+					<p:column headerText="Email">
+						<h:outputText value="#{teacher.email}" />
+					</p:column>
+					<p:column>
+						<p:commandButton class="ui-button-warning rounded-button"
+							icon="pi pi-trash" process="@this"
+							oncomplete="PF('deleteTeacherDialog').show()"
+							action="#{aaControl.setSelectedTeacher(teacher)}">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</div>
+
+	<h:form id="dialogs">
+		<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
+			width="300" message="Désattribuer l'enseignant" header="Confirm"
+			severity="warn">
+			<p:commandButton value="Oui" icon="pi pi-check"
+				actionListener="#{aaControl.unassignTeacher()}" process="@this"
+				update=":form:teacherTable, :formAddTeacher:msgs, :infos:nbAssignements"
+				oncomplete="PF('deleteTeacherDialog').hide()" />
+			<p:commandButton value="Non" type="button"
+				styleClass="ui-button-secondary" icon="pi pi-times"
+				onclick="PF('deleteTeacherDialog').hide()" />
+		</p:confirmDialog>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Attribution</title>
+	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../style.css" />
+</h:head>
+<h:body>
+	<ui:include src="../navbar.xhtml" />
+
+	<div class="card" style="padding: 60px;">
+		<h1>Attribution</h1>
+
+		<h:form>
+			<div class="card">
+				<p:dataTable var="aa" value="#{aaControl.aas}">
+					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
+						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.academicYear}" />
+					</p:column>
+
+					<p:column headerText="Intitulé cours" sortBy="#{aa.ue.entitled}"
+						filterBy="#{aa.ue.entitled}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.entitled}" />
+					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<h:commandLink action="#{aaControl.openDetail(aa)}">Detail</h:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+	</div>
+</h:body>
+</html>
