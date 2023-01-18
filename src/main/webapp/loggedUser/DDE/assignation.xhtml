@@ -17,11 +17,13 @@
 		<h:form>
 			<div class="card">
 				<p:dataTable var="aa" value="#{aaControl.aas}">
-					<p:column headerText="Année">
+					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
+						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.academicYear}" />
 					</p:column>
 
-					<p:column headerText="Intitulé cours">
+					<p:column headerText="Intitulé cours" sortBy="#{aa.ue.entitled}"
+						filterBy="#{aa.ue.entitled}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.entitled}" />
 					</p:column>
 

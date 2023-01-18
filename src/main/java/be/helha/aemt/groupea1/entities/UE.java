@@ -13,31 +13,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-
+@Table(name = "ue", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"code", "academicyear"})
+})
 public class UE implements Serializable {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id  ;
+	private int id ;
+	
+	private String academicYear;
 
-	private String academicYear ;
-
-	private String bloc ;
-
-	@Column(unique=true)
-	private String code ;
-
-	private String entitled ;
-
-	private int credit ;
-
+	private String bloc;
+	
+	private String code;
+	
+	private String entitled;
+	
+	private int credit;
+	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<AA> aas ;
-
+	private List<AA> aas;
+	
 	public UE() {}
-
+	
 	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit) throws NumberNegatifException {
 		this.academicYear = academicYear;
