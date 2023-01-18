@@ -15,17 +15,34 @@
 		<h:form id="infos">
 			<h1>#{aaControl.selected.ue.code}
 				#{aaControl.selected.ue.entitled}</h1>
+
 			<h2>#{aaControl.selected.code} #{aaControl.selected.entitled}</h2>
+
+			<p>#{aaControl.selected.credit} credits</p>
+
 			<p>#{aaControl.selected.nbGroup} groupes</p>
+
 			<p:outputLabel id="nbAssignements"
 				value="#{aaControl.selected.computeNbAssignements()}
 				attributions" />
+
+			<p>#{aaControl.selected.nbStudent} étudiants</p>
+
+			<p>
+				#{aaControl.selected.hoursQ1} heures <b>Q1</b>
+			</p>
+
+			<p>
+				#{aaControl.selected.hoursQ2} heures <b>Q2</b>
+			</p>
+
+
+			<p>#{aaControl.selected.computeNbHours()} heures total</p>
 		</h:form>
 
 		<div class="card">
 			<h2>Enseignant(s) attribué(s)</h2>
 
-			<h3>Ajouter un enseignant</h3>
 			<h:form id="formAddTeacher">
 				<p:growl id="msgs" showDetail="true" />
 
@@ -41,7 +58,7 @@
 
 					<div class="field">
 						<span class="ui-floatllabel"> <p:outputLabel for="@next"
-								value="Nombre de groupe" /> <p:inputText
+								value="Nombre de groupe(s)" /> <p:inputText
 								id="nbAssignementsInput"
 								value="#{aaControl.selectedNbAssignements}" />
 						</span>

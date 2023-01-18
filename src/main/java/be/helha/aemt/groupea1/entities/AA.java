@@ -1,5 +1,6 @@
 package be.helha.aemt.groupea1.entities;
 
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,10 +10,12 @@ import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -42,12 +45,14 @@ public class AA implements Serializable{
 	private int nbStudent ;
 
 	private EFraction fraction ;
-	
+
+	@ElementCollection
+	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.MERGE})
 	private Map<Teacher, Integer> teachers = new HashMap<>();
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private UE ue;
-	
+
 	public  AA() {}
 
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
@@ -64,15 +69,25 @@ public class AA implements Serializable{
 		this.ue = ue;
 	}
 
-	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement{
+	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{
+		if(nbAssignements <= 0)
+			throw new NumberNegatifException() ;
+
 		if(nbAssignements + computeNbAssignements() > nbGroup)
 			throw new OutOfBoundNbAssignement() ;
 
-		this.teachers.put(teacher, nbAssignements) ;	
+		if(this.teachers.get(teacher) != null)
+			this.teachers.put(teacher, this.teachers.get(teacher)+ nbAssignements) ;
+		else
+			this.teachers.put(teacher, nbAssignements) ;	
 	}
 
 	public void removeTeachers(Teacher teacher) {
 		this.teachers.remove(teacher) ;	
+	}
+	
+	public int computeNbHours() {
+		return this.hoursQ1 + this.hoursQ2 ;
 	}
 
 	public String assignStatus() {
