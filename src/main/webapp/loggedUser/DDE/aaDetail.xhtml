@@ -12,36 +12,51 @@
 	<ui:include src="../navbar.xhtml" />
 
 	<div class="card" style="padding: 60px;">
-		<h:form>
-			<h1>#{aaControl.selected.entitled}</h1>
-			<h:form>
+		<h1>#{aaControl.selected.entitled}</h1>
 
-				<div class="card">
-					<h2>Enseignant(s) attribué(s) pour cette ue</h2>
+		<div class="card">
+			<h2>Enseignant(s) attribué(s) pour cette ue</h2>
 
-					<h3>Ajouter un enseignant</h3>
-					<div class="card">
+			<h3>Ajouter un enseignant</h3>
+			<h:form id="formAddTeacher">
+				<p:growl id="msgs" showDetail="true" />
 
+				<p:panel header="Ajouter un enseignant" style="margin-bottom:10px;">
 
+					<p:outputLabel for="teacherSelect" value="Enseigant" />
+					<p:selectOneMenu id="teacherSelect" style="width:150px"
+						value="#{aaControl.selectedTeacherEmail}">
+						<f:selectItems value="#{aaControl.teachersMap}" />
+					</p:selectOneMenu>
+
+					<p:divider />
+
+					<div class="field">
+						<p:commandButton value="Ajouter"
+							update=":form:teacherTable, :formAddTeacher:msgs"
+							action="#{aaControl.addTeacher()}" />
 					</div>
-
-					<p:dataTable var="teacher"
-						value="#{aaControl.getSelectedTeachers()}">
-						<p:column headerText="Nom">
-							<h:outputText value="#{teacher.lastName}" />
-						</p:column>
-
-						<p:column headerText="Prénom">
-							<h:outputText value="#{teacher.firstName}" />
-						</p:column>
-
-						<p:column headerText="Email">
-							<h:outputText value="#{teacher.email}" />
-						</p:column>
-					</p:dataTable>
-				</div>
+				</p:panel>
 			</h:form>
-		</h:form>
+			<br />
+
+			<h:form id="form">
+				<p:dataTable var="teacher" id="teacherTable"
+					value="#{aaControl.getSelectedTeachers()}">
+					<p:column headerText="Nom">
+						<h:outputText value="#{teacher.lastName}" />
+					</p:column>
+
+					<p:column headerText="Prénom">
+						<h:outputText value="#{teacher.firstName}" />
+					</p:column>
+
+					<p:column headerText="Email">
+						<h:outputText value="#{teacher.email}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>

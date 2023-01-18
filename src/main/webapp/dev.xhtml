@@ -10,6 +10,9 @@
 </h:head>
 <h:body>
 	<h:form>
+		<h:commandButton action="#{ fillDatabaseControl.doAddAll() }"
+			value="Add all" />
+
 		<h:commandButton action="#{ fillDatabaseControl.doAddTestTeacher() }"
 			value="Ajouter prof" />
 
