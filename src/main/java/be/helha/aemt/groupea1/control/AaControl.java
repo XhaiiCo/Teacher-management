@@ -117,10 +117,14 @@ public class AaControl implements Serializable {
 			this.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
 	}
-	
+
 	public void unassignTeacher() {
 		this.selected.removeTeachers(this.selectedTeacher) ;
 		this.aaEJB.update(this.selected) ;
 		this.showInfoToast("Désattribué", "Enseignant désattribué");
+	}
+
+	public List<AA> findAAByTeacher(){
+		return this.aaEJB.findByTeacher(this.selectedTeacher) ;
 	}
 }

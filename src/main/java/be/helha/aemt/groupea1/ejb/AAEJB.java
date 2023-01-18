@@ -4,6 +4,7 @@ import java.util.List;
 
 import be.helha.aemt.groupea1.dao.AADAO;
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Teacher;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -28,5 +29,9 @@ public class AAEJB {
 
 	public AA update(AA aa) {
 		return aaDAO.update(aa);
+	}
+	
+	public List<AA> findByTeacher(Teacher teacher){
+		return this.aaDAO.findByTeacher(teacher) ; 
 	}
 }

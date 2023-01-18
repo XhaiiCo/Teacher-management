@@ -11,13 +11,36 @@
 <h:body>
 	<ui:include src="../navbar.xhtml" />
 	<div style="padding: 60px;">
-		<div class="card">
-			<h1>#{ teacherControl.selectedTeacher.lastName} #{
-				teacherControl.selectedTeacher.firstName}</h1>
-			<h2>#{ teacherControl.selectedTeacher.email}</h2>
-			<p>remarque: #{ teacherControl.selectedTeacher.note}</p>
+		<div>
+			<div class="card">
+				<h1>#{ teacherControl.selectedTeacher.lastName} #{
+					teacherControl.selectedTeacher.firstName}</h1>
+				<h2>#{ teacherControl.selectedTeacher.email}</h2>
+				<p>remarque: #{ teacherControl.selectedTeacher.formatNote()}</p>
+			</div>
 		</div>
 
+		<h:form>
+			<div class="card">
+				<p:dataTable var="aa" value="#{aaControl.findAAByTeacher()}">
+					<p:column headerText="Code ue">
+						<h:outputText value="#{aa.ue.code}" />
+					</p:column>
+
+					<p:column headerText="Intitulé UE">
+						<h:outputText value="#{aa.ue.entitled}" />
+					</p:column>
+
+					<p:column headerText="code AA">
+						<h:outputText value="#{aa.code}" />
+					</p:column>
+
+					<p:column headerText="Intitulé AA">
+						<h:outputText value="#{aa.entitled}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
 	</div>
 </h:body>
 </html>

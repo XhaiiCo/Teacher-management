@@ -28,11 +28,6 @@ public class Teacher implements Serializable {
 	@Column(unique = true)
 	private String email;
 
-	/*SAUTED
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<Assignment> assignments ;
-	 */
-
 	public Teacher() {}
 
 	public Teacher(String lastName, String firstName, String email, String note) throws InvalidEmailException{
