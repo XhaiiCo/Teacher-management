@@ -28,7 +28,10 @@ import jakarta.servlet.http.Part;
 @SessionScoped
 public class ExcelReaderControl implements Serializable {
 
+	//Item received from the multipart/form-data in the xhtml
     private Part file;
+    
+    //Variable that will contain the imported Excel file
     private Workbook workbook;
     
     @EJB
@@ -162,17 +165,21 @@ public class ExcelReaderControl implements Serializable {
     		int creditsUE = (int) row.getCell(3).getNumericCellValue();
     		String entitledUE = row.getCell(4).getStringCellValue();
     		
-    		/*
+    		String departmentName = row.getCell(5).getStringCellValue();
+    		String sectionName = row.getCell(6).getStringCellValue();
+    		
+    		Department sectionDepartment = new Department(departmentName);
+    		
     		try 
     		{
-				ueEJB.add(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE));
+				ueEJB.add(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE, new Section(sectionDepartment, sectionName)));
 			} 
     		catch (NumberNegatifException e) 
     		{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
+		
 		}
     }
 }

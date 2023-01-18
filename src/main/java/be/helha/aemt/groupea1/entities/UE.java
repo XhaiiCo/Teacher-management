@@ -7,18 +7,18 @@ import java.util.Objects;
 
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "ue", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"code", "academicyear"})
+        @UniqueConstraint(columnNames = {"code", "academicyear", "section_id"})
 })
 public class UE implements Serializable {
 	
@@ -36,6 +36,7 @@ public class UE implements Serializable {
 	
 	private int credit;
 
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Section section;
 	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
