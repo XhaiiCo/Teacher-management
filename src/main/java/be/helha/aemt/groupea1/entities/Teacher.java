@@ -35,7 +35,7 @@ public class Teacher implements Serializable {
 
 	public Teacher() {}
 
-	public Teacher(String lastName, String firstName, String email, String note)  throws InvalidEmailException{
+	public Teacher(String lastName, String firstName, String email, String note) throws InvalidEmailException{
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.setEmail(email);
