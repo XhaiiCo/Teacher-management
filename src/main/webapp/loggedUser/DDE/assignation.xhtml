@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Attribution</title>
+	<title>Liste des aas</title>
 	<meta http-equiv=" Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="../../style.css" />
 </h:head>
@@ -12,7 +12,7 @@
 	<ui:include src="../navbar.xhtml" />
 
 	<div class="card" style="padding: 60px;">
-		<h1>Attribution</h1>
+		<h1>Liste des aas</h1>
 
 		<h:form>
 			<div class="card">
@@ -21,22 +21,26 @@
 						filterBy="#{aa.ue.bloc}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.bloc}" />
 					</p:column>
-					
+
 					<p:column headerText="Intitulé UE" sortBy="#{aa.ue.entitled}"
 						filterBy="#{aa.ue.entitled}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.entitled}" />
 					</p:column>
-					
+
 					<p:column headerText="Intitulé AA" sortBy="#{aa.entitled}"
 						filterBy="#{aa.entitled}" filterMatchMode="contains">
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
-					
+
 					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
 						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.academicYear}" />
 					</p:column>
-					
+
+					<p:column headerText="Statut de l'attribution">
+						<h:outputText value="#{aa.assignStatus()}" />
+					</p:column>
+
 
 					<p:column style="width:3rem;text-align: center">
 						<h:commandLink action="#{aaControl.openDetail(aa)}">Detail</h:commandLink>
