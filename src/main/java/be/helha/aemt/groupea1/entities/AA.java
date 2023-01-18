@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "ue", uniqueConstraints = {
+@Table(name = "aa", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"code", "ue_id"})
 })
 public class AA implements Serializable{
@@ -69,7 +69,10 @@ public class AA implements Serializable{
 		this.ue = ue;
 	}
 
-	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement{
+	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{
+		if(nbAssignements <= 0)
+			throw new NumberNegatifException() ;
+
 		if(nbAssignements + computeNbAssignements() > nbGroup)
 			throw new OutOfBoundNbAssignement() ;
 
@@ -81,6 +84,10 @@ public class AA implements Serializable{
 
 	public void removeTeachers(Teacher teacher) {
 		this.teachers.remove(teacher) ;	
+	}
+	
+	public int computeNbHours() {
+		return this.hoursQ1 + this.hoursQ2 ;
 	}
 
 	public String assignStatus() {
