@@ -11,7 +11,7 @@ public enum EFraction {
 		this.fraction = fraction;
 	}
 	 
-	int getFraction(){
+	private int getFraction(){
 		return this.fraction;
 	}
 	

@@ -54,7 +54,7 @@ public class AA implements Serializable{
 	private UE ue;
 
 	public  AA() {}
-
+	
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
 			int nbGroup, int nbStudent, EFraction fraction, UE ue
 			) throws NumberNegatifException, HoursNotWantedException {
@@ -68,7 +68,7 @@ public class AA implements Serializable{
 		this.fraction = fraction;
 		this.ue = ue;
 	}
-
+	
 	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{
 		if(nbAssignements <= 0)
 			throw new NumberNegatifException() ;
