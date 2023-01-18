@@ -1,6 +1,7 @@
 package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -43,29 +45,40 @@ public class AaControl implements Serializable {
 	private AA selected ;
 	public AA getSelected() {return selected ;	}
 
+	private Teacher selectedTeacher ;
+	public Teacher getSelectedTeacher() {return selectedTeacher;}
+	public void setSelectedTeacher(Teacher selectedTeacher) {this.selectedTeacher = selectedTeacher;	}
+
 	private String selectedTeacherEmail;
 	public String getSelectedTeacherEmail() {return selectedTeacherEmail ;	}
 	public void setSelectedTeacherEmail(String value) {this.selectedTeacherEmail = value;}
 
-	public List<Teacher> getSelectedTeachers(){return selected.getTeachers() ;}
+	private int selectedNbAssignements = 1 ;
+	public int getSelectedNbAssignements() {return selectedNbAssignements ;	}
+	public void setSelectedNbAssignements(int value) {this.selectedNbAssignements = value;}
+
+	public List<Teacher> getSelectedTeachers(){
+		List<Teacher> result = new ArrayList<>() ;
+		for(Teacher t : this.selected.getTeachers().keySet()) {
+			result.add(t) ;
+		}
+		return result ;
+	}
 
 	@PostConstruct
 	public void init() {
 		this.aas = aaEJB.findAll() ;
 		this.teachers = teacherEJB.findAll() ;
 		for(Teacher teacher : this.teachers) {
-			this.teachersMap.put(teacher.getEmail(), teacher.getEmail()) ;	
+			this.teachersMap.put(teacher.getLastName() + " " + teacher.getFirstName() + " (" +  teacher.getEmail() + ")", teacher.getEmail()) ;	
 		}
 	}
 
 	public String openDetail(AA aa) {
 		this.selected = aa ;
-		try {
-			this.selected.addTeacher(new Teacher("Leclercq", "David", "david@helha.be", null));
-		} catch (InvalidEmailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.selectedNbAssignements =  1 ;
+		if(!this.teachers.isEmpty())
+			this.selectedTeacherEmail = this.teachers.get(0).getEmail() ;
 
 		return "/DDE/aaDetail" ;
 	}
@@ -80,15 +93,30 @@ public class AaControl implements Serializable {
 	public void addTeacher() {
 		try {
 			Teacher teacherToAdd = this.teacherEJB.findByEmail(new Teacher("", "", selectedTeacherEmail, null)) ;
+
 			if(teacherToAdd == null) {
 				this.showErrorToast("Erreur", "Erreur lors de l'ajout");
 				return ;
 			}
-			this.selected.addTeacher(teacherToAdd);
+
+			try {
+				this.selected.addTeacher(teacherToAdd, selectedNbAssignements);
+			} catch (OutOfBoundNbAssignement e) {
+				this.showErrorToast("Erreur", e.getMessage());
+				return ;
+			}
+
+			this.selected = aaEJB.update(this.selected) ;
 			this.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
 		} catch (InvalidEmailException e) {
 			e.printStackTrace();
 			this.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
+	}
+	
+	public void unassignTeacher() {
+		this.selected.removeTeachers(this.selectedTeacher) ;
+		this.aaEJB.update(this.selected) ;
+		this.showInfoToast("Désattribué", "Enseignant désattribué");
 	}
 }

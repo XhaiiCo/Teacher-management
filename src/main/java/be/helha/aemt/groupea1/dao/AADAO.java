@@ -48,7 +48,9 @@ public class AADAO extends AbstractDAO<AA>{
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the code
 	 */
+	/*
 	public AA update(AA aa) {
+	}
 
 		//Find the old AA
 		AA oldAA = findById(aa.getId()) ;
@@ -62,5 +64,6 @@ public class AADAO extends AbstractDAO<AA>{
 		
 		return null ;
 	}
+	*/
 	
 }
