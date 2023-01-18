@@ -9,21 +9,24 @@ import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "ue", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"code", "ue_id"})
+})
 public class AA implements Serializable{
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
 
-	@Column(unique=true)
 	private String code ;
 
 	private String entitled ;
@@ -39,7 +42,7 @@ public class AA implements Serializable{
 	private int nbStudent ;
 
 	private EFraction fraction ;
-
+	
 	private Map<Teacher, Integer> teachers = new HashMap<>();
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
