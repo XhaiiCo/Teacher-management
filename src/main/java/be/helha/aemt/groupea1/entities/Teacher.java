@@ -42,6 +42,9 @@ public class Teacher implements Serializable {
 		this.note = note;
 	}
 
+	public String formatNote() {
+		return this.note == null || this.note.equals("") ? "Aucune note" : this.note ;
+	}
 
 	public Integer getId() {
 		return id;

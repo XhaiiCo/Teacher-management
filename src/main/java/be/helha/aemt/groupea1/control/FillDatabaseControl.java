@@ -68,7 +68,7 @@ public class FillDatabaseControl implements Serializable{
 
 		for(int i = 1 ; i <= 20 ; i++) {
 			try {
-				Teacher t = new Teacher("N" + i, "P" + i, "n" + i + "p@helha.be", null) ;
+				Teacher t = new Teacher("N" + i, "P" + i, "n" + i + "p@helha.be", "") ;
 				teacherEJB.add(t) ;
 			}catch (InvalidEmailException e) {
 				System.err.println(e.getMessage()) ;
