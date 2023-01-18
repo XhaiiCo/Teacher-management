@@ -38,10 +38,8 @@ public class AA implements Serializable{
 
 	private EFraction fraction ;
 	
-	//@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
 	private Map<Teacher, Integer> teachers = new HashMap<>();
 	
-
 	private UE ue ;
 
 	public  AA() {}

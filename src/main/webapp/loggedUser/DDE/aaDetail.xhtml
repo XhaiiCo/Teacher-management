@@ -13,7 +13,9 @@
 
 	<div class="card" style="padding: 60px;">
 		<h:form id="infos">
-			<h1>#{aaControl.selected.entitled}</h1>
+			<h1>#{aaControl.selected.ue.code}
+				#{aaControl.selected.ue.entitled}</h1>
+			<h2>#{aaControl.selected.code} #{aaControl.selected.entitled}</h2>
 			<p>#{aaControl.selected.nbGroup} groupes</p>
 			<p:outputLabel id="nbAssignements"
 				value="#{aaControl.selected.computeNbAssignements()}
@@ -21,7 +23,7 @@
 		</h:form>
 
 		<div class="card">
-			<h2>Enseignant(s) attribué(s) pour cette ue</h2>
+			<h2>Enseignant(s) attribué(s)</h2>
 
 			<h3>Ajouter un enseignant</h3>
 			<h:form id="formAddTeacher">
