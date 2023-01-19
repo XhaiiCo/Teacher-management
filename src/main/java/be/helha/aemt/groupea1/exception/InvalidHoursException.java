@@ -2,7 +2,6 @@ package be.helha.aemt.groupea1.exception;
 
 public class InvalidHoursException extends Exception{
 
-	
 	private String message;
 
 	public InvalidHoursException(String message) {

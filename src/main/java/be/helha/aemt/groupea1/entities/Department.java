@@ -31,12 +31,10 @@ public class Department implements Serializable {
 	public Department() {}
 	
 	public Department(String name) {
-		
 		this.name = name;
 		this.sections = new ArrayList<Section>();
 		this.missions = new ArrayList<Mission>();
 	}
-	
 	
 	public void addSection(Section section) {	
 		this.sections.add(section) ;
@@ -79,7 +77,8 @@ public class Department implements Serializable {
 		return "Department [id=" + id + ", name=" + name + ", sections=" + sections + ", missions=" + missions + "]";
 	}
 
-	
+
+
 	
 	
 }

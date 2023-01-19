@@ -51,8 +51,7 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 
 		Query query = em.createQuery(jpqlQuery) ;		
 
-		return query.getResultList() ;	
-
+		return query.getResultList();
 	}
 
 	@Override

@@ -191,6 +191,7 @@ public class AA implements Serializable{
 	public int hashCode() {
 		return Objects.hash(code, id);
 	}
+	
 	/**
 	 * Equals on id and code
 	 */

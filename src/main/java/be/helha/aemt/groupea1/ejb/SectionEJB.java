@@ -1,5 +1,6 @@
 package be.helha.aemt.groupea1.ejb;
 
+
 import be.helha.aemt.groupea1.dao.SectionDAO;
 import be.helha.aemt.groupea1.entities.Section;
 import jakarta.ejb.EJB;
