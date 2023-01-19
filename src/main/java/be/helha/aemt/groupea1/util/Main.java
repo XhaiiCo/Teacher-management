@@ -1,38 +1,24 @@
 package be.helha.aemt.groupea1.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
 
-/*
-		public class ExcelGenerator 
-		{
-
-		    public void generateExcel(HttpServletResponse response) throws IOException 
-		    {
-		        Workbook workbook = new HSSFWorkbook();
-		        Sheet sheet = workbook.createSheet("Data");
-
-		        // Entêtes de colonne
-		        String[] columns = {"ID", "Nom", "Prenom", "Email"};
-		        Row headerRow = sheet.createRow(0);
-		        for (int i = 0; i < columns.length; i++) 
-		        {
-		            Cell cell = headerRow.createCell(i);
-		            cell.setCellValue(columns[i]);
-		        }
-
-
-		        // Définir les entêtes de colonne comme filtre automatique
-		        sheet.setAutoFilter(new CellRangeAddress(0, 0, 0, columns.length - 1));
-
-		        // Télécharger le fichier
-		        response.setContentType("application/vnd.ms-excel");
-		        response.setHeader("Content-Disposition", "attachment; filename=data.xls");
-		        workbook.write(response.getOutputStream());
-		        workbook.close();
-		    }
-		}*/
+		File file = new File("lib/data.txt");
+        try {
+			Scanner scanner = new Scanner(file, "UTF-8");
+			String sheetName = scanner.nextLine();
+			
+			System.out.println(sheetName);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }
