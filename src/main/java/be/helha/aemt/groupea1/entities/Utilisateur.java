@@ -19,7 +19,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Utilisateur implements Serializable
 {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
@@ -34,18 +33,14 @@ public class Utilisateur implements Serializable
 	@Enumerated(EnumType.STRING)
 	private ERole role ;
 		
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private Section section;
-		
 	public Utilisateur() {}
 	
-	public Utilisateur(String nom, String prenom, String email, String password, ERole role, Section section) throws InvalidEmailException {
+	public Utilisateur(String nom, String prenom, String email, String password, ERole role) throws InvalidEmailException {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.setEmail(email);
 		this.setPassword(password);
 		this.role = role;
-		this.section = section;
 	}	
 	
 	public Utilisateur(String email) throws InvalidEmailException {
@@ -120,14 +115,6 @@ public class Utilisateur implements Serializable
 		this.role = role;
 	}
 
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(email);
@@ -147,6 +134,4 @@ public class Utilisateur implements Serializable
 		Utilisateur other = (Utilisateur) obj;
 		return Objects.equals(email, other.email);
 	}
-
-	
 }
