@@ -14,7 +14,6 @@ import be.helha.aemt.groupea1.entities.EAssignationStatus;
 import be.helha.aemt.groupea1.entities.EQuarter;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
-import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import be.helha.aemt.groupea1.util.Toast;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;

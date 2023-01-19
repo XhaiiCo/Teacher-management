@@ -31,9 +31,6 @@ public class Section implements Serializable {
 	private String name;
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<Mission> missions ;
-	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<UE> ues ;
 	
 	public List<UE> getUes() {
@@ -49,7 +46,6 @@ public class Section implements Serializable {
 	public Section(Department department, String name) {
 		this.department = department;
 		this.name = name;
-		this.missions = new ArrayList<Mission>();
 		this.ues = new ArrayList<UE>() ;
 	}
 	
@@ -81,18 +77,9 @@ public class Section implements Serializable {
 		this.name = name;
 	}
 
-	public List<Mission> getMissions() {
-		return missions;
-	}
-
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
-	}
-
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", department=" + department + ", name=" + name + ", missions=" + missions
-				+ ", ues=" + ues + "]";
+		return "Section [id=" + id + ", department=" + department + ", name=" + name + ", missions=" + ", ues=" + ues + "]";
 	}
 
 	@Override
