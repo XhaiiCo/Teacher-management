@@ -2,7 +2,9 @@ package be.helha.aemt.groupea1.dao;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Assignment;
@@ -94,6 +96,23 @@ public class AADAO extends AbstractDAO<AA>{
 					return ;
 				}
 			}) ;
+		});
+
+		return result ;
+	}
+
+	public Map<AA, Integer> computeNbHoursInAAsForTeacher(Teacher teacher){
+		if(teacher == null) return null ;
+
+		Map<AA, Integer> result = new HashMap<>() ;
+
+		this.findByTeacher(teacher).forEach(aa -> {
+			int cpt = 0 ;
+			for(Assignment assignment : aa.getAssignments()) {
+				if(assignment.getTeacher().equals(teacher))
+					cpt += assignment.getNbHours() ;
+			}
+			result.put(aa, cpt) ;
 		});
 
 		return result ;
