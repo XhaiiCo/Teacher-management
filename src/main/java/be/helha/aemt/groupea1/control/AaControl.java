@@ -15,7 +15,7 @@ import be.helha.aemt.groupea1.entities.EQuarter;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
-import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -120,11 +120,11 @@ public class AaControl implements Serializable {
 
 		return result ; 
 	}
-	
+
 	public void onItemSelectQuarter() {
 		this.setGroupsMap(generateGroupsMap());
 	}
-	
+
 	public void showInfoToast(String summary, String detail ) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
@@ -142,22 +142,23 @@ public class AaControl implements Serializable {
 				return ;
 			}
 
-			try {
-				Assignment newAssignment = new Assignment(teacherToAdd, newQuarter, newHoursAssignment, newGroup) ;
+			Assignment newAssignment = new Assignment(teacherToAdd, newQuarter, newHoursAssignment, newGroup) ;
 
-				this.selected.addAssignment(newAssignment);
-			} catch (OutOfBoundNbAssignement | NumberNegatifException e ) {
-				this.showErrorToast("Erreur", e.getMessage());
-				return ;
-			} 
+			this.selected.addAssignment(newAssignment);
 
 			this.selected = aaEJB.update(this.selected) ;
 			this.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
+
 		} catch (InvalidEmailException e) {
 			e.printStackTrace();
 			this.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
+		catch (AllHoursAssignmedException | NumberNegatifException e ) {
+			this.showErrorToast("Erreur", e.getMessage());
+			return ;
+		}
 	}
+
 
 	public void removeAssignment() {
 		this.selected.removeAssignment(this.selectedAssignment) ;

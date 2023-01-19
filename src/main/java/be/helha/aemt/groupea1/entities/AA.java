@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
-import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -92,8 +92,29 @@ public class AA implements Serializable{
 		this.nbGroupQ2 = nbGroupQ2;
 	}
 
-	public void addAssignment(Assignment assignment) throws OutOfBoundNbAssignement, NumberNegatifException{
+	public void addAssignment(Assignment assignment) throws AllHoursAssignmedException, NumberNegatifException{
+		if(this.computeNbHoursAssignmentForAGroup(assignment.getQuarter(), assignment.getNumGroup()) + assignment.getNbHours() > nbHoursForQuarter(assignment.getQuarter()))
+			throw new AllHoursAssignmedException() ;
+
 		this.assignments.add(assignment) ;
+	}
+
+	public int computeNbHoursAssignmentForAGroup(EQuarter quarter, int group) {
+		int result = 0 ;
+
+		for(Assignment a : this.assignments) {
+			if(a.getQuarter().equals(quarter) && a.getNumGroup() == group)
+				result += a.getNbHours() ;
+		}
+
+		return result ;
+	}
+
+	public int nbHoursForQuarter(EQuarter quarter) {
+		if(quarter.equals(EQuarter.Q1)) 
+			return this.hoursQ1 ; 
+
+		return this.hoursQ2 ;
 	}
 
 	public void removeAssignment(Assignment assignment) {

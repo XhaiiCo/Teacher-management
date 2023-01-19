@@ -20,9 +20,9 @@
 
 			<p>#{aaControl.selected.credit} credits</p>
 
-			<p>#{aaControl.selected.nbGroupQ1} groupes Q1</p>
+			<p>#{aaControl.selected.nbGroupQ1} groupe(s) Q1</p>
 
-			<p>#{aaControl.selected.nbGroupQ2} groupes Q2</p>
+			<p>#{aaControl.selected.nbGroupQ2} groupe(s) Q2</p>
 
 			<p:outputLabel id="nbAssignements"
 				value="#{aaControl.selected.computeNbAssignments()}
@@ -76,7 +76,7 @@
 
 
 					<div class="field">
-						<p:outputLabel for="@next" value="Nb heures" />
+						<p:outputLabel for="@next" value="Nombre d'heures" />
 						<p:inputText id="newHoursAssignment"
 							value="#{aaControl.newHoursAssignment}" />
 					</div>
@@ -107,12 +107,12 @@
 						<h:outputText value="#{assignment.teacher.email}" />
 					</p:column>
 
-					<p:column headerText="Groupe">
-						<h:outputText value="#{assignment.numGroup}" />
-					</p:column>
-
 					<p:column headerText="Quadrimestre">
 						<h:outputText value="#{assignment.quarter}" />
+					</p:column>
+
+					<p:column headerText="Groupe">
+						<h:outputText value="#{assignment.numGroup}" />
 					</p:column>
 
 					<p:column headerText="Nb heures">
