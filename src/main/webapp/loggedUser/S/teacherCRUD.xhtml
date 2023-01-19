@@ -93,7 +93,19 @@
 										style="width:100%" />
 								</f:facet>
 							</p:cellEditor>
+						</p:column>
 
+						<p:column headerText="Note" sortBy="#{teacher.note}"
+							filterBy="#{teacher.note}" filterMatchMode="contains">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{teacher.formatNote()}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{teacher.note}" label="Note"
+										style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 
 						<p:column style="width:6rem">
@@ -108,7 +120,7 @@
 						</p:column>
 
 						<p:column style="width:3rem;text-align: center">
-							<h:commandLink action="#{teacherControl.goToDetailPage(teacher)}">Detail</h:commandLink>
+							<p:commandLink action="#{teacherControl.goToDetailPage(teacher)}" value="Detail" />
 						</p:column>
 					</p:dataTable>
 				</div>

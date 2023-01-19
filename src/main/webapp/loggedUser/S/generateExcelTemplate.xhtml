@@ -4,18 +4,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Create datas from excel</title>
+	<title>Generate Excel Template</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="../style.css" />
 </h:head>
 <h:body>
-
-	<h:form enctype="multipart/form-data">
-	    <h:inputFile id="file" value="#{excelReaderControl.file}" />
-	    <h:commandButton value="Importer" action="#{excelReaderControl.doImportDatasFromExcel}"/>
-	</h:form>
-	
-	<a href="generateExcelTemplate.xhtml">Create Template</a>
-	
 </h:body>
 </html>

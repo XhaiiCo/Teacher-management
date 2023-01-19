@@ -16,7 +16,23 @@
 
 		<h:form>
 			<div class="card">
-				<p:dataTable var="aa" value="#{aaControl.aas}">
+				<p:dataTable var="aa" value="#{aaControl.aas}" stripedRows="true">
+				
+					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
+						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.academicYear}" />
+					</p:column>
+					
+					<p:column headerText="Departement" sortBy="#{aa.ue.section.department.name}"
+						filterBy="#{aa.ue.section.department.name}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.section.department.name}" />
+					</p:column>
+					
+					<p:column headerText="Section" sortBy="#{aa.ue.section.name}"
+						filterBy="#{aa.ue.section.name}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.section.name}" />
+					</p:column>
+					
 					<p:column headerText="Bloc" sortBy="#{aa.ue.bloc}"
 						filterBy="#{aa.ue.bloc}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.bloc}" />
@@ -32,18 +48,14 @@
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
 
-					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
-						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
-						<h:outputText value="#{aa.ue.academicYear}" />
-					</p:column>
-
-					<p:column headerText="Statut de l'attribution">
+					<p:column headerText="Statut de l'attribution" sortBy="#{aa.assignStatus()}"
+					filterBy="#{aa.assignStatus()}" filterMatchMode="contains">
 						<h:outputText value="#{aa.assignStatus()}" />
 					</p:column>
 
 
 					<p:column style="width:3rem;text-align: center">
-						<h:commandLink action="#{aaControl.openDetail(aa)}">Detail</h:commandLink>
+						<p:commandLink action="#{aaControl.openDetail(aa)}" value="Detail" />
 					</p:column>
 
 				</p:dataTable>

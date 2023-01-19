@@ -1,11 +1,16 @@
 package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.primefaces.event.RowEditEvent;
 
+import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import be.helha.aemt.groupea1.util.Toast;
@@ -39,15 +44,19 @@ public class TeacherControl implements Serializable{
 	@EJB
 	private TeacherEJB teacherEJB ;
 
+	@EJB
+	private AAEJB aaEJB ;
+
+
 	@PostConstruct
 	public void init() {
 		this.teachers = this.teacherEJB.findAll() ;
 	}
-	
+
 	public String goToDetailPage(Teacher selectedTeacher) {
-		
+
 		this.setSelectedTeacher(selectedTeacher);
-		
+
 		return "/S/teacherDetail" ;
 	}
 
@@ -98,5 +107,19 @@ public class TeacherControl implements Serializable{
 		}
 		else
 			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
+	}
+
+	public List<AA> findAAByTeacher(){
+		return this.aaEJB.findByTeacher(this.selectedTeacher) ;
+	}
+
+	public List<AA> findDistinctAAByTeacher(){
+		List<AA> aas = this.aaEJB.findByTeacher(this.selectedTeacher) ;
+
+		//Remove duplicate
+		Set<AA> set = new LinkedHashSet<>(aas);
+		List<AA> listWithoutDuplicates = new ArrayList<>(set);
+
+		return listWithoutDuplicates ;
 	}
 }

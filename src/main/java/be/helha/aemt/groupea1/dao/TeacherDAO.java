@@ -2,7 +2,9 @@ package be.helha.aemt.groupea1.dao;
 
 import java.util.List;
 
+import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
+import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -10,6 +12,9 @@ import jakarta.persistence.TypedQuery;
 @Stateless//Used to do independent operations, it does not have any associated client state
 @LocalBean
 public class TeacherDAO extends AbstractDAO<Teacher>{
+	
+	@EJB
+	private AADAO aaDAO ;
 
 	public TeacherDAO() {
 		super(Teacher.class) ;
@@ -65,15 +70,18 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return result.get(0) ; 
 	}
+	
+	@Override
+	public Teacher delete(Teacher teacher) {
+		if(teacher == null) return null;
+		
+		List<AA> aas = aaDAO.findByTeacher(teacher) ;
+		aas.forEach(aa -> {
+			//aa.removeTeachers(teacher) ;
+			aaDAO.update(aa) ;
+		});
 
-	/* SAUTED
-	public List<AA> getAllAasOfTeacher(Teacher teacher) {
-		if(teacher == null) return null ;
+		return  super.delete(teacher);
+	}
 
-		// Récupérer chaque AA
-		List<Assignment> ass = teacher.getAssignments();
-		List<AA> aas = new ArrayList<AA>();
-		ass.forEach(e -> aas.addAll(e.getAas()));
-		return aas;
-	}*/
 }

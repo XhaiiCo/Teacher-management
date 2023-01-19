@@ -43,6 +43,12 @@ public class UE implements Serializable {
 	private List<AA> aas;
 	
 	public UE() {}
+		
+	public UE(String code, String academicYear, Section section) {
+		this.code = code;
+		this.academicYear = academicYear;
+		this.section = section;
+	}
 	
 	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit, Section section) throws NumberNegatifException {

@@ -11,10 +11,49 @@
 <h:body>
 	<ui:include src="../navbar.xhtml" />
 	<div style="padding: 60px;">
-		<div class="card">
-			<h1>#{ teacherControl.selectedTeacher.firstName}</h1>
+		<div>
+			<div class="card">
+				<h1>#{ teacherControl.selectedTeacher.lastName} #{
+					teacherControl.selectedTeacher.firstName}</h1>
+				<h2>#{ teacherControl.selectedTeacher.email}</h2>
+				<p>remarque: #{ teacherControl.selectedTeacher.formatNote()}</p>
+			</div>
 		</div>
 
+		<h:form>
+			<div class="card">
+				<h2>Cours attribués</h2>
+				<p:dataTable var="aa"
+					value="#{teacherControl.findDistinctAAByTeacher()}">
+
+					<p:column headerText="Année" filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.academicYear}" />
+					</p:column>
+
+					<p:column headerText="Code UE" filterBy="#{aa.ue.code}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.code}" />
+					</p:column>
+
+					<p:column headerText="Intitulé UE" filterBy="#{aa.ue.entitled}" filterMatchMode="contains" >
+						<h:outputText value="#{aa.ue.entitled}" />
+					</p:column>
+
+					<p:column headerText="code AA" filterBy="#{aa.code}" filterMatchMode="contains">
+						<h:outputText value="#{aa.code}" />
+					</p:column>
+
+					<p:column headerText="Intitulé AA" filterBy="#{aa.entitled}" filterMatchMode="contains" >
+						<h:outputText value="#{aa.entitled}" />
+					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<p:commandLink action="#{aaControl.openDetail(aa)}"
+							value="Detail" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
 	</div>
 </h:body>
 </html>

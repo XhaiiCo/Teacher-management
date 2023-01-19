@@ -3,20 +3,23 @@ package be.helha.aemt.groupea1.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.ejb.UEEJB;
+import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.EFraction;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.UE;
+import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.ejb.EJB;
@@ -46,6 +49,9 @@ public class ExcelReaderControl implements Serializable {
     @EJB
     private UEEJB ueEJB; 
     
+    @EJB
+    private AAEJB aaEJB;
+    
     /*Function to upload the excel file that will be save in the workbook variable
     and then the different import function will convert datas in each page in entities*/ 
     public void doImportDatasFromExcel() {
@@ -55,6 +61,7 @@ public class ExcelReaderControl implements Serializable {
     	this.importSections();
     	this.importTeachers();
     	this.importUEs();
+    	this.importAAs();
     }
     
     public void uploadFile() 
@@ -62,7 +69,7 @@ public class ExcelReaderControl implements Serializable {
         try 
         {
             InputStream input = file.getInputStream();
-            this.workbook = new XSSFWorkbook(input);     
+            this.workbook = new HSSFWorkbook(input);     
         } 
         catch (IOException e) 
         {
@@ -97,9 +104,9 @@ public class ExcelReaderControl implements Serializable {
     we use index to get the row cell. After that we get the value in the cell
     and we can create an instance of Department with this information*/
     public void importDepartments() {
-    	
-    	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Départements");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -112,8 +119,9 @@ public class ExcelReaderControl implements Serializable {
     }
     
     public void importSections() {
-    	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Sections");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -128,8 +136,9 @@ public class ExcelReaderControl implements Serializable {
     }
     
     public void importTeachers() {
-    	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("Enseignants");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -152,8 +161,9 @@ public class ExcelReaderControl implements Serializable {
     }
     
     public void importUEs() {
-    	//gérer ça car si feuille existe pas renvoie null
     	Sheet sheet = workbook.getSheet("UEs");
+    	
+    	if(sheet == null) return;
     	
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
@@ -182,4 +192,45 @@ public class ExcelReaderControl implements Serializable {
 		
 		}
     }
+    
+    public void importAAs() {
+    	Sheet sheet = workbook.getSheet("AAs");
+    	
+    	if(sheet == null) return;
+    	
+    	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
+		{
+    		Row row = sheet.getRow(i);
+    		
+    		String codeAA = row.getCell(0).getStringCellValue();
+    		int creditsAA = (int) row.getCell(1).getNumericCellValue();
+    		String entitledAA = row.getCell(2).getStringCellValue();
+    		int fractionAA = (int) row.getCell(3).getNumericCellValue();
+    		int hoursQ1AA = (int) row.getCell(4).getNumericCellValue();
+    		int hoursQ2AA = (int) row.getCell(5).getNumericCellValue();
+    		int nbStudentAA = (int) row.getCell(6).getNumericCellValue();
+    		int nbGroup1AA = (int) row.getCell(7).getNumericCellValue();
+    		int nbGroup2AA = (int) row.getCell(8).getNumericCellValue();
+    		String departmentName = row.getCell(9).getStringCellValue();
+    		String sectionName = row.getCell(10).getStringCellValue();
+    		String yearRangeUE = row.getCell(11).getStringCellValue();
+    		String codeUE = row.getCell(12).getStringCellValue();
+    		
+    		Department sectionDepartment = new Department(departmentName);
+    		Section section = new Section(sectionDepartment, sectionName);
+    		UE ue = new UE(codeUE, yearRangeUE, section);
+    		
+    		try 
+    		{
+				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroup1AA, nbGroup2AA, nbStudentAA, 
+						EFraction.findByNumber(fractionAA), ue));
+			} 
+    		catch (NumberNegatifException e) 
+    		{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+		}
+    }    
 }
