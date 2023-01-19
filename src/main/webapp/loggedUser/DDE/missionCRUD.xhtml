@@ -110,8 +110,9 @@
 					</p:column>
 
 					<p:column style="width:6rem">
-						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
-							saveTitle="Save Row" />
+						<p:rowEditor class="ui-button-warning rounded-button" 
+							editTitle="Edit Row" cancelTitle="Cancel Edit"
+							icon="pi pi-pencil" saveTitle="Save Row" />
 
 						<p:commandButton class="ui-button-warning rounded-button"
 							icon="pi pi-trash" process="@this"
@@ -144,18 +145,61 @@
 							<p:inputText id="hours" required="true"
 								value="#{missionControl.newMission.hours}" />
 						</div>
+					    
+					    <div class="field">
+							<p:outputLabel>Type de mission</p:outputLabel>
+							<p:selectOneRadio value="#{missionControl.type}" layout="grid" columns="3">
+							    <f:selectItem itemLabel="Transversale" itemValue="1" />
+							    <f:selectItem itemLabel="Par département" itemValue="2" />
+							    <f:selectItem itemLabel="Par séction" itemValue="3" />
+							    <p:ajax update="inputs"/>
+							</p:selectOneRadio>
+							 
+							 <h:panelGroup id="inputs">
+								<p:panelGrid style="width: 100%" columns="1" rendered="#{ missionControl.type == 1 }"></p:panelGrid>
+								<p:panelGrid style="width: 100%" columns="1" rendered="#{ missionControl.type == 2 }">
+									<p:outputLabel>Département</p:outputLabel>
+					                <p:selectOneMenu id="depart" value="#{ missionControl.departmentMission }"
+			                                panelStyle="width:180px" effect="fade" var="d"
+			                                filter="true" filterMatchMode="startsWith" converter="departmentConverter">
+					
+					                    <f:selectItems value="#{ departmentControl.getDepartments() }" var="department"
+				                                itemLabel="#{ department.name }"/>
+										
+					                    <p:column>
+					                        <f:facet name="header">
+					                            <h:outputText>Nom</h:outputText>
+					                        </f:facet>
+					                        <h:outputText value="#{ d.name }"/>
+					                    </p:column>
+					                </p:selectOneMenu>
+								</p:panelGrid>
+								<p:panelGrid style="width: 100%" id="input3" columns="1" rendered="#{missionControl.type == 3 }">
+									<p:outputLabel>Séction</p:outputLabel>
+					                <p:selectOneMenu id="section" value="#{ missionControl.sectionMission }"
+					                                panelStyle="width:180px" effect="fade" var="s"
+					                                filter="true" filterMatchMode="startsWith" converter="sectionConverter">
+					
+					                    <f:selectItems value="#{ sectionControl.getSections() }" var="section"
+					                                itemLabel="#{ section.name }" itemValue="#{ section }"/>
+					
+					                    <p:column>
+					                        <f:facet name="header">
+					                            <h:outputText value="Nom"/>
+					                        </f:facet>
+					                        <h:outputText value="#{ s.name }"/>
+					                    </p:column>
+					                </p:selectOneMenu>		
+								</p:panelGrid>
+							</h:panelGroup>
+					    </div>
 						
 						<div class="field">
 							<p:outputLabel for="teachers">Enseignants</p:outputLabel>
 					        <p:selectManyMenu id="teachers" value="#{ missionControl.newMission.teachers }" var="t" 
 					        	filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced" converter="teacherConverter">
 					           <f:selectItems value="#{ teacherControl.getTeachers() }" var="teacher" itemLabel="#{teacher.lastName}"
-					           		itemValue="#{teacher}"/>
-					
-					           <p:column>
-					               <span class="flag flag-#{t.id}" style="width: 30px; height: 20px"/>
-					           </p:column>
-					
+					           		itemValue="#{teacher}"/>					
 					           <p:column>
 					               <h:outputText value="#{t.lastName} #{t.firstName}"/>
 					           </p:column>
