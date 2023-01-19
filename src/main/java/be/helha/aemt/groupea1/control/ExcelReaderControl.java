@@ -3,11 +3,11 @@ package be.helha.aemt.groupea1.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
@@ -69,7 +69,7 @@ public class ExcelReaderControl implements Serializable {
         try 
         {
             InputStream input = file.getInputStream();
-            this.workbook = new XSSFWorkbook(input);     
+            this.workbook = new HSSFWorkbook(input);     
         } 
         catch (IOException e) 
         {
@@ -208,12 +208,13 @@ public class ExcelReaderControl implements Serializable {
     		int fractionAA = (int) row.getCell(3).getNumericCellValue();
     		int hoursQ1AA = (int) row.getCell(4).getNumericCellValue();
     		int hoursQ2AA = (int) row.getCell(5).getNumericCellValue();
-    		int nbGroupAA = (int) row.getCell(6).getNumericCellValue();
-    		int nbStudentAA = (int) row.getCell(7).getNumericCellValue();
-    		String departmentName = row.getCell(8).getStringCellValue();
-    		String sectionName = row.getCell(9).getStringCellValue();
-    		String yearRangeUE = row.getCell(10).getStringCellValue();
-    		String codeUE = row.getCell(11).getStringCellValue();
+    		int nbStudentAA = (int) row.getCell(6).getNumericCellValue();
+    		int nbGroup1AA = (int) row.getCell(7).getNumericCellValue();
+    		int nbGroup2AA = (int) row.getCell(8).getNumericCellValue();
+    		String departmentName = row.getCell(9).getStringCellValue();
+    		String sectionName = row.getCell(10).getStringCellValue();
+    		String yearRangeUE = row.getCell(11).getStringCellValue();
+    		String codeUE = row.getCell(12).getStringCellValue();
     		
     		Department sectionDepartment = new Department(departmentName);
     		Section section = new Section(sectionDepartment, sectionName);
@@ -221,10 +222,10 @@ public class ExcelReaderControl implements Serializable {
     		
     		try 
     		{
-				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroupAA, nbStudentAA, 
+				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroup1AA, nbGroup2AA, nbStudentAA, 
 						EFraction.findByNumber(fractionAA), ue));
 			} 
-    		catch (NumberNegatifException | HoursNotWantedException e) 
+    		catch (NumberNegatifException e) 
     		{
 				// TODO Auto-generated catch block
 				e.printStackTrace();

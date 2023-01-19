@@ -31,7 +31,7 @@ public class ExcelGeneratorControl extends HttpServlet  {
         headerCellStyle.setFont(headerFont);
         
         // Read the text file
-        File file = new File("C:/data.txt");
+        File file = new File("/lib/data.txt");
         Scanner scanner = new Scanner(file, "UTF-8");
         while (scanner.hasNextLine()) 
         {
@@ -57,7 +57,7 @@ public class ExcelGeneratorControl extends HttpServlet  {
         
         // Set the response headers
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=data.xls");
+        response.setHeader("Content-Disposition", "attachment; filename=template.xls");
         
         // Write the workbook to the output stream
         OutputStream out = response.getOutputStream();
