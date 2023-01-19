@@ -18,6 +18,16 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+	    <servlet-name>ExcelGeneratorControl</servlet-name>
+	    <servlet-class>be.helha.aemt.groupea1.control.ExcelGeneratorControl</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>ExcelGeneratorControl</servlet-name>
+	    <url-pattern>/loggedUser/S/generateExcelTemplate.xhtml</url-pattern>
+	</servlet-mapping>
+	
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>arya</param-value>

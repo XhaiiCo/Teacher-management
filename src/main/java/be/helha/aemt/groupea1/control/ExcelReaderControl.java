@@ -3,13 +3,11 @@ package be.helha.aemt.groupea1.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
@@ -233,6 +231,5 @@ public class ExcelReaderControl implements Serializable {
 			}
     		
 		}
-    }
-    
+    }    
 }

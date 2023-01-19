@@ -1,0 +1,39 @@
+Départements
+Nom du département
+.
+Sections
+Nom du département
+Nom de la section
+.
+Enseignants
+Adresse mail
+Nom
+Prénom
+Note
+.
+UEs
+Année académique
+Bloc
+Code
+Crédits
+Intitulé
+Nom du département
+Nom de la section
+.
+AAs
+Code
+Crédits
+Intitulé
+Fraction
+Heures Q1
+Heures Q2
+Nb groupes
+Nb Etudiants
+Nom du département
+Nom de la section
+Année académique
+Code UE
+
+
+
+
