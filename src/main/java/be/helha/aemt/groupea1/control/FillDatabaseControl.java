@@ -13,6 +13,7 @@ import be.helha.aemt.groupea1.ejb.UEEJB;
 import be.helha.aemt.groupea1.ejb.UtilisateurEJB;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Department;
+import be.helha.aemt.groupea1.entities.EAssignationStatus;
 import be.helha.aemt.groupea1.entities.EFraction;
 import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Mission;

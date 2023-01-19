@@ -219,11 +219,12 @@ public class ExcelReaderControl implements Serializable {
     		
     		Department sectionDepartment = new Department(departmentName);
     		Section section = new Section(sectionDepartment, sectionName);
-    		UE ue = new UE(yearRangeUE, section);
+    		UE ue = new UE(codeUE, yearRangeUE, section);
     		
     		try 
     		{
-				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroupAA, nbStudentAA, EFraction.findByNumber(fractionAA), ue));
+				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroupAA, nbStudentAA, 
+						EFraction.findByNumber(fractionAA), ue));
 			} 
     		catch (NumberNegatifException | HoursNotWantedException e) 
     		{

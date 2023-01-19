@@ -43,8 +43,9 @@ public class UE implements Serializable {
 	private List<AA> aas;
 	
 	public UE() {}
-	
-	public UE(String academicYear, Section section) {
+		
+	public UE(String code, String academicYear, Section section) {
+		this.code = code;
 		this.academicYear = academicYear;
 		this.section = section;
 	}

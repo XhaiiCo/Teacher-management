@@ -32,11 +32,12 @@ public class UEDAO extends AbstractDAO<UE> {
 	public UE find(UE ue) {
 		if(ue==null) return null;
 		
-		String rq = "SELECT ue FROM UE ue where ue.code=?1 and ue.academicYear=?2" ;
+		String rq = "SELECT ue FROM UE ue where ue.code=?1 and ue.academicYear=?2 and ue.section.id=?3";
 		
 		TypedQuery<UE>query = em.createQuery(rq, UE.class);
 		query.setParameter(1, ue.getCode());
 		query.setParameter(2, ue.getAcademicYear());
+		query.setParameter(3, ue.getSection().getId());
 		
 		List<UE> result = query.getResultList();
 		

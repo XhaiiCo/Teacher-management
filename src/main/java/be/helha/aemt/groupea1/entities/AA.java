@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,6 +46,7 @@ public class AA implements Serializable{
 
 	private int nbStudent ;
 
+	@Enumerated(EnumType.STRING)
 	private EFraction fraction ;
 
 	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
@@ -56,8 +58,8 @@ public class AA implements Serializable{
 	public  AA() {}
 
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
-			int nbGroupQ1, int nbGroupQ2, int nbStudent, EFraction fraction, UE ue
-			) throws NumberNegatifException, HoursNotWantedException {
+			int nbGroupQ1, int nbGroupQ2, int nbStudent, 
+			EFraction fraction, UE ue) throws NumberNegatifException  {
 		this.code = code;
 		this.entitled = entitled;
 		this.credit = credit;
@@ -69,7 +71,7 @@ public class AA implements Serializable{
 		this.fraction = fraction;
 		this.ue = ue;
 	}
-	
+
 	public int getNbGroupQ1() {
 		return nbGroupQ1;
 	}

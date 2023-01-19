@@ -10,6 +10,7 @@ import be.helha.aemt.groupea1.ejb.AssignmentEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Assignment;
+import be.helha.aemt.groupea1.entities.EAssignationStatus;
 import be.helha.aemt.groupea1.entities.EQuarter;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
@@ -87,6 +88,11 @@ public class AaControl implements Serializable {
     public EQuarter[] getQuarters() {
         return EQuarter.values();
     }
+	
+	public EAssignationStatus[] getAssignation()
+	{
+		return EAssignationStatus.values();
+	}
 
 	public String openDetail(AA aa) {
 		this.selected = aa ;
