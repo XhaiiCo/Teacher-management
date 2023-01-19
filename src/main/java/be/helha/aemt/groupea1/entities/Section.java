@@ -31,14 +31,14 @@ public class Section implements Serializable {
 	private String name;
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<UE> ues ;
+	private List<UE> ues = new ArrayList<>() ;
 	
 	public List<UE> getUes() {
 		return ues;
 	}
 	
 	public void setUes(List<UE> ues) {
-		this.ues = ues;
+		ues.forEach(ue -> this.addUe(ue));
 	}
 
 	public Section() {}
@@ -46,11 +46,12 @@ public class Section implements Serializable {
 	public Section(Department department, String name) {
 		this.department = department;
 		this.name = name;
-		this.ues = new ArrayList<UE>() ;
 	}
 	
-	public void addUe(UE ue) {
-		this.ues.add(ue) ;
+	public boolean addUe(UE ue) {
+		if(this.ues.contains(ue)) return false ;
+
+		return this.ues.add(ue) ;
 	}
 	
 	public int getId() {
@@ -98,7 +99,4 @@ public class Section implements Serializable {
 		Section other = (Section) obj;
 		return Objects.equals(department, other.department) && Objects.equals(name, other.name);
 	}
-
-	
-	
 }
