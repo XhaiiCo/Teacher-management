@@ -125,5 +125,18 @@ public class MissionDAO extends AbstractDAO<Mission>{
 		return null ;
 	}
 	
+	@Override
+	public Mission delete(Mission mission) {
+		if(mission == null) return mission;
+
+		mission.setTeachers(null);
+		
+		Mission toRemove = em.merge(mission);
+		
+		em.remove(toRemove);
+
+		return mission;
+	}
+	
 	
 }
