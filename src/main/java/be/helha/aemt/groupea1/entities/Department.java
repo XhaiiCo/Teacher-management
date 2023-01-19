@@ -3,6 +3,7 @@ package be.helha.aemt.groupea1.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -75,6 +76,26 @@ public class Department implements Serializable {
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", name=" + name + ", sections=" + sections + ", missions=" + missions + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	/**
+	 * equals on the department name
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		return Objects.equals(name, other.name);
 	}
 
 
