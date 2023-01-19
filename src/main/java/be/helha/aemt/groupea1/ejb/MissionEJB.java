@@ -4,6 +4,7 @@ import java.util.List;
 
 import be.helha.aemt.groupea1.dao.MissionDAO;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.Teacher;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -29,4 +30,7 @@ public class MissionEJB {
 		return missionDAO.update(mission);
 	}
 	
+	public List<Mission> findByTeacher(Teacher teacher){
+		return missionDAO.findByTeacher(teacher);
+	}
 }

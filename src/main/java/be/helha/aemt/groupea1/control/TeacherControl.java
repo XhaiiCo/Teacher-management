@@ -10,8 +10,10 @@ import java.util.Set;
 import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.AAEJB;
+import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import be.helha.aemt.groupea1.util.Toast;
@@ -48,6 +50,8 @@ public class TeacherControl implements Serializable{
 	@EJB
 	private AAEJB aaEJB ;
 
+	@EJB
+	private MissionEJB missionEJB;
 
 	@PostConstruct
 	public void init() {
@@ -127,6 +131,7 @@ public class TeacherControl implements Serializable{
 	public float computeWorkload() {
 		
 		Map<AA, Integer> aa_hours = aaEJB.computeNbHoursInAAsForTeacher(selectedTeacher);
+		List<Mission> teacherMissions = missionEJB.findByTeacher(selectedTeacher);
 		
 		float ratio = 0;
 		for (var entry : aa_hours.entrySet()) 
@@ -135,6 +140,11 @@ public class TeacherControl implements Serializable{
 		    int fraction = entry.getKey().getFraction().getFraction();
 		    
 		    ratio += Teacher.computeRatio(nbHours, fraction);   
+		}
+		
+		for(Mission mission : teacherMissions) {
+			int nbHours = mission.getHours();
+			ratio += Teacher.computeRatio(nbHours, 1400);
 		}
 		
 		return ratio * 10;	
