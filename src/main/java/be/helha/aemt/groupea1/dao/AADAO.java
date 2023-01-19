@@ -93,7 +93,7 @@ public class AADAO extends AbstractDAO<AA>{
 					result.add(aa) ;
 					return ;
 				}
-			}) ;
+			});
 		});
 
 		return result ;
