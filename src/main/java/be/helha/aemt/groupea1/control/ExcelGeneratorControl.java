@@ -2,6 +2,7 @@ package be.helha.aemt.groupea1.control;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -22,7 +24,7 @@ public class ExcelGeneratorControl extends HttpServlet  {
     {
         // Create a new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
-
+        
         //create cell font
         Font headerFont = workbook.createFont();
         headerFont.setBold(true);
@@ -30,9 +32,10 @@ public class ExcelGeneratorControl extends HttpServlet  {
         CellStyle headerCellStyle = workbook.createCellStyle();
         headerCellStyle.setFont(headerFont);
         
-        // Read the text file
-        File file = new File(("C:/data.txt"));
-        Scanner scanner = new Scanner(file, "UTF-8");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = classLoader.getResourceAsStream("data.txt");
+                
+        Scanner scanner = new Scanner(stream, "UTF-8");
         while (scanner.hasNextLine()) 
         {
             String sheetName = scanner.nextLine();

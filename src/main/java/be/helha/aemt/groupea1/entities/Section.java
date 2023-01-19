@@ -23,7 +23,7 @@ public class Section implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id  ;
+	private int id;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Department department ;
