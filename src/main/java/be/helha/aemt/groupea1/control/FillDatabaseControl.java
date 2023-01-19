@@ -28,18 +28,16 @@ import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
-import be.helha.aemt.groupea1.util.Toast;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
 /*
- insert ignore into UTILISATEUR('EMAIL', 'NOM', 'PASSWORD', 'PRENOM', 'ROLE')
+ insert ignore into UTILISATEUR(EMAIL, NOM, PASSWORD,  PRENOM, ROLE)
  values
  ('secr', 'nSecr', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pSecr', 'S'),
  ('dept', 'nDept', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDept', 'DDE'),
  ('dom', 'nDom', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDom', 'DDOM');
- 
  */
 @Named
 @SessionScoped
@@ -156,7 +154,7 @@ public class FillDatabaseControl implements Serializable{
 				missionEJB.add(ms);
 
 			}catch (InvalidHoursException e) {
-				Toast.showErrorToast("Erreur", e.getMessage());
+				e.printStackTrace();
 			}
 
 		}

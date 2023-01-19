@@ -31,7 +31,7 @@ public class ExcelGeneratorControl extends HttpServlet  {
         headerCellStyle.setFont(headerFont);
         
         // Read the text file
-        File file = new File("/lib/data.txt");
+        File file = new File(("C:/data.txt"));
         Scanner scanner = new Scanner(file, "UTF-8");
         while (scanner.hasNextLine()) 
         {
