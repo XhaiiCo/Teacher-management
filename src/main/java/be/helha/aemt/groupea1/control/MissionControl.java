@@ -10,9 +10,14 @@ import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Mission;
+import be.helha.aemt.groupea1.entities.MissionDepartment;
+import be.helha.aemt.groupea1.entities.MissionSection;
 import be.helha.aemt.groupea1.entities.MissionTransversale;
+import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
+import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
@@ -33,6 +38,20 @@ public class MissionControl implements Serializable {
 	private Mission newMission ;//Used when create a new mission
 	public Mission getNewMission() {return newMission;}
 	public void setNewMission(Mission newMission) {this.newMission = newMission;}
+	
+	private int type;
+	public int getType() {return type;}
+	public void setType(int type) {this.type = type;}
+
+	// Section for new mission;
+	private Section sectionMission;
+	public Section getSectionMission() {return sectionMission;}
+	public void setSectionMission(Section section) {this.sectionMission = section;}
+	
+	// Department for new mission;
+	private Department departmentMission;
+	public Department getDepartmentMission() {return departmentMission;}
+	public void setDepartmentMission(Department department) {this.departmentMission = department;}
 
 	private Mission removeMission;
 	public Mission getRemoveMission() {return removeMission;}
@@ -44,6 +63,7 @@ public class MissionControl implements Serializable {
 	@PostConstruct
 	public void init () {
 		this.missions = this.missionEJB.findAll();
+		this.type = 1;
 	}
 	
 	public void onRowEdit(RowEditEvent<Mission> event) {
@@ -61,10 +81,24 @@ public class MissionControl implements Serializable {
 	}
 	
 	public void openNewMission() {
-		this.newMission = new MissionTransversale() ; // TODO
-	}
+		this.newMission = new MissionTransversale();
+	} 
 	
 	public void saveNewMission() {
+		if (this.type == 2) {
+			try {
+				newMission = new MissionDepartment(newMission.getAcademicYear(), newMission.getEntitled(), newMission.getHours(), newMission.getTeachers(), departmentMission);
+			} catch (InvalidHoursException e) {
+				Toast.showErrorToast("Erreur", e.getMessage());
+			}
+		} else if (type == 3) {
+			try {
+				newMission = new MissionSection(newMission.getAcademicYear(), newMission.getEntitled(), newMission.getHours(), newMission.getTeachers(), sectionMission);
+			} catch (InvalidHoursException e) {
+				Toast.showErrorToast("Erreur", e.getMessage());
+			}
+		}
+		
 		Mission missionAdd = this.missionEJB.add(newMission);
 		
 		if(missionAdd != null) {
