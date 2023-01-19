@@ -114,7 +114,7 @@ public class Teacher implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.id + " " +  this.lastName + " " + this.firstName + " " + this.email + " " + this.note ;
+		return this.lastName + " " + this.firstName;
 	}
 
 }

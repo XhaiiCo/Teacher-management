@@ -51,15 +51,15 @@ public abstract class AbstractDAO<T> implements IDAO<T> {
 
 		Query query = em.createQuery(jpqlQuery) ;		
 
-		return query.getResultList() ;	
-
+		return query.getResultList();
 	}
 
 	@Override
 	public T delete(T t) {
 		if(t == null) return t;
+
+		T toRemove = em.merge(t);
 		
-		T toRemove = em.merge(t) ;
 		em.remove(toRemove);
 
 		return t;

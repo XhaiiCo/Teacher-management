@@ -14,6 +14,8 @@ import be.helha.aemt.groupea1.entities.EAssignationStatus;
 import be.helha.aemt.groupea1.entities.EQuarter;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import be.helha.aemt.groupea1.util.Toast;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
 import jakarta.annotation.PostConstruct;
@@ -138,7 +140,7 @@ public class AaControl implements Serializable {
 			Teacher teacherToAdd = this.teacherEJB.findByEmail(new Teacher("", "", selectedTeacherEmail, null)) ;
 
 			if(teacherToAdd == null) {
-				this.showErrorToast("Erreur", "Erreur lors de l'ajout");
+				Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
 				return ;
 			}
 
@@ -147,11 +149,10 @@ public class AaControl implements Serializable {
 			this.selected.addAssignment(newAssignment);
 
 			this.selected = aaEJB.update(this.selected) ;
-			this.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
-
+			Toast.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
 		} catch (InvalidEmailException e) {
 			e.printStackTrace();
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
 		catch (AllHoursAssignmedException | NumberNegatifException e ) {
 			this.showErrorToast("Erreur", e.getMessage());
@@ -164,6 +165,6 @@ public class AaControl implements Serializable {
 		this.selected.removeAssignment(this.selectedAssignment) ;
 		this.aaEJB.update(this.selected) ;
 		this.assignmentEJB.delete(this.selectedAssignment) ;
-		this.showInfoToast("Désattribué", "Enseignant désattribué");
+		Toast.showInfoToast("Désattribué", "Enseignant désattribué");
 	}
 }

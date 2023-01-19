@@ -8,6 +8,7 @@ import org.primefaces.event.RowEditEvent;
 import be.helha.aemt.groupea1.ejb.UEEJB;
 import be.helha.aemt.groupea1.entities.UE;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -44,21 +45,13 @@ public class UEControl implements Serializable{
 		this.ues = this.ueEJB.findAll() ;
 	}
 
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
-
 	public void onRowEdit(RowEditEvent<UE> event) {
 		UE updatedUe = event.getObject() ;
 
 		if(this.ueEJB.update(updatedUe) != null) 
-			this.showInfoToast("Modifié", "UE modifié" );
+			Toast.showInfoToast("Modifié", "UE modifié" );
 		else
-			this.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
+			Toast.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
 	}
 
 	public void onRowCancel(RowEditEvent<UE> event) {
@@ -82,10 +75,10 @@ public class UEControl implements Serializable{
 
 		if(addedUe != null) {
 			this.ues.add(addedUe) ;
-			this.showInfoToast("Ajouté", "UE ajouté");
+			Toast.showInfoToast("Ajouté", "UE ajouté");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cet ue est peut être déjà présent");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout, cet ue est peut être déjà présent");
 	}
 
 
@@ -95,13 +88,13 @@ public class UEControl implements Serializable{
 		UE removedUe = this.ueEJB.delete(this.removeUe) ; 
 		if(removedUe != null) {
 			this.ues.remove(removedUe) ;
-			this.showInfoToast("Supprimé"," UE supprimé");
+			Toast.showInfoToast("Supprimé"," UE supprimé");
 		}
 		else
 		{
-			this.showErrorToast("Error","Erreur de lors de la suppression");
+			Toast.showErrorToast("Error","Erreur de lors de la suppression");
 		}
-}
-
-
+		
+	}
+	
 }
