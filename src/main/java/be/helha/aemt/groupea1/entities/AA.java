@@ -125,17 +125,29 @@ public class AA implements Serializable{
 		return this.hoursQ1 + this.hoursQ2 ;
 	}
 
-	//TODO
 	public String assignStatus() {
-		/*
-		if(this.computeNbAssignments() == this.nbGroup) 
+		if(this.assignments.isEmpty())
+			return EAssignationStatus.Nothing.getText() ;
+
+		if(this.isAssignationDone())
 			return EAssignationStatus.Done.getText() ;
 
-		if(this.computeNbAssignments() > 0)
-			return EAssignationStatus.InProgress.getText() ;
+		return EAssignationStatus.InProgress.getText() ;
 
-		 */
-		return EAssignationStatus.Nothing.getText() ;
+	}
+
+	public boolean isAssignationDone() {
+		for(int i = 1 ; i <= this.nbGroupQ1 ; i++) {
+			if(this.computeNbHoursAssignmentForAGroup(EQuarter.Q1, i) != this.hoursQ1)
+				return false ;
+		}
+
+		for(int i = 1 ; i <= this.nbGroupQ2 ; i++) {
+			if(this.computeNbHoursAssignmentForAGroup(EQuarter.Q2, i) != this.hoursQ2)
+				return false ;
+		}
+
+		return true ;
 	}
 
 	public List<Assignment> getAssignments() {
