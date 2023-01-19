@@ -22,8 +22,14 @@
 
 		<h:form>
 			<div class="card">
-			<h2>Cours attribués</h2>
-				<p:dataTable var="aa" value="#{teacherControl.findDistinctAAByTeacher()}">
+				<h2>Cours attribués</h2>
+				<p:dataTable var="aa"
+					value="#{teacherControl.findDistinctAAByTeacher()}">
+
+					<p:column headerText="Année">
+						<h:outputText value="#{aa.ue.academicYear}" />
+					</p:column>
+
 					<p:column headerText="Code ue">
 						<h:outputText value="#{aa.ue.code}" />
 					</p:column>
