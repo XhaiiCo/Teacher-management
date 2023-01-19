@@ -18,38 +18,38 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "ue", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"code", "academicyear", "section_id"})
+		@UniqueConstraint(columnNames = {"code", "academicyear", "section_id"})
 })
 public class UE implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
-	
+
 	private String academicYear;
 
 	private String bloc;
-	
+
 	private String code;
-	
+
 	private String entitled;
-	
+
 	private int credit;
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Section section;
-	
+
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
 	private List<AA> aas = new ArrayList<>();
-	
+
 	public UE() {}
-		
+
 	public UE(String code, String academicYear, Section section) {
 		this.code = code;
 		this.academicYear = academicYear;
 		this.section = section;
 	}
-	
+
 	public UE(String academicYear, String bloc, String code, String entitled,
 			int credit, Section section) throws NumberNegatifException {
 		this.academicYear = academicYear;
@@ -59,7 +59,7 @@ public class UE implements Serializable {
 		setCredit(credit);
 		this.section = section ;
 	}
-	
+
 	public Section getSection() {
 		return section;
 	}
@@ -68,8 +68,10 @@ public class UE implements Serializable {
 		this.section = section;
 	}
 
-	public void addAA(AA aa) {
-		this.aas.add(aa) ;
+	public boolean addAA(AA aa) {
+		if(this.aas.contains(aa)) return false ;
+
+		return this.aas.add(aa) ;
 	}
 
 	public int getId() {
@@ -153,6 +155,6 @@ public class UE implements Serializable {
 		UE other = (UE) obj;
 		return Objects.equals(code, other.code) && Objects.equals(section, other.section);
 	}
-	
+
 }
 

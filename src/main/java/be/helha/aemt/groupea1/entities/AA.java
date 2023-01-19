@@ -263,5 +263,4 @@ public class AA implements Serializable{
 		AA other = (AA) obj;
 		return Objects.equals(code, other.code) && Objects.equals(ue, other.ue);
 	}
-
 }

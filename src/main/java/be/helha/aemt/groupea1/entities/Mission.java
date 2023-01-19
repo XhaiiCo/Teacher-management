@@ -1,6 +1,7 @@
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
@@ -24,26 +25,26 @@ public abstract class Mission implements Serializable {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
-	
+
 	private String academicYear ;
-	
+
 	private String entitled ;
-	
+
 	private int hours ;
 
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	private List<Teacher> teachers;
-	
+	private List<Teacher> teachers = new ArrayList<>();
+
 	public Mission (){
 	}
-	
+
 	public Mission(String academicYear, String entitled, int hours, List<Teacher> teachers) throws InvalidHoursException {
 		this.academicYear = academicYear;
 		this.entitled = entitled;
 		setHours(hours);
-		this.teachers = teachers;
+		setTeachers(teachers);
 	}
-	
+
 	public abstract String getType();
 	public abstract String getName();
 
@@ -77,7 +78,7 @@ public abstract class Mission implements Serializable {
 
 	public void setHours(int hours) throws InvalidHoursException {
 		if (hours <= 1400)this.hours=hours;
-			
+
 		else throw new InvalidHoursException();	
 	}
 
@@ -85,8 +86,15 @@ public abstract class Mission implements Serializable {
 		return teachers;
 	}
 
+	public boolean addTeacher(Teacher teacher) {
+		if(this.teachers.contains(teacher))
+			return false ;
+
+		return this.teachers.add(teacher) ;
+	}
+
 	public void setTeachers(List<Teacher> teachers) {
-		this.teachers = teachers;
+		teachers.forEach(teacher -> this.addTeacher(teacher));
 	}
 
 	@Override
