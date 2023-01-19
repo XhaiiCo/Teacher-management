@@ -32,6 +32,13 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
+/*
+ insert ignore into UTILISATEUR(EMAIL, NOM, PASSWORD,  PRENOM, ROLE)
+ values
+ ('secr', 'nSecr', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pSecr', 'S'),
+ ('dept', 'nDept', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDept', 'DDE'),
+ ('dom', 'nDom', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDom', 'DDOM');
+ */
 @Named
 @SessionScoped
 public class FillDatabaseControl implements Serializable{
@@ -103,45 +110,28 @@ public class FillDatabaseControl implements Serializable{
 
 	//OK
 	public void doAddMockUtilisateur() {
+		Utilisateur dde;
+		Utilisateur secr;
+		Utilisateur ddom;
 
-		for(int i = 1 ; i <= 6 ; i++)
+		try 
 		{
-			Utilisateur dde;
-			Utilisateur secr;
+			dde = new Utilisateur("Ndept", "Pdept", "dept@helha.be", 
+					"helha", ERole.DDE);
 
-			Department department = new Department("Departement" + i);
+			secr = new Utilisateur("Nsecr", "Psecr", "secr@helha.be", 
+					"helha", ERole.S);
 
-			try 
-			{
-				dde = new Utilisateur("NDirDept" + i , "PDirDept" + i, "ndirdept" + i + "p@helha.be", 
-						"helha", ERole.DDE, new Section(department, "Section" + i));
+			ddom = new Utilisateur("Ndom", "Pdom", "dom@helha.be", 
+					"helha", ERole.DDOM);
 
-				secr = new Utilisateur("SDept" + i , "PDept" + i, "sdept" + i + "p@helha.be", 
-						"helha", ERole.S, new Section(department, "Section" + i));
-
-				utilisateurEJB.add(dde);
-				utilisateurEJB.add(secr);
-			} 
-			catch (InvalidEmailException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-			Utilisateur ddom;
-			try 
-			{
-				ddom = new Utilisateur("NDirDom", "PDirDom", "ndirdomp@helha.be", 
-						"helha", ERole.DDOM, new Section(department, "Section" + i));
-
-				utilisateurEJB.add(ddom);
-			} 
-			catch (InvalidEmailException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			utilisateurEJB.add(dde);
+			utilisateurEJB.add(secr);
+			utilisateurEJB.add(ddom);
+		} 
+		catch (InvalidEmailException e) 
+		{
+			e.printStackTrace();
 		}
 	}
 
@@ -152,7 +142,7 @@ public class FillDatabaseControl implements Serializable{
 			Department d = new Department("Departement" + i);
 			Section section = new Section(d, "Section" + i);
 			List<Teacher> teachers = new ArrayList<Teacher>();
-			
+
 			try {
 				Mission mt = new MissionTransversale("2022-2023", "mt" + i , i * 100, teachers);
 				missionEJB.add(mt);
@@ -168,6 +158,6 @@ public class FillDatabaseControl implements Serializable{
 			}
 
 		}
-		
+
 	}
 }

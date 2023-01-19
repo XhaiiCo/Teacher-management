@@ -3,6 +3,7 @@ package be.helha.aemt.groupea1.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,9 +31,6 @@ public class Section implements Serializable {
 	private String name;
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<Mission> missions ;
-	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<UE> ues ;
 	
 	public List<UE> getUes() {
@@ -48,7 +46,6 @@ public class Section implements Serializable {
 	public Section(Department department, String name) {
 		this.department = department;
 		this.name = name;
-		this.missions = new ArrayList<Mission>();
 		this.ues = new ArrayList<UE>() ;
 	}
 	
@@ -80,22 +77,28 @@ public class Section implements Serializable {
 		this.name = name;
 	}
 
-	public List<Mission> getMissions() {
-		return missions;
-	}
-
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
+	@Override
+	public String toString() {
+		return "Section [id=" + id + ", department=" + department + ", name=" + name + ", missions=" + ", ues=" + ues + "]";
 	}
 
 	@Override
-	public String toString() {
-		return "Section [id=" + id + ", department=" + department + ", name=" + name + ", missions=" + missions
-				+ ", ues=" + ues + "]";
+	public int hashCode() {
+		return Objects.hash(department, name);
 	}
-	
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Section other = (Section) obj;
+		return Objects.equals(department, other.department) && Objects.equals(name, other.name);
+	}
+
 	
 	
 }

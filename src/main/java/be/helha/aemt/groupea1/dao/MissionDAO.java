@@ -115,6 +115,17 @@ public class MissionDAO extends AbstractDAO<Mission>{
 		//Find the old Mission
 		Mission oldMission = findById(mission.getId()) ;
 		if(mission == null) return null;
+
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		List<Teacher> ts = mission.getTeachers();
+		
+		Teacher teacher;
+		for (int i=0; i<ts.size(); i++) {
+			teacher = teacherDAO.find(ts.get(i));
+			if(teacher != null)
+				teachers.add(teacher);
+		}
+		mission.setTeachers(teachers);
 		
 		if(oldMission.getEntitled().equals(mission.getEntitled()) && oldMission.getAcademicYear().equals(mission.getAcademicYear()))
 			return super.update(mission);
@@ -123,6 +134,19 @@ public class MissionDAO extends AbstractDAO<Mission>{
 			return super.update(mission);
 		
 		return null ;
+	}
+	
+	@Override
+	public Mission delete(Mission mission) {
+		if(mission == null) return mission;
+
+		mission.setTeachers(null);
+		
+		Mission toRemove = em.merge(mission);
+		
+		em.remove(toRemove);
+
+		return mission;
 	}
 	
 	

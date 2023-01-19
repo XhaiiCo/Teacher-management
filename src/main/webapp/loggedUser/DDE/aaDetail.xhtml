@@ -94,28 +94,35 @@
 
 			<h:form id="form">
 				<p:dataTable var="assignment" id="assignmentsTable"
-					value="#{aaControl.getSelectedAssignments()}">
-					<p:column headerText="Nom">
+					value="#{aaControl.getSelectedAssignments()}" stripedRows="true">
+					
+					<p:column headerText="Nom" sortBy="#{assignment.teacher.lastName}" 
+					filterBy="#{assignment.teacher.lastName}" filterMatchMode="contains">
 						<h:outputText value="#{assignment.teacher.lastName}" />
 					</p:column>
 
-					<p:column headerText="Prénom">
+					<p:column headerText="Prénom" sortBy="#{assignment.teacher.firstName}" 
+					filterBy="#{assignment.teacher.firstName}" filterMatchMode="contains" >
 						<h:outputText value="#{assignment.teacher.firstName}" />
 					</p:column>
 
-					<p:column headerText="Email">
+					<p:column headerText="Email" sortBy="#{assignment.teacher.email}" 
+					filterBy="#{assignment.teacher.email}" filterMatchMode="contains">
 						<h:outputText value="#{assignment.teacher.email}" />
 					</p:column>
 
-					<p:column headerText="Quadrimestre">
+					<p:column headerText="Quadrimestre" sortBy="#{assignment.quarter}" 
+					filterBy="#{assignment.quarter}" filterMatchMode="contains">
 						<h:outputText value="#{assignment.quarter}" />
 					</p:column>
 
-					<p:column headerText="Groupe">
+					<p:column headerText="Groupe" sortBy="#{assignment.numGroup}" 
+					filterBy="#{assignment.numGroup}" filterMatchMode="contains">
 						<h:outputText value="#{assignment.numGroup}" />
 					</p:column>
 
-					<p:column headerText="Nb heures">
+					<p:column headerText="Nb heures" sortBy="#{assignment.nbHours}" 
+					filterBy="#{assignment.nbHours}" filterMatchMode="contains">
 						<h:outputText value="#{assignment.nbHours}" />
 					</p:column>
 

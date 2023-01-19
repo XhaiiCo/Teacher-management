@@ -14,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -31,7 +31,7 @@ public abstract class Mission implements Serializable {
 	
 	private int hours ;
 
-	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private List<Teacher> teachers;
 	
 	public Mission (){
@@ -91,7 +91,7 @@ public abstract class Mission implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Mission [id=" + id + ", academicYear=" + academicYear + ", entitled=" + entitled + ", hours=" + hours
+		return "Mission [id=" + id + ", academicYear=" + academicYear + ", entitled=" + entitled + ", hours=" + hours + ", teachers=" + teachers
 				+ "]";
 	}
 
