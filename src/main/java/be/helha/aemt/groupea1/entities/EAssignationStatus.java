@@ -2,9 +2,9 @@ package be.helha.aemt.groupea1.entities;
 
 public enum EAssignationStatus {
 
-	Done("Terminé"),
+	Done("Terminée"),
 	InProgress("En cours"),
-	Nothing("Pas attribué") ;
+	Nothing("Pas attribuée") ;
 	
 	private String text ;
 	private EAssignationStatus(String text) {
