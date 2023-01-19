@@ -32,6 +32,14 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
+/*
+ insert ignore into UTILISATEUR('EMAIL', 'NOM', 'PASSWORD', 'PRENOM', 'ROLE')
+ values
+ ('secr', 'nSecr', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pSecr', 'S'),
+ ('dept', 'nDept', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDept', 'DDE'),
+ ('dom', 'nDom', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDom', 'DDOM');
+ 
+ */
 @Named
 @SessionScoped
 public class FillDatabaseControl implements Serializable{
@@ -107,18 +115,16 @@ public class FillDatabaseControl implements Serializable{
 		Utilisateur secr;
 		Utilisateur ddom;
 
-		Department department = new Department("Departement");
-
 		try 
 		{
 			dde = new Utilisateur("Ndept", "Pdept", "dept@helha.be", 
-					"helha", ERole.DDE, new Section(department, "Section"));
+					"helha", ERole.DDE);
 
 			secr = new Utilisateur("Nsecr", "Psecr", "secr@helha.be", 
-					"helha", ERole.S, new Section(department, "Section"));
+					"helha", ERole.S);
 
 			ddom = new Utilisateur("Ndom", "Pdom", "dom@helha.be", 
-					"helha", ERole.DDOM, new Section(department, "Section"));
+					"helha", ERole.DDOM);
 
 			utilisateurEJB.add(dde);
 			utilisateurEJB.add(secr);
@@ -126,7 +132,6 @@ public class FillDatabaseControl implements Serializable{
 		} 
 		catch (InvalidEmailException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

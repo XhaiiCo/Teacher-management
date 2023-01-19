@@ -33,18 +33,6 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 		if(utilisateur == null) return null ;
 
 		if(find(utilisateur) != null) return null ;
-			
-		Department department = departmentDAO.find(utilisateur.getSection().getDepartment());
-		
-		if(department != null) {
-			utilisateur.getSection().setDepartment(department);
-		}
-		
-		Section section = sectionDAO.find(utilisateur.getSection());
-		
-		if(section != null) {
-			utilisateur.setSection(section);
-		}
 		
 		return super.add(utilisateur);
 	}
