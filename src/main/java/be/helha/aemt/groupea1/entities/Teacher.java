@@ -117,4 +117,8 @@ public class Teacher implements Serializable {
 		return this.lastName + " " + this.firstName;
 	}
 
+	public static float computeRatio(int nbHours, int denominator) {
+		
+		return (float) nbHours / denominator;
+	}
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.primefaces.event.RowEditEvent;
@@ -122,4 +123,21 @@ public class TeacherControl implements Serializable{
 
 		return listWithoutDuplicates ;
 	}
+	
+	public float computeWorkload() {
+		
+		Map<AA, Integer> aa_hours = aaEJB.computeNbHoursInAAsForTeacher(selectedTeacher);
+		
+		float ratio = 0;
+		for (var entry : aa_hours.entrySet()) 
+		{
+			int nbHours = aa_hours.get(entry.getKey());
+		    int fraction = entry.getKey().getFraction().getFraction();
+		    
+		    ratio += Teacher.computeRatio(nbHours, fraction);   
+		}
+		
+		return ratio * 10;	
+	}
+	
 }

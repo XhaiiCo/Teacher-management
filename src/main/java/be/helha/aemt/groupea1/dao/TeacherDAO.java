@@ -19,7 +19,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 	public TeacherDAO() {
 		super(Teacher.class) ;
 	}
-
+	
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
@@ -80,7 +80,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 			//aa.removeTeachers(teacher) ;
 			aaDAO.update(aa) ;
 		});
-
+		
 		return  super.delete(teacher);
 	}
 

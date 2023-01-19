@@ -17,9 +17,10 @@
 					teacherControl.selectedTeacher.firstName}</h1>
 				<h2>#{ teacherControl.selectedTeacher.email}</h2>
 				<p>remarque: #{ teacherControl.selectedTeacher.formatNote()}</p>
+				<p>ratio: #{ teacherControl.computeWorkload()} / 10</p>
 			</div>
 		</div>
-
+		
 		<h:form>
 			<div class="card">
 				<h2>Cours attribués</h2>
