@@ -95,17 +95,17 @@ public class AADAO extends AbstractDAO<AA>{
 					result.add(aa) ;
 					return ;
 				}
-			});
+			}) ;
 		});
 
 		return result ;
 	}
-	
+
 	public Map<AA, Integer> computeNbHoursInAAsForTeacher(Teacher teacher){
 		if(teacher == null) return null ;
-		
+
 		Map<AA, Integer> result = new HashMap<>() ;
-		
+
 		this.findByTeacher(teacher).forEach(aa -> {
 			int cpt = 0 ;
 			for(Assignment assignment : aa.getAssignments()) {
@@ -114,7 +114,7 @@ public class AADAO extends AbstractDAO<AA>{
 			}
 			result.put(aa, cpt) ;
 		});
-		
+
 		return result ;
 	}
 }
