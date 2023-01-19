@@ -33,7 +33,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
 /*
- insert ignore into UTILISATEUR('EMAIL', 'NOM', 'PASSWORD', 'PRENOM', 'ROLE')
+ insert ignore into UTILISATEUR(EMAIL, NOM, PASSWORD,  PRENOM, ROLE)
  values
  ('secr', 'nSecr', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pSecr', 'S'),
  ('dept', 'nDept', 'd+Rn6wFp6C538JDfIXoyM1fGoVepjAN15vbbr+ApyDo=', 'pDept', 'DDE'),
