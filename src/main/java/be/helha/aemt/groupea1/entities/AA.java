@@ -12,6 +12,8 @@ import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -52,11 +54,14 @@ public class AA implements Serializable{
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private UE ue;
-
+	
+	@Enumerated(EnumType.STRING)
+	private EAssignationStatus assignation ;
+	
 	public  AA() {}
 	
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
-			int nbGroup, int nbStudent, EFraction fraction, UE ue
+			int nbGroup, int nbStudent, EFraction fraction, UE ue, EAssignationStatus assignation
 			) throws NumberNegatifException, HoursNotWantedException {
 		this.code = code;
 		this.entitled = entitled;
@@ -67,6 +72,7 @@ public class AA implements Serializable{
 		this.setNbStudent(nbStudent);
 		this.fraction = fraction;
 		this.ue = ue;
+		this.assignation=assignation;
 	}
 	
 	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{

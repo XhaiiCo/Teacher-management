@@ -48,7 +48,8 @@
 						<h:outputText value="#{aa.ue.academicYear}" />
 					</p:column>
 
-					<p:column headerText="Statut de l'attribution">
+					<p:column headerText="Statut de l'attribution" sortBy="#{aa.assignStatus()}"
+					filterBy="#{aa.assignStatus()}" filterMatchMode="contains">
 						<h:outputText value="#{aa.assignStatus()}" />
 					</p:column>
 

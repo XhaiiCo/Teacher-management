@@ -9,6 +9,7 @@ import java.util.Map;
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.EAssignationStatus;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
@@ -77,6 +78,11 @@ public class AaControl implements Serializable {
 
 	public int findNbGroup(Teacher teacher) {
 		return this.selected.getTeachers().get(teacher) ;
+	}
+	
+	public EAssignationStatus[] getAssignation()
+	{
+		return EAssignationStatus.values();
 	}
 
 	public String openDetail(AA aa) {
