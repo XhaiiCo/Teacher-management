@@ -22,7 +22,7 @@
 
 		<h:form>
 			<div class="card">
-				<p:dataTable var="aa" value="#{aaControl.findAAByTeacher()}">
+				<p:dataTable var="aa" value="#{teacherControl.findAAByTeacher()}">
 					<p:column headerText="Code ue">
 						<h:outputText value="#{aa.ue.code}" />
 					</p:column>
@@ -38,6 +38,12 @@
 					<p:column headerText="Intitulé AA">
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<p:commandLink action="#{aaControl.openDetail(detail)}"
+							value="Detail" />
+					</p:column>
+
 				</p:dataTable>
 			</div>
 		</h:form>

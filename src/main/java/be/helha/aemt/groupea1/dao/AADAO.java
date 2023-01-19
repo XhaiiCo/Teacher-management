@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Assignment;
 import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
@@ -87,8 +88,8 @@ public class AADAO extends AbstractDAO<AA>{
 		List<AA> result = new ArrayList<AA>() ;
 
 		aas.forEach(aa -> {
-			aa.getTeachers().keySet().forEach((Teacher t) -> {
-				if(t.getEmail().equals(teacher.getEmail())) {
+			aa.getAssignments().forEach((Assignment a) -> {
+				if(a.getTeacher().equals(teacher)) {
 					result.add(aa) ;
 					return ;
 				}

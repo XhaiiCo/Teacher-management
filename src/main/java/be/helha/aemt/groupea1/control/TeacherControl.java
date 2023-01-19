@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.primefaces.event.RowEditEvent;
 
+import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
 import jakarta.annotation.PostConstruct;
@@ -37,6 +39,10 @@ public class TeacherControl implements Serializable{
 
 	@EJB
 	private TeacherEJB teacherEJB ;
+
+	@EJB
+	private AAEJB aaEJB ;
+
 
 	@PostConstruct
 	public void init() {
@@ -105,5 +111,9 @@ public class TeacherControl implements Serializable{
 		}
 		else
 			this.showErrorToast("Erreur", "Erreur lors de la suppression");
+	}
+
+	public List<AA> findAAByTeacher(){
+		return this.aaEJB.findByTeacher(this.selectedTeacher) ;
 	}
 }

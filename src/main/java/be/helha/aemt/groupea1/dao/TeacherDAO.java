@@ -77,7 +77,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 		
 		List<AA> aas = aaDAO.findByTeacher(teacher) ;
 		aas.forEach(aa -> {
-			aa.removeTeachers(teacher) ;
+			//aa.removeTeachers(teacher) ;
 			aaDAO.update(aa) ;
 		});
 

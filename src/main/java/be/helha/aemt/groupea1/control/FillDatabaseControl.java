@@ -88,7 +88,7 @@ public class FillDatabaseControl implements Serializable{
 				for(int k = 1 ; k <= 3 ; k++) {
 					UE ue = new UE("2022-2023", "1Bi", "Code"+ i+j+k, "UE"+i+j+k, 6, s) ;
 					for(int l = 1 ; l <= 2 ; l++) {
-						AA aa = new AA( "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 20, 20, 2, 20, EFraction.f480, ue ) ; 
+						AA aa = new AA( "Code"+i+j+k+l, "AA"+i+j+k+l, 3, 20, 20, 3, 2, 20, EFraction.f480, ue ) ; 
 						ue.addAA(aa) ;
 					}
 					s.addUe(ue);
