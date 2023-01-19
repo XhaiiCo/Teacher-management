@@ -40,7 +40,7 @@ public class UE implements Serializable {
 	private Section section;
 	
 	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-	private List<AA> aas;
+	private List<AA> aas = new ArrayList<>();
 	
 	public UE() {}
 		
@@ -57,7 +57,6 @@ public class UE implements Serializable {
 		this.code = code;
 		this.entitled = entitled;
 		setCredit(credit);
-		this.aas= new ArrayList<AA>();
 		this.section = section ;
 	}
 	
@@ -128,7 +127,7 @@ public class UE implements Serializable {
 	}
 
 	public void setAas(List<AA> aas) {
-		this.aas = aas;
+		aas.forEach(aa -> this.addAA(aa)) ;
 	}
 
 
@@ -140,12 +139,9 @@ public class UE implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, id);
+		return Objects.hash(code, section);
 	}
 
-	/**
-	 * Equals on the id and the code
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -155,7 +151,8 @@ public class UE implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UE other = (UE) obj;
-		return Objects.equals(code, other.code) && id == other.id;
+		return Objects.equals(code, other.code) && Objects.equals(section, other.section);
 	}
+	
 }
 

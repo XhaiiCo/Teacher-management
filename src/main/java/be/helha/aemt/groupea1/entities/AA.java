@@ -249,12 +249,9 @@ public class AA implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, id);
+		return Objects.hash(code, ue);
 	}
-	
-	/**
-	 * Equals on id and code
-	 */
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -264,6 +261,7 @@ public class AA implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		AA other = (AA) obj;
-		return Objects.equals(code, other.code) && id == other.id;
+		return Objects.equals(code, other.code) && Objects.equals(ue, other.ue);
 	}
+
 }

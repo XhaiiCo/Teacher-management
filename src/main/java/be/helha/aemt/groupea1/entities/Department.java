@@ -24,17 +24,18 @@ public class Department implements Serializable {
 	private String name ;
 	
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	private List<Section> sections ;
+	private List<Section> sections = new ArrayList<>();
 	
 	public Department() {}
 	
 	public Department(String name) {
 		this.name = name;
-		this.sections = new ArrayList<Section>();
 	}
 	
-	public void addSection(Section section) {	
-		this.sections.add(section) ;
+	public boolean addSection(Section section) {	
+		if(this.sections.contains(section)) return false ;
+
+		return this.sections.add(section) ;
 	}
 
 	public int getId() {
@@ -58,7 +59,7 @@ public class Department implements Serializable {
 	}
 
 	public void setSections(List<Section> sections) {
-		this.sections = sections;
+		sections.forEach(section -> this.addSection(section));
 	}
 
 	@Override
@@ -85,9 +86,4 @@ public class Department implements Serializable {
 		Department other = (Department) obj;
 		return Objects.equals(name, other.name);
 	}
-
-
-
-	
-	
 }
