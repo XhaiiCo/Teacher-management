@@ -38,7 +38,6 @@
 				#{aaControl.selected.hoursQ2} heures <b>Q2</b>
 			</p>
 
-
 			<p>#{aaControl.selected.computeNbHours()} heures total</p>
 		</h:form>
 
@@ -59,22 +58,27 @@
 					</div>
 
 					<div class="field">
-						<p:outputLabel for="@next" value="Groupe" />
-						<p:inputText id="newGroupAssignment" value="#{aaControl.newGroup}" />
-					</div>
-
-					<div class="field">
 						<p:outputLabel for="@next">Quadrimestre</p:outputLabel>
-						<p:selectOneMenu 
-							value="#{aaControl.newQuarter}">
+						<p:selectOneMenu value="#{aaControl.newQuarter}"
+							update=":formAddAssignment:groupSelect">
 							<f:selectItems value="#{aaControl.quarters}" var="quarter"
 								itemLabel="#{quarter}" itemValue="#{quarter}" />
+							<p:ajax update="groupSelect" listener="#{aaControl.onItemSelectQuarter()}" />
 						</p:selectOneMenu>
 					</div>
 
 					<div class="field">
+						<p:outputLabel for="@next" value="Groupe" />
+						<p:selectOneMenu id="groupSelect" value="#{aaControl.newGroup}">
+							<f:selectItems value="#{aaControl.generateGroupsMap()}" />
+						</p:selectOneMenu>
+					</div>
+
+
+					<div class="field">
 						<p:outputLabel for="@next" value="Nb heures" />
-						<p:inputText id="newHoursAssignment" value="#{aaControl.newHoursAssignment}" />
+						<p:inputText id="newHoursAssignment"
+							value="#{aaControl.newHoursAssignment}" />
 					</div>
 
 					<p:divider />

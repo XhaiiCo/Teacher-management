@@ -64,6 +64,10 @@ public class AaControl implements Serializable {
 	public int getNewGroup() {return newGroup ;	}
 	public void setNewGroup(int value) {this.newGroup = value;}
 
+	private Map<String, Integer> groupsMap = new LinkedHashMap<>();
+	public Map<String, Integer> getGroupsMap() {return groupsMap;}
+	public void setGroupsMap(Map<String, Integer> groupsMap) {this.groupsMap = groupsMap;}
+
 	private EQuarter newQuarter = EQuarter.Q1;
 	public EQuarter getNewQuarter() {return newQuarter ;	}
 	public void setNewQuarter(EQuarter value) {this.newQuarter = value;}
@@ -85,10 +89,10 @@ public class AaControl implements Serializable {
 		}
 	}
 
-    public EQuarter[] getQuarters() {
-        return EQuarter.values();
-    }
-	
+	public EQuarter[] getQuarters() {
+		return EQuarter.values();
+	}
+
 	public EAssignationStatus[] getAssignation()
 	{
 		return EAssignationStatus.values();
@@ -97,12 +101,30 @@ public class AaControl implements Serializable {
 	public String openDetail(AA aa) {
 		this.selected = aa ;
 		this.newGroup =  1 ;
+		this.onItemSelectQuarter(); 
 		if(!this.teachers.isEmpty())
 			this.selectedTeacherEmail = this.teachers.get(0).getEmail() ;
 
 		return "/DDE/aaDetail" ;
 	}
 
+	public Map<String, Integer> generateGroupsMap(){
+		int nbGroup = this.selected.getNbGroupQ1() ;
+		if(this.newQuarter != null && this.newQuarter.equals(EQuarter.Q2)) 
+			nbGroup = this.selected.getNbGroupQ2() ;
+
+		Map<String, Integer> result = new LinkedHashMap<>() ;
+
+		for(int i = 1 ; i <= nbGroup ; i++)
+			result.put("Groupe " + i , i) ;
+
+		return result ; 
+	}
+	
+	public void onItemSelectQuarter() {
+		this.setGroupsMap(generateGroupsMap());
+	}
+	
 	public void showInfoToast(String summary, String detail ) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
 	}
@@ -143,5 +165,4 @@ public class AaControl implements Serializable {
 		this.assignmentEJB.delete(this.selectedAssignment) ;
 		this.showInfoToast("Désattribué", "Enseignant désattribué");
 	}
-
 }
