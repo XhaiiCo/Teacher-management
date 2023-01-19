@@ -181,13 +181,13 @@
 					                                filter="true" filterMatchMode="startsWith" converter="sectionConverter">
 					
 					                    <f:selectItems value="#{ sectionControl.getSections() }" var="section"
-					                                itemLabel="#{ section.name }" itemValue="#{ section }"/>
+					                                itemLabel="#{ section.department.getName() }: #{ section.name }" itemValue="#{ section }"/>
 					
 					                    <p:column>
 					                        <f:facet name="header">
 					                            <h:outputText value="Nom"/>
 					                        </f:facet>
-					                        <h:outputText value="#{ s.name }"/>
+					                        <h:outputText value="#{ s.department.getName() }: #{ s.name }"/>
 					                    </p:column>
 					                </p:selectOneMenu>		
 								</p:panelGrid>
