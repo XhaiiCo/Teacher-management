@@ -1,7 +1,10 @@
 package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.primefaces.event.RowEditEvent;
 
@@ -48,11 +51,11 @@ public class TeacherControl implements Serializable{
 	public void init() {
 		this.teachers = this.teacherEJB.findAll() ;
 	}
-	
+
 	public String goToDetailPage(Teacher selectedTeacher) {
-		
+
 		this.setSelectedTeacher(selectedTeacher);
-		
+
 		return "/S/teacherDetail" ;
 	}
 
@@ -115,5 +118,15 @@ public class TeacherControl implements Serializable{
 
 	public List<AA> findAAByTeacher(){
 		return this.aaEJB.findByTeacher(this.selectedTeacher) ;
+	}
+
+	public List<AA> findDistinctAAByTeacher(){
+		List<AA> aas = this.aaEJB.findByTeacher(this.selectedTeacher) ;
+
+		//Remove duplicate
+		Set<AA> set = new LinkedHashSet<>(aas);
+		List<AA> listWithoutDuplicates = new ArrayList<>(set);
+
+		return listWithoutDuplicates ;
 	}
 }
