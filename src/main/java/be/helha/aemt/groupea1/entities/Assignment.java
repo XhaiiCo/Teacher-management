@@ -1,8 +1,7 @@
-/* SAUTED
 package be.helha.aemt.groupea1.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,46 +15,79 @@ public class Assignment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
 
-	private String academicYear ;
+	private Teacher teacher ;
 
-	private List<AA> aas ;
+	private EQuarter quarter ;
 
-	private List<Mission> missions ;
+	private int numGroup ;
+
+	private int NbHours ;
 
 	public Assignment() {}
 
-	public int getId() {
-		return id;
+	public Assignment(Teacher teacher,  EQuarter quarter, int nbHours, int group) {
+		super();
+		this.teacher = teacher ;
+		this.quarter = quarter;
+		this.NbHours = nbHours;
+		this.numGroup = group ;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getNumGroup() {
+		return numGroup;
 	}
 
-	public String getAcademicYear() {
-		return academicYear;
+	public void setNumGroup(int numGroup) {
+		this.numGroup = numGroup;
 	}
 
-	public void setAcademicYear(String academicYear) {
-		this.academicYear = academicYear;
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public List<AA> getAas() {
-		return aas;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
-	public void setAas(List<AA> aas) {
-		this.aas = aas;
+	public EQuarter getQuarter() {
+		return quarter;
 	}
 
-	public List<Mission> getMissions() {
-		return missions;
+	public void setQuarter(EQuarter quarter) {
+		this.quarter = quarter;
 	}
 
-	public void setMissions(List<Mission> missions) {
-		this.missions = missions;
-	} 
-	
+
+	public int getNbHours() {
+		return NbHours;
+	}
+
+	public void setNbHours(int nbHours) {
+		NbHours = nbHours;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(NbHours, numGroup, quarter, teacher);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Assignment other = (Assignment) obj;
+		return NbHours == other.NbHours && numGroup == other.numGroup && quarter == other.quarter
+				&& Objects.equals(teacher, other.teacher);
+	}
+
+	@Override
+	public String toString() {
+		return "Assignment [id=" + id + ", teacher=" + teacher + ", quarter=" + quarter + ", numGroup=" + numGroup
+				+ ", NbHours=" + NbHours + "]";
+	}
 	
 }
-*/

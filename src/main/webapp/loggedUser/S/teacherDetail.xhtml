@@ -22,22 +22,35 @@
 
 		<h:form>
 			<div class="card">
-				<p:dataTable var="aa" value="#{aaControl.findAAByTeacher()}">
-					<p:column headerText="Code ue">
+				<h2>Cours attribués</h2>
+				<p:dataTable var="aa"
+					value="#{teacherControl.findDistinctAAByTeacher()}">
+
+					<p:column headerText="Année" filterBy="#{aa.ue.academicYear}" sortBy="#{aa.ue.academicYear}" filterMatchMode="contains">
+						<h:outputText value="#{aa.ue.academicYear}" />
+					</p:column>
+
+					<p:column headerText="Code ue" filterBy="#{aa.ue.code}" sortBy="#{aa.ue.code}" filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.code}" />
 					</p:column>
 
-					<p:column headerText="Intitulé UE">
+					<p:column headerText="Intitulé UE" filterBy="#{aa.ue.entitled}" sortBy="#{aa.ue.entitled}" filterMatchMode="contains" >
 						<h:outputText value="#{aa.ue.entitled}" />
 					</p:column>
 
-					<p:column headerText="code AA">
+					<p:column headerText="code AA" filterBy="#{aa.code}" sortBy="#{aa.code}" filterMatchMode="contains">
 						<h:outputText value="#{aa.code}" />
 					</p:column>
 
-					<p:column headerText="Intitulé AA">
+					<p:column headerText="Intitulé AA" filterBy="#{aa.entitled}" sortBy="#{aa.entitled}" filterMatchMode="contains" >
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<p:commandLink action="#{aaControl.openDetail(detail)}"
+							value="Detail" />
+					</p:column>
+
 				</p:dataTable>
 			</div>
 		</h:form>

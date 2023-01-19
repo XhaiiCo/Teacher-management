@@ -2,30 +2,30 @@ package be.helha.aemt.groupea1.entities;
 
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
-import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "aa", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"code", "ue_id"})
+		@UniqueConstraint(columnNames = {"code", "ue_id"})
 })
 public class AA implements Serializable{
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id  ;
@@ -40,72 +40,122 @@ public class AA implements Serializable{
 
 	private int hoursQ2 ;
 
-	private int nbGroup ;
+	private int nbGroupQ1 ;
+
+	private int nbGroupQ2 ;
 
 	private int nbStudent ;
 
+	@Enumerated(EnumType.STRING)
 	private EFraction fraction ;
 
-	@ElementCollection
-	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.MERGE})
-	private Map<Teacher, Integer> teachers = new HashMap<>();
+	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+	private List<Assignment> assignments = new ArrayList<>();
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private UE ue;
 
 	public  AA() {}
-	
+
 	public AA(String code, String entitled, int credit, int hoursQ1, int hoursQ2,
-			int nbGroup, int nbStudent, EFraction fraction, UE ue
-			) throws NumberNegatifException, HoursNotWantedException {
+			int nbGroupQ1, int nbGroupQ2, int nbStudent, 
+			EFraction fraction, UE ue) throws NumberNegatifException  {
 		this.code = code;
 		this.entitled = entitled;
 		this.credit = credit;
 		this.setHoursQ1(hoursQ1);
 		this.setHoursQ2(hoursQ2);
-		this.nbGroup = nbGroup;
+		this.setNbGroupQ1(nbGroupQ1);
+		this.setNbGroupQ2(nbGroupQ2);
 		this.setNbStudent(nbStudent);
 		this.fraction = fraction;
 		this.ue = ue;
 	}
-	
-	public void addTeacher(Teacher teacher, int nbAssignements) throws OutOfBoundNbAssignement, NumberNegatifException{
-		if(nbAssignements <= 0)
-			throw new NumberNegatifException() ;
 
-		if(nbAssignements + computeNbAssignements() > nbGroup)
-			throw new OutOfBoundNbAssignement() ;
-
-		if(this.teachers.get(teacher) != null)
-			this.teachers.put(teacher, this.teachers.get(teacher)+ nbAssignements) ;
-		else
-			this.teachers.put(teacher, nbAssignements) ;	
+	public int getNbGroupQ1() {
+		return nbGroupQ1;
 	}
 
-	public void removeTeachers(Teacher teacher) {
-		this.teachers.remove(teacher) ;	
+	public void setNbGroupQ1(int nbGroupQ1) throws NumberNegatifException{
+		if(nbGroupQ1 < 0) throw new NumberNegatifException() ;
+
+		this.nbGroupQ1 = nbGroupQ1;
 	}
-	
+
+	public int getNbGroupQ2() {
+		return nbGroupQ2;
+	}
+
+	public void setNbGroupQ2(int nbGroupQ2) throws NumberNegatifException {
+		if(nbGroupQ2 < 0) throw new NumberNegatifException() ;
+
+		this.nbGroupQ2 = nbGroupQ2;
+	}
+
+	public void addAssignment(Assignment assignment) throws AllHoursAssignmedException, NumberNegatifException{
+		if(this.computeNbHoursAssignmentForAGroup(assignment.getQuarter(), assignment.getNumGroup()) + assignment.getNbHours() > nbHoursForQuarter(assignment.getQuarter()))
+			throw new AllHoursAssignmedException() ;
+
+		this.assignments.add(assignment) ;
+	}
+
+	public int computeNbHoursAssignmentForAGroup(EQuarter quarter, int group) {
+		int result = 0 ;
+
+		for(Assignment a : this.assignments) {
+			if(a.getQuarter().equals(quarter) && a.getNumGroup() == group)
+				result += a.getNbHours() ;
+		}
+
+		return result ;
+	}
+
+	public int nbHoursForQuarter(EQuarter quarter) {
+		if(quarter.equals(EQuarter.Q1)) 
+			return this.hoursQ1 ; 
+
+		return this.hoursQ2 ;
+	}
+
+	public void removeAssignment(Assignment assignment) {
+		this.assignments.remove(assignment) ;	
+	}
+
 	public int computeNbHours() {
 		return this.hoursQ1 + this.hoursQ2 ;
 	}
 
 	public String assignStatus() {
-		if(this.computeNbAssignements() == this.nbGroup) 
+		if(this.assignments.isEmpty())
+			return EAssignationStatus.Nothing.getText() ;
+
+		if(this.isAssignationDone())
 			return EAssignationStatus.Done.getText() ;
 
-		if(this.computeNbAssignements() > 0)
-			return EAssignationStatus.InProgress.getText() ;
+		return EAssignationStatus.InProgress.getText() ;
 
-		return EAssignationStatus.Nothing.getText() ;
 	}
 
-	public Map<Teacher, Integer> getTeachers() {
-		return teachers;
+	public boolean isAssignationDone() {
+		for(int i = 1 ; i <= this.nbGroupQ1 ; i++) {
+			if(this.computeNbHoursAssignmentForAGroup(EQuarter.Q1, i) != this.hoursQ1)
+				return false ;
+		}
+
+		for(int i = 1 ; i <= this.nbGroupQ2 ; i++) {
+			if(this.computeNbHoursAssignmentForAGroup(EQuarter.Q2, i) != this.hoursQ2)
+				return false ;
+		}
+
+		return true ;
 	}
 
-	public int computeNbAssignements() {
-		return this.teachers.values().stream().reduce(0, (a,b) -> a + b) ;
+	public List<Assignment> getAssignments() {
+		return assignments;
+	}
+
+	public int computeNbAssignments() {
+		return assignments.size() ;
 	}
 
 	public UE getUe() {
@@ -171,17 +221,6 @@ public class AA implements Serializable{
 		else throw new NumberNegatifException();
 	}
 
-	public int getNbGroup() {
-		return nbGroup;
-	}
-
-	public void setNbGroup(int nbGroup) throws NumberNegatifException {
-		if( nbGroup >= 0 ) this.nbGroup = nbGroup;
-
-		else throw new NumberNegatifException();
-
-	}
-
 	public int getNbStudent() {
 		return nbStudent;
 	}
@@ -202,15 +241,17 @@ public class AA implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AA [id=" + id +  ", code=" + code + ", entitled=" + entitled
-				+ ", credit=" + credit + ", hoursQ1=" + hoursQ1 + ", hoursQ2=" + hoursQ2
-				+ ", nbGroup=" + nbGroup + ", nbStudent=" + nbStudent + ", fraction=" + fraction + "]";
+		return "AA [id=" + id + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", hoursQ1="
+				+ hoursQ1 + ", hoursQ2=" + hoursQ2 + ", nbGroupQ1=" + nbGroupQ1 + ", nbGroupQ2=" + nbGroupQ2
+				+ ", nbStudent=" + nbStudent + ", fraction=" + fraction + ", assignments=" + assignments + ", ue=" + ue
+				+ "]";
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(code, id);
 	}
+
 	/**
 	 * Equals on id and code
 	 */

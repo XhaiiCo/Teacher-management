@@ -20,10 +20,12 @@
 
 			<p>#{aaControl.selected.credit} credits</p>
 
-			<p>#{aaControl.selected.nbGroup} groupes</p>
+			<p>#{aaControl.selected.nbGroupQ1} groupe(s) Q1</p>
+
+			<p>#{aaControl.selected.nbGroupQ2} groupe(s) Q2</p>
 
 			<p:outputLabel id="nbAssignements"
-				value="#{aaControl.selected.computeNbAssignements()}
+				value="#{aaControl.selected.computeNbAssignments()}
 				attributions" />
 
 			<p>#{aaControl.selected.nbStudent} étudiants</p>
@@ -36,14 +38,13 @@
 				#{aaControl.selected.hoursQ2} heures <b>Q2</b>
 			</p>
 
-
 			<p>#{aaControl.selected.computeNbHours()} heures total</p>
 		</h:form>
 
 		<div class="card">
 			<h2>Enseignant(s) attribué(s)</h2>
 
-			<h:form id="formAddTeacher">
+			<h:form id="formAddAssignment">
 				<p:growl id="msgs" showDetail="true" />
 
 				<p:panel header="Ajouter un enseignant" style="margin-bottom:10px;">
@@ -57,18 +58,34 @@
 					</div>
 
 					<div class="field">
-						<span class="ui-floatllabel"> <p:outputLabel for="@next"
-								value="Nombre de groupe(s)" /> <p:inputText
-								id="nbAssignementsInput"
-								value="#{aaControl.selectedNbAssignements}" />
-						</span>
+						<p:outputLabel for="@next">Quadrimestre</p:outputLabel>
+						<p:selectOneMenu value="#{aaControl.newQuarter}"
+							update=":formAddAssignment:groupSelect">
+							<f:selectItems value="#{aaControl.quarters}" var="quarter"
+								itemLabel="#{quarter}" itemValue="#{quarter}" />
+							<p:ajax update="groupSelect" listener="#{aaControl.onItemSelectQuarter()}" />
+						</p:selectOneMenu>
+					</div>
+
+					<div class="field">
+						<p:outputLabel for="@next" value="Groupe" />
+						<p:selectOneMenu id="groupSelect" value="#{aaControl.newGroup}">
+							<f:selectItems value="#{aaControl.generateGroupsMap()}" />
+						</p:selectOneMenu>
+					</div>
+
+
+					<div class="field">
+						<p:outputLabel for="@next" value="Nombre d'heures" />
+						<p:inputText id="newHoursAssignment"
+							value="#{aaControl.newHoursAssignment}" />
 					</div>
 
 					<p:divider />
 
 					<div class="field">
 						<p:commandButton value="Ajouter"
-							update=":form:teacherTable, :formAddTeacher:msgs, :infos:nbAssignements"
+							update=":form:assignmentsTable, :formAddAssignment:msgs, :infos:nbAssignements"
 							action="#{aaControl.addTeacher()}" />
 					</div>
 				</p:panel>
@@ -76,29 +93,38 @@
 			<br />
 
 			<h:form id="form">
-				<p:dataTable var="teacher" id="teacherTable"
-					value="#{aaControl.getSelectedTeachers()}">
+				<p:dataTable var="assignment" id="assignmentsTable"
+					value="#{aaControl.getSelectedAssignments()}">
 					<p:column headerText="Nom">
-						<h:outputText value="#{teacher.lastName}" />
+						<h:outputText value="#{assignment.teacher.lastName}" />
 					</p:column>
 
 					<p:column headerText="Prénom">
-						<h:outputText value="#{teacher.firstName}" />
+						<h:outputText value="#{assignment.teacher.firstName}" />
 					</p:column>
 
 					<p:column headerText="Email">
-						<h:outputText value="#{teacher.email}" />
+						<h:outputText value="#{assignment.teacher.email}" />
 					</p:column>
 
-					<p:column headerText="Nb groupes">
-						<h:outputText value="#{aaControl.findNbGroup(teacher)}" />
+					<p:column headerText="Quadrimestre">
+						<h:outputText value="#{assignment.quarter}" />
 					</p:column>
+
+					<p:column headerText="Groupe">
+						<h:outputText value="#{assignment.numGroup}" />
+					</p:column>
+
+					<p:column headerText="Nb heures">
+						<h:outputText value="#{assignment.nbHours}" />
+					</p:column>
+
 
 					<p:column>
 						<p:commandButton class="ui-button-warning rounded-button"
 							icon="pi pi-trash" process="@this"
-							oncomplete="PF('deleteTeacherDialog').show()"
-							action="#{aaControl.setSelectedTeacher(teacher)}">
+							oncomplete="PF('deleteAssignmentDialog').show()"
+							action="#{aaControl.setSelectedAssignment(assignment)}">
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -107,16 +133,16 @@
 	</div>
 
 	<h:form id="dialogs">
-		<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
+		<p:confirmDialog widgetVar="deleteAssignmentDialog" showEffect="fade"
 			width="300" message="Désattribuer l'enseignant" header="Confirm"
 			severity="warn">
 			<p:commandButton value="Oui" icon="pi pi-check"
-				actionListener="#{aaControl.unassignTeacher()}" process="@this"
-				update=":form:teacherTable, :formAddTeacher:msgs, :infos:nbAssignements"
-				oncomplete="PF('deleteTeacherDialog').hide()" />
+				actionListener="#{aaControl.removeAssignment()}" process="@this"
+				update=":form:assignmentsTable, :formAddAssignment:msgs, :infos:nbAssignements"
+				oncomplete="PF('deleteAssignmentDialog').hide()" />
 			<p:commandButton value="Non" type="button"
 				styleClass="ui-button-secondary" icon="pi pi-times"
-				onclick="PF('deleteTeacherDialog').hide()" />
+				onclick="PF('deleteAssignmentDialog').hide()" />
 		</p:confirmDialog>
 	</h:form>
 </h:body>
