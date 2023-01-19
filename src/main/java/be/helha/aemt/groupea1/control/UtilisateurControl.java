@@ -9,6 +9,7 @@ import be.helha.aemt.groupea1.ejb.UtilisateurEJB;
 import be.helha.aemt.groupea1.entities.ERole;
 import be.helha.aemt.groupea1.entities.Utilisateur;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -76,21 +77,13 @@ public class UtilisateurControl implements Serializable {
 		this.users = this.utilisateurEJB.findAll() ;
 	}
 
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
-
 	public void onRowEdit(RowEditEvent<Utilisateur> event) {
 		Utilisateur updatedUser = event.getObject() ;
 
 		if(this.utilisateurEJB.update(updatedUser) != null) 
-			this.showInfoToast("Modifié", "Utilisateur modifié" );
+			Toast.showInfoToast("Modifié", "Utilisateur modifié" );
 		else
-			this.showErrorToast("Erreur", "Erreur lors de la modification");
+			Toast.showErrorToast("Erreur", "Erreur lors de la modification");
 	}
 
 	public void onRowCancel(RowEditEvent<Utilisateur> event) {
@@ -107,10 +100,10 @@ public class UtilisateurControl implements Serializable {
 
 		if(addedUser != null) {
 			this.users.add(addedUser) ;
-			this.showInfoToast("Ajouté", "Utilisateur ajouté");
+			Toast.showInfoToast("Ajouté", "Utilisateur ajouté");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cet utilisateur est peut être déjà présent");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout, cet utilisateur est peut être déjà présent");
 	}
 
 	public void removeUser() {
@@ -119,9 +112,9 @@ public class UtilisateurControl implements Serializable {
 		Utilisateur removedUser = this.utilisateurEJB.delete(this.removeUser) ; 
 		if(removedUser != null) {
 			this.users.remove(removedUser) ;
-			this.showInfoToast("Supprimé", "Utilisateur supprimé");
+			Toast.showInfoToast("Supprimé", "Utilisateur supprimé");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de la suppression");
+			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
 }

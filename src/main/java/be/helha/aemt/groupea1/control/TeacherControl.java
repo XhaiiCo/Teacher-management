@@ -8,6 +8,7 @@ import org.primefaces.event.RowEditEvent;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -50,21 +51,13 @@ public class TeacherControl implements Serializable{
 		return "/S/teacherDetail" ;
 	}
 
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
-
 	public void onRowEdit(RowEditEvent<Teacher> event) {
 		Teacher updatedTeacher = event.getObject() ;
 
 		if(this.teacherEJB.update(updatedTeacher) != null) 
-			this.showInfoToast("Modifié", "Enseignant modifié" );
+			Toast.showInfoToast("Modifié", "Enseignant modifié" );
 		else
-			this.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
+			Toast.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
 	}
 
 	public void onRowCancel(RowEditEvent<Teacher> event) {
@@ -89,10 +82,10 @@ public class TeacherControl implements Serializable{
 
 		if(addedTeacher != null) {
 			this.teachers.add(addedTeacher) ;
-			this.showInfoToast("Ajouté", "Enseignant ajouté");
+			Toast.showInfoToast("Ajouté", "Enseignant ajouté");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cet enseignant est peut être déjà présent");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout, cet enseignant est peut être déjà présent");
 	}
 
 	public void removeTeacher() {
@@ -101,9 +94,9 @@ public class TeacherControl implements Serializable{
 		Teacher removedTeacher = this.teacherEJB.delete(this.removeTeacher) ; 
 		if(removedTeacher != null) {
 			this.teachers.remove(removedTeacher) ;
-			this.showInfoToast("Supprimé", "Enseignant supprimé");
+			Toast.showInfoToast("Supprimé", "Enseignant supprimé");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de la suppression");
+			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
 }

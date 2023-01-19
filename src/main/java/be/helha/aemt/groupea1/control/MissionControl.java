@@ -14,6 +14,7 @@ import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -44,22 +45,14 @@ public class MissionControl implements Serializable {
 	public void init () {
 		this.missions = this.missionEJB.findAll();
 	}
-
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
 	
 	public void onRowEdit(RowEditEvent<Mission> event) {
 		Mission updatedMission = event.getObject() ;
 
 		if(this.missionEJB.update(updatedMission) != null) 
-			this.showInfoToast("Modifié", "Mission modifiée" );
+			Toast.showInfoToast("Modifié", "Mission modifiée" );
 		else
-			this.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
+			Toast.showErrorToast("Erreur", new NotAvailableEmailException().getMessage());
 	}
 
 	public void onRowCancel(RowEditEvent<Mission> event) {
@@ -76,10 +69,11 @@ public class MissionControl implements Serializable {
 		
 		if(missionAdd != null) {
 			this.missions.add(missionAdd) ;
-			this.showInfoToast("Ajouté", "Mission ajoutée");
+			Toast.showInfoToast("Ajouté", "Mission ajoutée");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout, cette mission est peut être déjà présente");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout, cette mission est peut être déjà présente");
+		this.type = 1;
 	}
 
 	public void removeMission() {
@@ -88,10 +82,10 @@ public class MissionControl implements Serializable {
 		Mission removedMission = this.missionEJB.delete(this.removeMission); 
 		if(removedMission != null) {
 			this.missions.remove(removedMission);
-			this.showInfoToast("Supprimé", "Mission supprimée");
+			Toast.showInfoToast("Supprimé", "Mission supprimée");
 		}
 		else
-			this.showErrorToast("Erreur", "Erreur lors de la suppression");
+			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
 
 }

@@ -12,6 +12,7 @@ import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.OutOfBoundNbAssignement;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -86,41 +87,34 @@ public class AaControl implements Serializable {
 
 		return "/DDE/aaDetail" ;
 	}
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
 
 	public void addTeacher() {
 		try {
 			Teacher teacherToAdd = this.teacherEJB.findByEmail(new Teacher("", "", selectedTeacherEmail, null)) ;
 
 			if(teacherToAdd == null) {
-				this.showErrorToast("Erreur", "Erreur lors de l'ajout");
+				Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
 				return ;
 			}
 
 			try {
 				this.selected.addTeacher(teacherToAdd, selectedNbAssignements);
 			} catch (OutOfBoundNbAssignement e) {
-				this.showErrorToast("Erreur", e.getMessage());
+				Toast.showErrorToast("Erreur", e.getMessage());
 				return ;
 			}
 
 			this.selected = aaEJB.update(this.selected) ;
-			this.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
+			Toast.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
 		} catch (InvalidEmailException e) {
 			e.printStackTrace();
-			this.showErrorToast("Erreur", "Erreur lors de l'ajout");
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
 	}
 	
 	public void unassignTeacher() {
 		this.selected.removeTeachers(this.selectedTeacher) ;
 		this.aaEJB.update(this.selected) ;
-		this.showInfoToast("Désattribué", "Enseignant désattribué");
+		Toast.showInfoToast("Désattribué", "Enseignant désattribué");
 	}
 }

@@ -27,6 +27,7 @@ import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
+import be.helha.aemt.groupea1.util.Toast;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -163,7 +164,7 @@ public class FillDatabaseControl implements Serializable{
 				missionEJB.add(ms);
 
 			}catch (InvalidHoursException e) {
-				e.printStackTrace();
+				Toast.showErrorToast("Erreur", e.getMessage());
 			}
 
 		}
