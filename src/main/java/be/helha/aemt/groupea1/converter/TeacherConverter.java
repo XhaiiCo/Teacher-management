@@ -1,5 +1,6 @@
-package be.helha.aemt.groupea1.entities;
+package be.helha.aemt.groupea1.converter;
 
+import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
@@ -18,7 +19,7 @@ public class TeacherConverter implements Converter<Object> {
 		} catch (InvalidEmailException e) {
 			e.printStackTrace();
 		}
-		return "error (email invalide)";
+		return "";
 	}
 
 	@Override
