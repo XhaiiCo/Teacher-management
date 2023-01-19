@@ -95,7 +95,7 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="Role" filterMatchMode="contains">
+						<p:column headerText="Role" sortBy="#{user.role.text}" filterBy="#{user.role.text}" filterMatchMode="contains">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{user.role.text}" />
