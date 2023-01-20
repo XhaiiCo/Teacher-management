@@ -1,5 +1,6 @@
 package be.helha.aemt.groupea1.control;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Named
 @SessionScoped
@@ -49,14 +51,22 @@ public class UtilisateurControl implements Serializable {
         return ERole.values();
     }
 
+    public String disconnect() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		
+		request.getSession().invalidate();
+
+		return "/login/login.xhtml";
+    }
+    
 	private void fetchConnectedUser() {
 
 		/*get the username of the currently logged user
 		the name is the email as defined in the "User Name Column" in the Payara Realm*/
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		
+				
 		String email = request.getUserPrincipal().getName();
-
+		
 		try 
 		{
 			Utilisateur u = new Utilisateur(email);

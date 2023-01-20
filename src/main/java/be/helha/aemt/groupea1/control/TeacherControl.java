@@ -63,9 +63,9 @@ public class TeacherControl implements Serializable{
 
 		this.setSelectedTeacher(selectedTeacher);
 
-		return "/../DDE/teacherDetail" ;
+		return "/loggedUser/DDE/teacherDetail.xhtml" ;
 	}
-
+	
 	public void onRowEdit(RowEditEvent<Teacher> event) {
 		Teacher updatedTeacher = event.getObject() ;
 
