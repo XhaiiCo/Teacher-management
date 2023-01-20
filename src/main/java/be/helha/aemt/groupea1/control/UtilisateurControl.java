@@ -117,4 +117,19 @@ public class UtilisateurControl implements Serializable {
 		else
 			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
+	
+	public boolean hasAccessToTheDDEFunction() {
+		return validRole(connectedUser, ERole.DDE) || validRole(connectedUser, ERole.DDOM) ;
+	}
+
+	public boolean hasAccessToTheDDOMFunction() {
+		return  validRole(connectedUser, ERole.DDOM);
+	}
+
+	
+	private boolean validRole(Utilisateur user, ERole role) {
+		if(user == null) return false ;
+		
+		return user.getRole().equals(role) ;
+	}
 }
