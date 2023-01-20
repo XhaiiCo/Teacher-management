@@ -13,6 +13,7 @@ public class TeacherConverter implements Converter<Object> {
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
 		String[] splittedString = value.split("\\+");
+
 		try {
 			Teacher t = new Teacher(splittedString[0], splittedString[1], splittedString[2], (splittedString.length > 3 ? splittedString[3] : " "));
 			return t;

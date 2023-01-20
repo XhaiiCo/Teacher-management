@@ -94,6 +94,7 @@ public abstract class Mission implements Serializable {
 	}
 
 	public void setTeachers(List<Teacher> teachers) {
+		teachers.clear();
 		teachers.forEach(teacher -> this.addTeacher(teacher));
 	}
 

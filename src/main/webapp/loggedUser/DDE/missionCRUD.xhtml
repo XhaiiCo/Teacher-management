@@ -177,11 +177,11 @@
 								<p:panelGrid style="width: 100%" id="input3" columns="1" rendered="#{missionControl.type == 3 }">
 									<p:outputLabel>Séction</p:outputLabel>
 					                <p:selectOneMenu id="section" value="#{ missionControl.sectionMission }"
-					                                panelStyle="width:180px" effect="fade" var="s"
-					                                filter="true" filterMatchMode="startsWith" converter="sectionConverter">
+			                                panelStyle="width:180px" effect="fade" var="s"
+			                                filter="true" filterMatchMode="startsWith" converter="sectionConverter">
 					
 					                    <f:selectItems value="#{ sectionControl.getSections() }" var="section"
-					                                itemLabel="#{ section.department.getName() }: #{ section.name }" itemValue="#{ section }"/>
+				                                itemLabel="#{ section.department.getName() }: #{ section.name }" itemValue="#{ section }"/>
 					
 					                    <p:column>
 					                        <f:facet name="header">
