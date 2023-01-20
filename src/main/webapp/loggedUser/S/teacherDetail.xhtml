@@ -20,41 +20,80 @@
 				<p>Charge de travail : #{ teacherControl.computeWorkload()} / 10</p>
 			</div>
 		</div>
-		
+
 		<h:form>
 			<div class="card">
 				<h2>Cours attribués</h2>
 				<p:dataTable var="aa"
 					value="#{teacherControl.findDistinctAAByTeacher()}">
 
-					<p:column headerText="Année" filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">
+					<p:column headerText="Année" filterBy="#{aa.ue.academicYear}"
+						filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.academicYear}" />
 					</p:column>
 
-					<p:column headerText="Code UE" filterBy="#{aa.ue.code}" filterMatchMode="contains">
+					<p:column headerText="Code UE" filterBy="#{aa.ue.code}"
+						filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.code}" />
 					</p:column>
 
-					<p:column headerText="Intitulé UE" filterBy="#{aa.ue.entitled}" filterMatchMode="contains" >
+					<p:column headerText="Intitulé UE" filterBy="#{aa.ue.entitled}"
+						filterMatchMode="contains">
 						<h:outputText value="#{aa.ue.entitled}" />
 					</p:column>
 
-					<p:column headerText="code AA" filterBy="#{aa.code}" filterMatchMode="contains">
+					<p:column headerText="code AA" filterBy="#{aa.code}"
+						filterMatchMode="contains">
 						<h:outputText value="#{aa.code}" />
 					</p:column>
 
-					<p:column headerText="Intitulé AA" filterBy="#{aa.entitled}" filterMatchMode="contains" >
+					<p:column headerText="Intitulé AA" filterBy="#{aa.entitled}"
+						filterMatchMode="contains">
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
 
 					<p:column style="width:3rem;text-align: center">
-						<p:commandLink action="#{aaControl.openDetail(aa)}"
-							value="Detail" />
+						<p:commandLink action="#{aaControl.openDetail(aa)}" value="Detail" />
 					</p:column>
 
 				</p:dataTable>
 			</div>
 		</h:form>
+
+		<h:form>
+			<div class="card">
+				<h2>Missions attribuées</h2>
+				<p:dataTable var="mission" value="#{teacherControl.findMissions()}">
+
+					<p:column headerText="Année" filterBy="#{mission.academicYear}"
+						filterMatchMode="contains">
+						<h:outputText value="#{mission.academicYear}" />
+					</p:column>
+
+					<p:column headerText="Intitulé" filterBy="#{mission.entitled}"
+						filterMatchMode="contains">
+						<h:outputText value="#{mission.entitled}" />
+					</p:column>
+
+					<p:column headerText="Heures" filterBy="#{mission.hours}"
+						filterMatchMode="contains">
+						<h:outputText value="#{mission.hours}" />
+					</p:column>
+
+					<p:column headerText="Type" filterBy="#{ mission.getType() }"
+						filterMatchMode="contains">
+						<h:outputText value="#{ mission.getType() }" />
+					</p:column>
+
+					<p:column headerText="Département ou Section"
+						filterBy="#{ mission.getName() }" filterMatchMode="contains">
+						<h:outputText value="#{ mission.getName() }" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+
 	</div>
 </h:body>
 </html>

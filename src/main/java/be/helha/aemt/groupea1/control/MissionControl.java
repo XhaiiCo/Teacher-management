@@ -121,5 +121,5 @@ public class MissionControl implements Serializable {
 		else
 			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
-
+	
 }

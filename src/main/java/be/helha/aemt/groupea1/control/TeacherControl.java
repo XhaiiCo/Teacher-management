@@ -151,4 +151,7 @@ public class TeacherControl implements Serializable{
 		return (float) Math.round(ratio * 1000) / 100;	
 	}
 	
+	public List<Mission> findMissions(){
+		return this.missionEJB.findByTeacher(this.selectedTeacher) ;
+	}
 }
