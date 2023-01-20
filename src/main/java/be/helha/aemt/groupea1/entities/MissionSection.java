@@ -32,7 +32,7 @@ public class MissionSection extends Mission {
 	}
 
 	public String getName() {
-		return section.getName();
+		return section.getDepartment().getName() +": "+ section.getName();
 	}
 
 	public Section getSection() {
