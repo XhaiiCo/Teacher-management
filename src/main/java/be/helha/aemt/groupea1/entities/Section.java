@@ -38,6 +38,7 @@ public class Section implements Serializable {
 	}
 	
 	public void setUes(List<UE> ues) {
+		this.ues = new ArrayList<>() ;
 		ues.forEach(ue -> this.addUe(ue));
 	}
 
