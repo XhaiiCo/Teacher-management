@@ -14,8 +14,10 @@
 	    <h:inputFile id="file" value="#{excelReaderControl.file}" />
 	    <h:commandButton value="Importer" action="#{excelReaderControl.doImportDatasFromExcel}"/>
 	</h:form>
-	
-	<a href="generateExcelTemplate.xhtml">Create Template</a>
+	<br/>	
+	<h:form>
+	    <h:commandButton value="Create Template" action="#{excelGeneratorControl.generateExcelTemplate}"/>
+	</h:form>
 	
 </h:body>
 </html>

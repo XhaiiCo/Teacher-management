@@ -54,7 +54,7 @@ public class UtilisateurControl implements Serializable {
 		/*get the username of the currently logged user
 		the name is the email as defined in the "User Name Column" in the Payara Realm*/
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-
+		
 		String email = request.getUserPrincipal().getName();
 
 		try 

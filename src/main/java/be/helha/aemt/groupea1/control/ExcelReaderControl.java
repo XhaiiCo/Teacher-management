@@ -99,19 +99,23 @@ public class ExcelReaderControl implements Serializable {
     	}
     }
     
-    /* Get the sheet based on it's name so we don't need to use index and so have
-    the sheet don't have to be in the same place in the workbook, otherwise
-    we use index to get the row cell. After that we get the value in the cell
-    and we can create an instance of Department with this information*/
     public void importDepartments() {
+    	
+    	/*try to retrieve the sheet named "Départements" from the downloaded 
+    	Excel file, if there is no file of that name, it will return null and 
+    	we will have to deal with it. Otherwise we will get an error*/
     	Sheet sheet = workbook.getSheet("Départements");
     	
     	if(sheet == null) return;
     	
+    	//loop on all rows excluding the row 0 so we don't get headers
     	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
 		{
     		Row row = sheet.getRow(i);
     		
+    		/*get the value of the cell using the index, by doing 
+    		this we must have the column in the Excel sheet in the 
+    		same order as the indexes defined in the program.*/ 
     		String departmentName = row.getCell(0).getStringCellValue();
     		
     		departmentEJB.add(new Department(departmentName));

@@ -18,6 +18,9 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+<!-- Décommenter si on veut que le téléchargement se lance à l'arrivée sur une certaine page
+par exemple ici  la page generateExcelTemplate.xhtml et y accéder avec une balise link dans le xhtml-->
+<!--  
 	<servlet>
 	    <servlet-name>ExcelGeneratorControl</servlet-name>
 	    <servlet-class>be.helha.aemt.groupea1.control.ExcelGeneratorControl</servlet-class>
@@ -26,7 +29,7 @@
 	<servlet-mapping>
 	    <servlet-name>ExcelGeneratorControl</servlet-name>
 	    <url-pattern>/loggedUser/S/generateExcelTemplate.xhtml</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>-->
 	
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
