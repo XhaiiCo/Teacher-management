@@ -129,6 +129,7 @@ public class UE implements Serializable {
 	}
 
 	public void setAas(List<AA> aas) {
+		this.aas = new ArrayList<>() ;
 		aas.forEach(aa -> this.addAA(aa)) ;
 	}
 

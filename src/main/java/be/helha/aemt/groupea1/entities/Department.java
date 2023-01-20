@@ -59,6 +59,7 @@ public class Department implements Serializable {
 	}
 
 	public void setSections(List<Section> sections) {
+		this.sections = new ArrayList<>() ;
 		sections.forEach(section -> this.addSection(section));
 	}
 
