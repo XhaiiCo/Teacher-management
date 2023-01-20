@@ -23,13 +23,12 @@
 
 			<p:menuitem value="Importer avec Excel" icon="pi pi-fw pi-file-excel"
 				outcome="/S/createFromExcel" />
-				
+			
+			<p:menuitem action="#{utilisateurControl.disconnect}">	
+				Se déconnecter <i class="pi pi-fw pi-sign-out"/>
+			</p:menuitem>	
 			
 		</p:menubar>
 	</h:form>
-	
-	<h:form>
-		<p:commandButton value="Se déconnecter" action="#{utilisateurControl.disconnect}"/>
-	</h:form>
-		
+			
 </ui:composition>
