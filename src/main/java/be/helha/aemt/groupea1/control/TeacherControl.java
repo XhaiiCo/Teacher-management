@@ -1,6 +1,7 @@
 package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -146,8 +147,8 @@ public class TeacherControl implements Serializable{
 			int nbHours = mission.getHours();
 			ratio += Teacher.computeRatio(nbHours, 1400);
 		}
-		
-		return ratio * 10;	
+			
+		return (float) Math.round(ratio * 1000) / 100;	
 	}
 	
 }
