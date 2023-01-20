@@ -63,7 +63,7 @@ public class TeacherControl implements Serializable{
 
 		this.setSelectedTeacher(selectedTeacher);
 
-		return "/S/teacherDetail" ;
+		return "/../DDE/teacherDetail" ;
 	}
 
 	public void onRowEdit(RowEditEvent<Teacher> event) {

@@ -2,8 +2,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:c="http://java.sun.com/jstl/core">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<!-- Routes defined in faces-config.xml -->
 	<h:form>
@@ -13,21 +12,14 @@
 			<p:menuitem value="Enseignants" icon="pi pi-fw pi-users"
 				outcome="/S/teacherCRUD" />
 
+			<p:menuitem value="Utilisateurs" icon="pi pi-fw pi-users"
+				outcome="/DDOM/userCRUD" rendered="#{utilisateurControl.hasAccessToTheDDOMFunction()}"/>
 
-			<c:if test="#{utilisateurControl.hasAccessToTheDDOMFunction()}">
-				<p:menuitem value="Utilisateurs" icon="pi pi-fw pi-users"
-					outcome="/DDOM/userCRUD" />
-			</c:if>
-
-			<c:if test="#{utilisateurControl.hasAccessToTheDDEFunction()}">
-				<p:menuitem value="Attributions" icon="pi pi-fw pi-user-plus"
-					outcome="/DDE/assignation" />
-			</c:if>
-
-			<c:if test="#{utilisateurControl.hasAccessToTheDDEFunction()}">
-				<p:menuitem value="Missions" icon="pi pi-fw pi-list"
-					outcome="/DDE/missionCRUD" />
-			</c:if>
+			<p:menuitem value="Attributions" icon="pi pi-fw pi-user-plus"
+				outcome="/DDE/assignation" rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}"/>
+			
+			<p:menuitem value="Missions" icon="pi pi-fw pi-list"
+				outcome="/DDE/missionCRUD" rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}"/>
 
 			<p:menuitem value="Importer avec Excel" icon="pi pi-fw pi-file-excel"
 				outcome="/S/createFromExcel" />
