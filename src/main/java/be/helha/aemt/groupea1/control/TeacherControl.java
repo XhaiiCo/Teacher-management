@@ -150,4 +150,7 @@ public class TeacherControl implements Serializable{
 		return ratio * 10;	
 	}
 	
+	public List<Mission> findMissions(){
+		return this.missionEJB.findByTeacher(this.selectedTeacher) ;
+	}
 }
