@@ -236,5 +236,9 @@ public class ExcelReaderControl implements Serializable {
 			}
     		
 		}
-    }    
+    }
+    
+    public void importMissions() {
+    	
+    }
 }

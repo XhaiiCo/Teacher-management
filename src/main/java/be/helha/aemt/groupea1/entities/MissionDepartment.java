@@ -26,6 +26,11 @@ public class MissionDepartment extends Mission {
 		super(academicYear, entitled, hours, teachers);
 		this.department = department;
 	}
+	
+	public MissionDepartment(String academicYear, String entitled, int hours, Department department) throws InvalidHoursException {
+		super(academicYear, entitled, hours);
+		this.department = department;
+	}
 
 	public String getType() {
 		return MissionDepartment.TYPE;
