@@ -34,7 +34,11 @@ Nom du département
 Nom de la section
 Année académique
 Code UE
-
-
-
-
+.
+Missions
+Type
+Année académique
+Intitulé
+Heures
+Nom du département
+Nom de la section
