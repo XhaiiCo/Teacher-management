@@ -43,7 +43,7 @@ public class MissionDAO extends AbstractDAO<Mission>{
 	 */
 	public Mission find(Mission mission) {
 		if (mission==null) return null;
-
+		
 		String rq = "SELECT m From Mission m where m.entitled=?1 and m.academicYear=?2";
 
 		TypedQuery<Mission>query = em.createQuery(rq,Mission.class);
@@ -51,6 +51,26 @@ public class MissionDAO extends AbstractDAO<Mission>{
 		query.setParameter(2,mission.getAcademicYear());
 
 		List<Mission> result=query.getResultList();
+
+		if (mission instanceof MissionDepartment) {
+			List<Mission> tmp = new ArrayList<Mission>();
+			result.forEach(e -> {
+				if (e instanceof MissionDepartment)
+					if(((MissionDepartment) e).getDepartment().equals(((MissionDepartment)mission).getDepartment()))
+						tmp.add(((MissionDepartment) e));
+			});
+			if (tmp.isEmpty()) return null;
+			return tmp.get(0);
+		} else if (mission instanceof MissionSection) {
+			List<Mission> tmp = new ArrayList<Mission>();
+			result.forEach(e -> {
+				if (e instanceof MissionSection)
+					if(((MissionSection) e).getSection().equals(((MissionSection)mission).getSection()))
+						tmp.add(((MissionSection) e));
+			});
+			if (tmp.isEmpty()) return null;
+			return tmp.get(0);
+		}
 
 		if (result.isEmpty()) return null;
 		return result.get(0);
