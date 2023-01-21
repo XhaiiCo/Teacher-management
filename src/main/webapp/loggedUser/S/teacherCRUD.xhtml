@@ -31,21 +31,11 @@
 								<p:resetInput target=":dialogs:add-teacher-content" />
 							</p:commandButton>
 						</p:toolbarGroup>
-						<!-- 
-					<p:toolbarGroup align="right">
-						<p:fileUpload mode="simple" skinSimple="true" label="Import"
-							chooseIcon="pi pi-download" />
-						<p:commandButton value="Export" icon="pi pi-upload"
-							styleClass="ui-button-help" ajax="false">
-							<p:dataExporter type="pdf" target="teachers" fileName="products" />
-						</p:commandButton>
-					</p:toolbarGroup>
-					-->
 					</p:toolbar>
 
 					<p:dataTable id="teachers" var="teacher" editable="true"
-						value="#{ teacherControl.teachers }" rows="10" paginator="true"
-						paginatorPosition="bottom"
+						multiViewState="true" value="#{ teacherControl.teachers }"
+						rows="10" paginator="true" paginatorPosition="bottom"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
 						rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}"
@@ -119,10 +109,12 @@
 							</p:commandButton>
 						</p:column>
 
-						<p:column style="width:3rem;text-align: center" rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}">
-							<p:commandLink action="#{teacherControl.goToDetailPage(teacher)}" value="Détails"/>
+						<p:column style="width:3rem;text-align: center"
+							rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}">
+							<p:commandLink action="#{teacherControl.goToDetailPage(teacher)}"
+								value="Détails" />
 						</p:column>
-						
+
 					</p:dataTable>
 				</div>
 			</h:form>

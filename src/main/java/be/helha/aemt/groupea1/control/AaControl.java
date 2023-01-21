@@ -36,7 +36,7 @@ public class AaControl implements Serializable {
 
 	@EJB
 	private TeacherEJB teacherEJB ;
-
+	
 	private List<AA> aas ;
 	public List<AA> getAas() {
 		return aas ;

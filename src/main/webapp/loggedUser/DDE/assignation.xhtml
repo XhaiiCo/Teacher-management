@@ -16,7 +16,7 @@
 
 		<h:form>
 			<div class="card">
-				<p:dataTable var="aa" value="#{aaControl.aas}" stripedRows="true">
+				<p:dataTable var="aa" value="#{aaControl.aas}" stripedRows="true" multiViewState="true">
 				
 					<p:column headerText="Année" sortBy="#{aa.ue.academicYear}"
 						filterBy="#{aa.ue.academicYear}" filterMatchMode="contains">

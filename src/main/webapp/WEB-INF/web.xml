@@ -18,24 +18,20 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-<!-- Décommenter si on veut que le téléchargement se lance à l'arrivée sur une certaine page
-par exemple ici  la page generateExcelTemplate.xhtml et y accéder avec une balise link dans le xhtml-->
-<!--  
-	<servlet>
-	    <servlet-name>ExcelGeneratorControl</servlet-name>
-	    <servlet-class>be.helha.aemt.groupea1.control.ExcelGeneratorControl</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-	    <servlet-name>ExcelGeneratorControl</servlet-name>
-	    <url-pattern>/loggedUser/S/generateExcelTemplate.xhtml</url-pattern>
-	</servlet-mapping>-->
-	
+	<!-- Décommenter si on veut que le téléchargement se lance à l'arrivée sur 
+		une certaine page par exemple ici la page generateExcelTemplate.xhtml et 
+		y accéder avec une balise link dans le xhtml -->
+	<!-- <servlet> <servlet-name>ExcelGeneratorControl</servlet-name> <servlet-class>be.helha.aemt.groupea1.control.ExcelGeneratorControl</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>ExcelGeneratorControl</servlet-name> 
+		<url-pattern>/loggedUser/S/generateExcelTemplate.xhtml</url-pattern> </servlet-mapping> -->
+
+
+	<!-- primeFaces theme -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>arya</param-value>
 	</context-param>
-	
+
 	<security-constraint>
 		<display-name>Logged users pages</display-name>
 		<web-resource-collection>
@@ -51,13 +47,13 @@ par exemple ici  la page generateExcelTemplate.xhtml et y accéder avec une bali
 			<http-method>DELETE</http-method>
 		</web-resource-collection>
 		<auth-constraint>
-			<description/>
+			<description />
 			<role-name>S</role-name>
 			<role-name>DDE</role-name>
 			<role-name>DDOM</role-name>
 		</auth-constraint>
 	</security-constraint>
-	
+
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<realm-name>groupeA1Realm</realm-name>
@@ -66,68 +62,68 @@ par exemple ici  la page generateExcelTemplate.xhtml et y accéder avec une bali
 			<form-error-page>/login/loginerror.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
-	
+
 	<security-constraint>
-    	<display-name>Secretary access</display-name>
-        <web-resource-collection>
-            <web-resource-name>Secretary Area</web-resource-name>
-            <description/>
-            <url-pattern>/loggedUser/S/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>PUT</http-method>
-            <http-method>OPTIONS</http-method>
-            <http-method>TRACE</http-method>
-            <http-method>DELETE</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <description />
-            <role-name>S</role-name>
-            <role-name>DDE</role-name>
-            <role-name>DDOM</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
+		<display-name>Secretary access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Secretary Area</web-resource-name>
+			<description />
+			<url-pattern>/loggedUser/S/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>S</role-name>
+			<role-name>DDE</role-name>
+			<role-name>DDOM</role-name>
+		</auth-constraint>
+	</security-constraint>
+
 	<security-constraint>
-    	<display-name>Department Director access</display-name>
-        <web-resource-collection>
-            <web-resource-name>Department Director Area</web-resource-name>
-            <description/>
-            <url-pattern>/loggedUser/DDE/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>PUT</http-method>
-            <http-method>OPTIONS</http-method>
-            <http-method>TRACE</http-method>
-            <http-method>DELETE</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <description />
-            <role-name>DDE</role-name>
-            <role-name>DDOM</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
+		<display-name>Department Director access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Department Director Area</web-resource-name>
+			<description />
+			<url-pattern>/loggedUser/DDE/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>DDE</role-name>
+			<role-name>DDOM</role-name>
+		</auth-constraint>
+	</security-constraint>
+
 	<security-constraint>
-    	<display-name>Domain Director access</display-name>
-        <web-resource-collection>
-            <web-resource-name>Domain Director Area</web-resource-name>
-            <description/>
-            <url-pattern>/loggedUser/DDOM/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>PUT</http-method>
-            <http-method>OPTIONS</http-method>
-            <http-method>TRACE</http-method>
-            <http-method>DELETE</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <description />
-            <role-name>DDOM</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
+		<display-name>Domain Director access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Domain Director Area</web-resource-name>
+			<description />
+			<url-pattern>/loggedUser/DDOM/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description />
+			<role-name>DDOM</role-name>
+		</auth-constraint>
+	</security-constraint>
+
 </web-app>
