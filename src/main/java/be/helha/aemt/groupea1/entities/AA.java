@@ -50,7 +50,7 @@ public class AA implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private EFraction fraction ;
 
-	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	private List<Assignment> assignments = new ArrayList<>();
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)

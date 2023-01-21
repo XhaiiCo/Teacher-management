@@ -29,7 +29,7 @@ public class AADAO extends AbstractDAO<AA>{
 
 	@EJB
 	private UEDAO ueDAO;
-	
+
 	@EJB
 	private AssignmentDAO assignmentDAO;
 
@@ -120,21 +120,7 @@ public class AADAO extends AbstractDAO<AA>{
 
 		return result ;
 	}
-	
-	public AA delete(AA aa)
-	{
-		if (aa == null) return null ;
-		
-	//	List<Assignment> assignments = assignmentDAO.findByAA(aa.getId());
-		
-		aa.getAssignments().forEach(assignment ->{
-			assignmentDAO.delete(assignment);
-			});
-		aa.removeAll();
-		aa.setUe(null);
-		return super.delete(aa);
-	}
-	
+
 	public List<AA> findAllByUe (UE ue)
 	{
 		if(ue==null) return null;

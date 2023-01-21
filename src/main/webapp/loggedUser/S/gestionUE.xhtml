@@ -11,88 +11,91 @@
 <h:body>
 	<ui:include src="../navbar.xhtml" />
 	<div style="padding: 60px;">
-	
-		<div class="card" >
+
+		<div class="card">
 			<h1>UE</h1>
 		</div>
-	
+
 		<div class="card crud demo">
 			<h:form id="form">
-			 	<p:growl id="msgs" showDetail="true" />
+				<p:growl id="msgs" showDetail="true" />
 				<div class="card">
-				
-				
-					<p:toolbar>
-<!-- 						<p:toolbarGroup> -->
-<!-- 							<p:commandButton value="Ajouter" icon="pi pi-plus" -->
-<!-- 							  	update=":dialogs:add-ue-content"  -->
-<!-- 								action="#{uEControl.openNewUe()}" -->
-<!-- 								oncomplete="PF('addUeDialog').show()" -->
-<!-- 								styleClass="ui-button-success" style="margin-right: .5rem"> -->
-<!-- 								<p:resetInput target=":dialogs:add-Ue-content" /> -->
-<!-- 							</p:commandButton> -->
-<!-- 						</p:toolbarGroup> -->
-			
-					</p:toolbar>
-					
-						
-					<p:dataTable id="ues" var="ue" value="#{uEControl.ues}" stripedRows="true">
-							
-							
-					<p:column headerText="Année" sortBy="#{ue.academicYear}"
-							filterBy="#{ue.academicYear}" filterMatchMode="contains">
-									<h:outputText value="#{ue.academicYear}" />
-					</p:column>
 
-					<p:column headerText="Intitulé unité d'enseignement" sortBy="#{ue.entitled}"
-							filterBy="#{ue.entitled}" filterMatchMode="contains">
-						<h:outputText value="#{ue.entitled}" />
-					</p:column>
-					
-					<p:column headerText="Bloc" sortBy="#{ue.bloc}"
-							filterBy="#{ue.bloc}" filterMatchMode="contains">
-						<h:outputText value="#{ue.bloc}" />
-					</p:column>
-					
-					<p:column headerText="Code" sortBy="#{ue.code}"
+
+					<p:toolbar>
+						<!-- 						<p:toolbarGroup> -->
+						<!-- 							<p:commandButton value="Ajouter" icon="pi pi-plus" -->
+						<!-- 							  	update=":dialogs:add-ue-content"  -->
+						<!-- 								action="#{uEControl.openNewUe()}" -->
+						<!-- 								oncomplete="PF('addUeDialog').show()" -->
+						<!-- 								styleClass="ui-button-success" style="margin-right: .5rem"> -->
+						<!-- 								<p:resetInput target=":dialogs:add-Ue-content" /> -->
+						<!-- 							</p:commandButton> -->
+						<!-- 						</p:toolbarGroup> -->
+
+					</p:toolbar>
+
+
+					<p:dataTable id="ues" var="ue" value="#{uEControl.ues}"
+						stripedRows="true">
+
+
+						<p:column headerText="Année" sortBy="#{ue.academicYear}"
+							filterBy="#{ue.academicYear}" filterMatchMode="contains">
+							<h:outputText value="#{ue.academicYear}" />
+						</p:column>
+
+						<p:column headerText="Code" sortBy="#{ue.code}"
 							filterBy="#{ue.code}" filterMatchMode="contains">
-						<h:outputText value="#{ue.code}" />
-					</p:column>
-					
-					<p:column headerText="Crédit" sortBy="#{ue.credit}"
+							<h:outputText value="#{ue.code}" />
+						</p:column>
+
+						<p:column headerText="Intitulé unité d'enseignement"
+							sortBy="#{ue.entitled}" filterBy="#{ue.entitled}"
+							filterMatchMode="contains">
+							<h:outputText value="#{ue.entitled}" />
+						</p:column>
+
+						<p:column headerText="Bloc" sortBy="#{ue.bloc}"
+							filterBy="#{ue.bloc}" filterMatchMode="contains">
+							<h:outputText value="#{ue.bloc}" />
+						</p:column>
+
+						<p:column headerText="Crédit" sortBy="#{ue.credit}"
 							filterBy="#{ue.credit}" filterMatchMode="contains">
-						<h:outputText value="#{ue.credit}" />
-					</p:column>
-					
-					<p:column headerText="section" sortBy="#{ue.section.name}"
+							<h:outputText value="#{ue.credit}" />
+						</p:column>
+
+						<p:column headerText="section" sortBy="#{ue.section.name}"
 							filterBy="#{ue.section.name}" filterMatchMode="contains">
-						<h:outputText value="#{ue.section.name}" />
-					</p:column>
-					
-					<p:column headerText="nombre de AA" sortBy="#{ue.nbAA()}"
+							<h:outputText value="#{ue.section.name}" />
+						</p:column>
+
+						<p:column headerText="nombre de AA" sortBy="#{ue.nbAA()}"
 							filterBy="#{ue.nbAA()}" filterMatchMode="contains">
-						<h:outputText value="#{ue.nbAA()}" />
-					</p:column>
-					
-					<p:column style="width:6rem">
+							<h:outputText value="#{ue.nbAA()}" />
+						</p:column>
+
+						<p:column style="width:6rem">
+							<!--
 							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 								saveTitle="Save Row" />
-								
-					<p:commandButton class="ui-button-warning rounded-button"
+								-->
+
+							<p:commandButton class="ui-button-warning rounded-button"
 								icon="pi pi-trash" process="@this"
 								action="#{uEControl.setRemoveUe(ue)}"
 								oncomplete="PF('deleteTeacherDialog').show()">
 							</p:commandButton>
 						</p:column>
-				
-				</p:dataTable>
+
+					</p:dataTable>
 				</div>
 			</h:form>
-				
+
 			<h:form id="dialogs">
 				<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
-					width="300"
-					message="Voulez-vous vraiment supprimer cet ue?"
+					width="300" message="Voulez-vous vraiment supprimer cette ue?"
 					header="Confirmation" severity="warn">
 					<p:commandButton value="Oui" icon="pi pi-check"
 						actionListener="#{uEControl.removeUe}" process="@this"

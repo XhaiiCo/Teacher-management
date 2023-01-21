@@ -8,7 +8,6 @@ import java.util.Objects;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,7 +39,7 @@ public class UE implements Serializable {
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Section section;
 
-	@OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<AA> aas = new ArrayList<>();
 
 	public UE() {}

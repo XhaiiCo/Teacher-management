@@ -17,24 +17,24 @@
 					outcome="/DDOM/userCRUD"
 					rendered="#{utilisateurControl.hasAccessToTheDDOMFunction()}" />
 
-				<p:menuitem value="Attributions" icon="pi pi-fw pi-user-plus"
+				<p:menuitem value="UE" icon="pi pi-fw pi-user"
+					outcome="/S/gestionUE" />
+
+				<p:menuitem value="Attributions/AA" icon="pi pi-fw pi-user-plus"
 					outcome="/DDE/assignation"
 					rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}" />
-
 
 				<p:menuitem value="Missions" icon="pi pi-fw pi-list"
 					outcome="/DDE/missionCRUD"
 					rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}" />
-					
-				<p:menuitem value="UE" icon="pi pi-fw pi-user"
-					outcome="/S/gestionUE" />
+
 
 				<p:menuitem value="Importer avec Excel"
 					icon="pi pi-fw pi-file-excel" outcome="/S/createFromExcel" />
 
 				<p:menuitem action="#{utilisateurControl.disconnect}"
 					value="Se déconnecter" icon="pi pi-fw pi-sign-out" />
-					
+
 			</p:menubar>
 		</h:form>
 	</div>

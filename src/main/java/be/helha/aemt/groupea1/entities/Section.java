@@ -30,7 +30,7 @@ public class Section implements Serializable {
 	
 	private String name;
 	
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
 	private List<UE> ues = new ArrayList<>() ;
 	
 	public List<UE> getUes() {
@@ -49,6 +49,11 @@ public class Section implements Serializable {
 		this.name = name;
 	}
 	
+	
+	public void removeUE(UE ue) {
+		this.ues.remove(ue) ;
+	}
+
 	public boolean addUe(UE ue) {
 		if(this.ues.contains(ue)) return false ;
 
