@@ -20,6 +20,7 @@
 
 		<div>
 			<h:form id="form">
+				<p:growl id="msgs" showDetail="true" />
 				<p:dataTable var="teacher" id="teachersTable"
 					value="#{missionControl.selectedMission.teachers}">
 
@@ -38,18 +39,31 @@
 						<h:outputText value="#{teacher.email}" />
 					</p:column>
 
-					<!--
 					<p:column>
 						<p:commandButton class="ui-button-warning rounded-button"
 							icon="pi pi-trash" process="@this"
-							oncomplete="PF('deleteAssignmentDialog').show()"
-							action="#{aaControl.setSelectedAssignment(teacher)}">
+							oncomplete="PF('deleteTeacherDialog').show()"
+							action="#{missionControl.setTeacherToRemove(teacher)}">
 						</p:commandButton>
 					</p:column>
-					-->
 				</p:dataTable>
 			</h:form>
 		</div>
 	</div>
+
+	<h:form id="dialogs">
+		<p:confirmDialog widgetVar="deleteTeacherDialog" showEffect="fade"
+			width="300" message="Désattribuer l'enseignant" header="Confirm"
+			severity="warn">
+			<p:commandButton value="Oui" icon="pi pi-check"
+				actionListener="#{missionControl.removeTeacher()}" process="@this"
+				update=":form:teachersTable, :form:msgs"
+				oncomplete="PF('deleteTeacherDialog').hide()" />
+			<p:commandButton value="Non" type="button"
+				styleClass="ui-button-secondary" icon="pi pi-times"
+				onclick="PF('deleteTeacherDialog').hide()" />
+		</p:confirmDialog>
+	</h:form>
+
 </h:body>
 </html>

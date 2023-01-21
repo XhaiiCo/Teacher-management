@@ -1,4 +1,4 @@
- package be.helha.aemt.groupea1.control;
+package be.helha.aemt.groupea1.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class MissionControl implements Serializable {
 	private Mission newMission ;//Used when create a new mission
 	public Mission getNewMission() {return newMission;}
 	public void setNewMission(Mission newMission) {this.newMission = newMission;}
-	
+
 	private int type;
 	public int getType() {return type;}
 	public void setType(int type) {this.type = type;}
@@ -47,7 +47,7 @@ public class MissionControl implements Serializable {
 	private Section sectionMission;
 	public Section getSectionMission() {return sectionMission;}
 	public void setSectionMission(Section section) {this.sectionMission = section;}
-	
+
 	// Department for new mission;
 	private Department departmentMission;
 	public Department getDepartmentMission() {return departmentMission;}
@@ -56,10 +56,14 @@ public class MissionControl implements Serializable {
 	private Mission removeMission;
 	public Mission getRemoveMission() {return removeMission;}
 	public void setRemoveMission(Mission removeMission) {this.removeMission = removeMission;}
-	
+
 	private Mission selectedMission ;
 	public Mission getSelectedMission() {return selectedMission;	}
 	public void setSelectedMission(Mission selectedMission) {this.selectedMission = selectedMission;	}
+
+	private Teacher teacherToRemove ;
+	public Teacher getTeacherToRemove() {	return teacherToRemove;}
+	public void setTeacherToRemove(Teacher teacherToRemove) {this.teacherToRemove = teacherToRemove;}
 
 	@EJB
 	private MissionEJB missionEJB;
@@ -69,7 +73,7 @@ public class MissionControl implements Serializable {
 		this.missions = this.missionEJB.findAll();
 		this.type = 1;
 	}
-	
+
 	public void onRowEdit(RowEditEvent<Mission> event) {
 		Mission updatedMission = event.getObject() ;
 
@@ -83,11 +87,11 @@ public class MissionControl implements Serializable {
 		FacesMessage msg = new FacesMessage("Modification annulée");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-	
+
 	public void openNewMission() {
 		this.newMission = new MissionTransversale();
 	} 
-	
+
 	public void saveNewMission() {
 		if (this.type == 2) {
 			try {
@@ -102,9 +106,9 @@ public class MissionControl implements Serializable {
 				Toast.showErrorToast("Erreur", e.getMessage());
 			}
 		}
-		
+
 		Mission missionAdd = this.missionEJB.add(newMission);
-		
+
 		if(missionAdd != null) {
 			this.missions.add(missionAdd) ;
 			Toast.showInfoToast("Ajouté", "Mission ajoutée");
@@ -125,7 +129,7 @@ public class MissionControl implements Serializable {
 		else
 			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
-	
+
 	public String goToDetailPage(Mission mission) {
 
 		this.setSelectedMission(mission);
@@ -133,4 +137,9 @@ public class MissionControl implements Serializable {
 		return "/loggedUser/DDE/missionDetail.xhtml" ;
 	}
 
+	public void removeTeacher() {
+		this.selectedMission.removeTeacher(teacherToRemove);
+		this.missionEJB.update(this.selectedMission) ;
+		Toast.showInfoToast("Désattribué", "Enseignant désattribué");
+	}
 }
