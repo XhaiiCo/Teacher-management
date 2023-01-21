@@ -56,6 +56,10 @@ public class MissionControl implements Serializable {
 	private Mission removeMission;
 	public Mission getRemoveMission() {return removeMission;}
 	public void setRemoveMission(Mission removeMission) {this.removeMission = removeMission;}
+	
+	private Mission selectedMission ;
+	public Mission getSelectedMission() {return selectedMission;	}
+	public void setSelectedMission(Mission selectedMission) {this.selectedMission = selectedMission;	}
 
 	@EJB
 	private MissionEJB missionEJB;
@@ -122,4 +126,11 @@ public class MissionControl implements Serializable {
 			Toast.showErrorToast("Erreur", "Erreur lors de la suppression");
 	}
 	
+	public String goToDetailPage(Mission mission) {
+
+		this.setSelectedMission(mission);
+
+		return "/loggedUser/DDE/missionDetail.xhtml" ;
+	}
+
 }
