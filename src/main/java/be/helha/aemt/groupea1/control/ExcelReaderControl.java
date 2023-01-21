@@ -3,11 +3,15 @@ package be.helha.aemt.groupea1.control;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
 import be.helha.aemt.groupea1.ejb.MissionEJB;
@@ -23,7 +27,6 @@ import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.UE;
-import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
@@ -60,6 +63,8 @@ public class ExcelReaderControl implements Serializable {
     @EJB
     private MissionEJB missionEJB;
     
+    private List<Department> departments = new ArrayList<>() ;
+    
     /*Function to upload the excel file that will be save in the workbook variable
     and then the different import function will convert datas in each page in entities*/ 
     public void doImportDatasFromExcel() {
@@ -71,6 +76,7 @@ public class ExcelReaderControl implements Serializable {
     	this.importUEs();
     	this.importAAs();
     	this.importMissions();
+    	this.saveDepartment(); 
     }
     
     public void uploadFile() 
@@ -127,8 +133,25 @@ public class ExcelReaderControl implements Serializable {
     		same order as the indexes defined in the program.*/ 
     		String departmentName = row.getCell(0).getStringCellValue();
     		
-    		departmentEJB.add(new Department(departmentName));
+    		//departmentEJB.add(new Department(departmentName));
+    		this.departments.add(new Department(departmentName)) ;
 		}
+    }
+    
+    public void saveDepartment() {
+    	this.departments.forEach(department -> {
+    		departmentEJB.add(department) ;
+    	});
+    }
+
+    public Department findOrAddDepartment(Department department) {
+    	int ind = this.departments.indexOf(department) ;
+    	if(ind != -1) {
+    		return this.departments.get(ind) ;
+    	}
+    	this.departments.add(department) ;
+
+    	return department ;
     }
     
     public void importSections() {
@@ -143,8 +166,9 @@ public class ExcelReaderControl implements Serializable {
     		String departmentName = row.getCell(0).getStringCellValue();
     		String sectionName = row.getCell(1).getStringCellValue();
     		
-    		Department sectionDepartment = new Department(departmentName);
-    		sectionEJB.add(new Section(sectionDepartment, sectionName));
+    		Department department = this.findOrAddDepartment(new Department(departmentName)) ;
+
+    		department.addSection(new Section(department, sectionName));
 		}
     }
     
@@ -173,6 +197,15 @@ public class ExcelReaderControl implements Serializable {
 		}
     }
     
+    public Section findOrAddSection(Department department, Section section) {
+    	int ind = department.getSections().indexOf(section) ;
+    	if(ind != -1)
+    		return department.getSections().get(ind) ;
+    	
+    	department.addSection(section) ;
+    	return section ; 
+    }
+    
     public void importUEs() {
     	Sheet sheet = workbook.getSheet("UEs");
     	
@@ -191,11 +224,12 @@ public class ExcelReaderControl implements Serializable {
     		String departmentName = row.getCell(5).getStringCellValue();
     		String sectionName = row.getCell(6).getStringCellValue();
     		
-    		Department sectionDepartment = new Department(departmentName);
+    		Department department = this.findOrAddDepartment(new Department(departmentName)) ;
+    		Section section = this.findOrAddSection(department, new Section(department, sectionName)) ;
     		
     		try 
     		{
-				ueEJB.add(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE, new Section(sectionDepartment, sectionName)));
+				section.addUe(new UE(yearRangeUE, blocUE, codeUE, entitledUE, creditsUE, section));
 			} 
     		catch (NumberNegatifException e) 
     		{
@@ -206,6 +240,15 @@ public class ExcelReaderControl implements Serializable {
 		}
     }
     
+    public UE findOrAddUE(Section section, UE ue) {
+    	int ind = section.getUes().indexOf(ue) ;
+    	if(ind != -1)
+    		return section.getUes().get(ind) ;
+    	
+    	section.addUe(ue) ;
+    	return ue ; 
+    }
+
     public void importAAs() {
     	Sheet sheet = workbook.getSheet("AAs");
     	
@@ -229,13 +272,13 @@ public class ExcelReaderControl implements Serializable {
     		String yearRangeUE = row.getCell(11).getStringCellValue();
     		String codeUE = row.getCell(12).getStringCellValue();
     		
-    		Department sectionDepartment = new Department(departmentName);
-    		Section section = new Section(sectionDepartment, sectionName);
-    		UE ue = new UE(codeUE, yearRangeUE, section);
+    		Department department = this.findOrAddDepartment( new Department(departmentName)) ;
+    		Section section = this.findOrAddSection(department, new Section(department, sectionName)) ;
+    		UE ue = this.findOrAddUE(section, new UE(codeUE, yearRangeUE, section)) ;
     		
     		try 
     		{
-				aaEJB.add(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroup1AA, nbGroup2AA, nbStudentAA, 
+				ue.addAA(new AA(codeAA, entitledAA, creditsAA, hoursQ1AA, hoursQ2AA, nbGroup1AA, nbGroup2AA, nbStudentAA, 
 						EFraction.findByNumber(fractionAA), ue));
 			} 
     		catch (NumberNegatifException e) 
@@ -243,7 +286,6 @@ public class ExcelReaderControl implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		
 		}
     }
     
