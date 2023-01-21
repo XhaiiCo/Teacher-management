@@ -1,8 +1,11 @@
 package be.helha.aemt.groupea1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import be.helha.aemt.groupea1.entities.AA;
+import be.helha.aemt.groupea1.entities.Assignment;
+import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.Teacher;
 import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
@@ -12,14 +15,21 @@ import jakarta.persistence.TypedQuery;
 @Stateless//Used to do independent operations, it does not have any associated client state
 @LocalBean
 public class TeacherDAO extends AbstractDAO<Teacher>{
-	
+
 	@EJB
 	private AADAO aaDAO ;
+
+	@EJB
+	private AssignmentDAO assignmentDAO;
+
+	@EJB
+	private MissionDAO missionDAO ;
+
 
 	public TeacherDAO() {
 		super(Teacher.class) ;
 	}
-	
+
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
@@ -31,7 +41,7 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return super.add(teacher);
 	}
-	
+
 	@Override
 	/**
 	 * Redefinition of the method to add a condition to check that there are no duplicates on the email
@@ -70,18 +80,39 @@ public class TeacherDAO extends AbstractDAO<Teacher>{
 
 		return result.get(0) ; 
 	}
-	
+
 	@Override
 	public Teacher delete(Teacher teacher) {
 		if(teacher == null) return null;
-		
+
+		//Remove assignements
 		List<AA> aas = aaDAO.findByTeacher(teacher) ;
 		aas.forEach(aa -> {
-			//aa.removeTeachers(teacher) ;
+			List<Assignment> toRemoves= new ArrayList<>() ;
+			aa.getAssignments().forEach(assignment -> {
+				if(assignment.getTeacher().equals(teacher)) {
+					toRemoves.add(assignment) ;
+				}
+			});
+			toRemoves.forEach(toRemove -> {
+				aa.removeAssignment(toRemove) ;
+				assignmentDAO.delete(toRemove) ;
+			});
 			aaDAO.update(aa) ;
 		});
-		
+
+		//Remove in missions
+		List<Mission> missions = missionDAO.findByTeacher(teacher) ;
+		List<Mission> toRemoves = new ArrayList<>() ;
+		missions.forEach(mission -> {
+			toRemoves.add(mission) ;
+		});
+
+		toRemoves.forEach(toRemove -> {
+			toRemove.removeTeacher(teacher) ;
+			missionDAO.update(toRemove) ;
+		});
+
 		return  super.delete(teacher);
 	}
-
 }
