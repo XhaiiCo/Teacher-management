@@ -10,9 +10,46 @@
 <h:body>
 	<ui:include src="../navbar.xhtml" />
 
-	<div class="card">
-	
-	<h1>#{missionControl.selectedMission.entitled}</h1>
+	<div class="card" style="padding: 60px;">
+		<div>
+			<h1>#{missionControl.selectedMission.entitled}</h1>
+			<h2>#{missionControl.selectedMission.type}</h2>
+			<h3>#{missionControl.selectedMission.academicYear}</h3>
+			<p>#{missionControl.selectedMission.hours} heures</p>
+		</div>
+
+		<div>
+			<h:form id="form">
+				<p:dataTable var="teacher" id="teachersTable"
+					value="#{missionControl.selectedMission.teachers}">
+
+					<p:column headerText="Nom" sortBy="#{teacher.lastName}"
+						filterBy="#{teacher.lastName}" filterMatchMode="contains">
+						<h:outputText value="#{teacher.lastName}" />
+					</p:column>
+
+					<p:column headerText="Prénom" sortBy="#{teacher.firstName}"
+						filterBy="#{teacher.firstName}" filterMatchMode="contains">
+						<h:outputText value="#{teacher.firstName}" />
+					</p:column>
+
+					<p:column headerText="Email" sortBy="#{teacher.email}"
+						filterBy="#{teacher.email}" filterMatchMode="contains">
+						<h:outputText value="#{teacher.email}" />
+					</p:column>
+
+					<!--
+					<p:column>
+						<p:commandButton class="ui-button-warning rounded-button"
+							icon="pi pi-trash" process="@this"
+							oncomplete="PF('deleteAssignmentDialog').show()"
+							action="#{aaControl.setSelectedAssignment(teacher)}">
+						</p:commandButton>
+					</p:column>
+					-->
+				</p:dataTable>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>
