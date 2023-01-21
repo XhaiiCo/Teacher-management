@@ -126,14 +126,6 @@ public class AaControl implements Serializable {
 		this.setGroupsMap(generateGroupsMap());
 	}
 
-	public void showInfoToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
-	}
-
-	public void showErrorToast(String summary, String detail ) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
-	}
-
 	public void addTeacher() {
 		try {
 			Teacher teacherToAdd = this.teacherEJB.findByEmail(new Teacher("", "", selectedTeacherEmail, null)) ;
@@ -154,11 +146,10 @@ public class AaControl implements Serializable {
 			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
 		}
 		catch (AllHoursAssignmedException | NumberNegatifException e ) {
-			this.showErrorToast("Erreur", e.getMessage());
+			Toast.showErrorToast("Erreur", e.getMessage());
 			return ;
 		}
 	}
-
 
 	public void removeAssignment() {
 		this.selected.removeAssignment(this.selectedAssignment) ;

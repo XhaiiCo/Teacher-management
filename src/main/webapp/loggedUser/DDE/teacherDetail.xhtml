@@ -53,7 +53,8 @@
 					</p:column>
 
 					<p:column style="width:3rem;text-align: center">
-						<p:commandLink action="#{aaControl.openDetail(aa)}" value="Détails" />
+						<p:commandLink action="#{aaControl.openDetail(aa)}"
+							value="Détails" />
 					</p:column>
 
 				</p:dataTable>
@@ -89,6 +90,12 @@
 						filterBy="#{ mission.getName() }" filterMatchMode="contains">
 						<h:outputText value="#{ mission.getName() }" />
 					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<p:commandLink action="#{missionControl.goToDetailPage(mission)}"
+							value="Détails" />
+					</p:column>
+
 
 				</p:dataTable>
 			</div>

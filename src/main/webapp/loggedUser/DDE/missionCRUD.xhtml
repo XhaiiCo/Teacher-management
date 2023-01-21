@@ -47,8 +47,8 @@ th[aria-label="Enseignants"] {
 				</p:toolbar>
 
 				<p:dataTable id="missions" var="mission" editable="true"
-					value="#{ missionControl.missions }" rows="10" paginator="true"
-					paginatorPosition="bottom"
+					multiViewState="true" value="#{ missionControl.missions }"
+					rows="10" paginator="true" paginatorPosition="bottom"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					currentPageReportTemplate="{startRecord}-{endRecord} des {totalRecords} profs"
 					rowsPerPageTemplate="10,20,{ShowAll|'Voir tout'}" scrollable="true"
@@ -127,6 +127,12 @@ th[aria-label="Enseignants"] {
 							oncomplete="PF('deleteMissionDialog').show()">
 						</p:commandButton>
 					</p:column>
+
+					<p:column style="width:3rem;text-align: center">
+						<p:commandLink action="#{missionControl.goToDetailPage(mission)}"
+							value="Détails" />
+					</p:column>
+
 				</p:dataTable>
 			</div>
 		</h:form>

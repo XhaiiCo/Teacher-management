@@ -20,6 +20,10 @@ public class MissionTransversale extends Mission {
 		super(academicYear, entitled, hours, teachers);
 	}
 
+	public MissionTransversale(String academicYear, String entitled, int hours) throws InvalidHoursException {
+		super(academicYear, entitled, hours);
+	}
+	
 	public String getType() {
 		return MissionTransversale.TYPE;
 	}
