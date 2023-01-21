@@ -19,6 +19,29 @@
 		</div>
 
 		<div>
+			<h:form id="formAddTeacher">
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:panel header="Ajouter un enseignant" style="margin-bottom:10px;">
+
+					<div class="field">
+						<p:outputLabel for="teacherSelect" value="Enseigant" />
+						<p:selectOneMenu id="teacherSelect"
+							value="#{missionControl.selectedTeacherEmail}">
+							<f:selectItems value="#{missionControl.teachersMap}" />
+						</p:selectOneMenu>
+					</div>
+
+					<p:divider />
+
+					<div class="field">
+						<p:commandButton value="Ajouter"
+							update=":form:teachersTable, :form:msgs"
+							action="#{missionControl.addTeacher()}" />
+					</div>
+				</p:panel>
+			</h:form>
+			<br />
 			<h:form id="form">
 				<p:growl id="msgs" showDetail="true" />
 				<p:dataTable var="teacher" id="teachersTable"

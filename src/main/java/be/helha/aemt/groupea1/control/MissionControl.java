@@ -10,6 +10,7 @@ import org.primefaces.event.RowEditEvent;
 
 import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
+import be.helha.aemt.groupea1.entities.Assignment;
 import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.Mission;
 import be.helha.aemt.groupea1.entities.MissionDepartment;
@@ -17,8 +18,11 @@ import be.helha.aemt.groupea1.entities.MissionSection;
 import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
+import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
+import be.helha.aemt.groupea1.exception.InvalidEmailException;
 import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NotAvailableEmailException;
+import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.util.Toast;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -65,13 +69,30 @@ public class MissionControl implements Serializable {
 	public Teacher getTeacherToRemove() {	return teacherToRemove;}
 	public void setTeacherToRemove(Teacher teacherToRemove) {this.teacherToRemove = teacherToRemove;}
 
+	private String selectedTeacherEmail ;
+	public String getSelectedTeacherEmail() {return selectedTeacherEmail;}
+	public void setSelectedTeacherEmail(String selectedTeacherEmail) {this.selectedTeacherEmail = selectedTeacherEmail;}
+
+	private Map<String, String> teachersMap = new LinkedHashMap<>();
+	public Map<String, String> getTeachersMap() {return teachersMap;	}
+	public void setTeachersMap(Map<String, String> teachersMap) {this.teachersMap = teachersMap;	}
+
+
 	@EJB
 	private MissionEJB missionEJB;
+	
+	@EJB
+	private TeacherEJB teacherEJB;
+
 
 	@PostConstruct
 	public void init () {
 		this.missions = this.missionEJB.findAll();
 		this.type = 1;
+		for(Teacher teacher : teacherEJB.findAll()) {
+			this.teachersMap.put(teacher.getLastName() + " " + teacher.getFirstName() + " (" +  teacher.getEmail() + ")", teacher.getEmail()) ;	
+		}
+
 	}
 
 	public void onRowEdit(RowEditEvent<Mission> event) {
@@ -135,6 +156,25 @@ public class MissionControl implements Serializable {
 		this.setSelectedMission(mission);
 
 		return "/loggedUser/DDE/missionDetail.xhtml" ;
+	}
+
+	public void addTeacher() {
+		try {
+			Teacher teacherToAdd = this.teacherEJB.findByEmail(new Teacher("", "", this.selectedTeacherEmail, null)) ;
+
+			if(teacherToAdd == null) {
+				Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
+				return ;
+			}
+
+			this.selectedMission.addTeacher(teacherToAdd) ;
+
+			this.selectedMission = missionEJB.update(this.selectedMission) ;
+			Toast.showInfoToast("Ajouté", selectedTeacherEmail + " ajouté");
+		} catch (InvalidEmailException e) {
+			e.printStackTrace();
+			Toast.showErrorToast("Erreur", "Erreur lors de l'ajout");
+		}
 	}
 
 	public void removeTeacher() {
