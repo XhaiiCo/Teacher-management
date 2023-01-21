@@ -10,7 +10,6 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -23,17 +22,11 @@ import java.util.Scanner;
 @Named
 @SessionScoped
 public class ExcelGeneratorControl extends HttpServlet implements Serializable {
-	
-	//call the doGet here, so we can get the current request and response and give it to it
-	public void generateExcelTemplate() throws ServletException, IOException 
-	{
-		 this.doGet((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest(), 
-				 (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse());
-	}
-	
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+		
+    public void generateExcelTemplate() throws ServletException, IOException 
     {
+    	HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+    	
         //Create a new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
         
