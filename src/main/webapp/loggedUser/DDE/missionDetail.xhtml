@@ -11,6 +11,9 @@
 	<ui:include src="../navbar.xhtml" />
 
 	<div class="card" style="padding: 60px;">
+		<p:commandLink value="Retour à la liste des missions"
+			action="/DDE/missionCRUD" />
+			
 		<div>
 			<h1>#{missionControl.selectedMission.entitled}</h1>
 			<h2>#{missionControl.selectedMission.type}</h2>
