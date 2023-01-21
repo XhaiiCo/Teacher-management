@@ -21,6 +21,9 @@ public class UEDAO extends AbstractDAO<UE> {
 	@EJB
 	public SectionDAO sectionDAO;
 	
+	@EJB
+	public AADAO aaDAO;
+	
 	public UEDAO() {
 		super(UE.class);
 	}
@@ -91,6 +94,27 @@ public class UEDAO extends AbstractDAO<UE> {
 		if(result.isEmpty()) return null ;
 
 		return result.get(0);
+	}
+	
+	public UE delete (UE ue)
+	{
+		if (ue== null) return null;
+		
+//		List<AA> aas = aaDAO.findAllByUe(ue);
+		ue.getAas().forEach(aa -> {
+			aaDAO.delete(aa) ;
+		});
+		ue.removeAllAA();
+		ue.setSection(null);
+		return  super.delete(ue);
+//		
+//		
+//		
+//		UE ueDelete =em.merge(ue);
+//		
+//		em.remove(ueDelete);
+//		
+//		return ue;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import be.helha.aemt.groupea1.dao.AADAO;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Teacher;
+import be.helha.aemt.groupea1.entities.UE;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
@@ -38,5 +39,9 @@ public class AAEJB {
 	
 	public Map<AA, Integer> computeNbHoursInAAsForTeacher(Teacher teacher){
 		return aaDAO.computeNbHoursInAAsForTeacher(teacher);
+	}
+	
+	public List<AA> findAllByUe (UE ue){
+		return aaDAO.findAllByUe(ue);
 	}
 }

@@ -19,6 +19,14 @@
 			<to-view-id>/loggedUser/S/teacherCRUD.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/loggedUser/*</from-view-id>
+		<navigation-case>
+			<from-outcome>/S/gestionUE</from-outcome>
+			<to-view-id>/loggedUser/S/gestionUE.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/loggedUser/*</from-view-id>

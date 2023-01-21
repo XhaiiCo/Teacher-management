@@ -73,6 +73,14 @@ public class UE implements Serializable {
 
 		return this.aas.add(aa) ;
 	}
+	
+	public void removeAllAA() {
+		this.aas.clear();
+	}
+	
+	public int nbAA() {
+		return this.aas.size();
+	}
 
 	public int getId() {
 		return id;
@@ -131,13 +139,6 @@ public class UE implements Serializable {
 	public void setAas(List<AA> aas) {
 		this.aas = new ArrayList<>() ;
 		aas.forEach(aa -> this.addAA(aa)) ;
-	}
-
-
-	@Override
-	public String toString() {
-		return "UE [id=" + id + ", academicYear=" + academicYear + ", bloc=" + bloc + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", aas=" + aas
-				+ "]";
 	}
 
 	@Override

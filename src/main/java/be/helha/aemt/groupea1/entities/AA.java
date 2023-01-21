@@ -149,6 +149,11 @@ public class AA implements Serializable{
 
 		return true ;
 	}
+	
+	public void removeAll()
+	{
+		assignments.clear();
+	}
 
 	public List<Assignment> getAssignments() {
 		return assignments;
@@ -239,13 +244,6 @@ public class AA implements Serializable{
 		this.fraction = fraction;
 	}
 
-	@Override
-	public String toString() {
-		return "AA [id=" + id + ", code=" + code + ", entitled=" + entitled + ", credit=" + credit + ", hoursQ1="
-				+ hoursQ1 + ", hoursQ2=" + hoursQ2 + ", nbGroupQ1=" + nbGroupQ1 + ", nbGroupQ2=" + nbGroupQ2
-				+ ", nbStudent=" + nbStudent + ", fraction=" + fraction + ", assignments=" + assignments + ", ue=" + ue
-				+ "]";
-	}
 
 	@Override
 	public int hashCode() {

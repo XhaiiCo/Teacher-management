@@ -21,10 +21,14 @@ import jakarta.inject.Named;
 public class UEControl implements Serializable{
 	
 	private List<UE> ues;
-	public List<UE> getUe() { return ues; }
-	public void setUe(List<UE> UE) {this.ues = ues; }
+	public List<UE> getUes() {
+		return ues;
+	}
+	public void setUes(List<UE> ues) {
+		this.ues = ues;
+	}
 
-	private UE newUe ;//Used when create a new teacher
+	private UE newUe ;//Used when create a new UE
 	public UE getNewUe() {return newUe;}
 	public void setNewUe(UE newUe) {this.newUe = newUe;}
 	

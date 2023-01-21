@@ -48,10 +48,20 @@
 						<h:outputText value="#{aa.entitled}" />
 					</p:column>
 
-					<p:column headerText="Statut de l'attribution" sortBy="#{aa.assignStatus()}"
-					filterBy="#{aa.assignStatus()}" filterMatchMode="contains">
+					<p:column headerText="Statut de l'attribution"  filterMatchMode="contains" sortBy="#{aa.assignStatus()}"
+					filterBy="#{aa.assignStatus()}">
+					
 						<h:outputText value="#{aa.assignStatus()}" />
 					</p:column>
+
+<!-- 					<p:column headerText="Statut de l'attribution" filterMatchMode="contains" sortBy="#{aaControl.getAssignation()}"> -->
+<!-- 						<f:facet name="header" headerText="Statut de l'attribution" > -->
+<!-- 							<p:selectOneMenu value="eAssignementStatus" > -->
+<!-- 								<f:selectItems value="#{aaControl.getAssignation()}" itemLabel="#{aaControl.getAssignation().text}" itemValue="#{text}"/> -->
+<!-- 							</p:selectOneMenu> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{aa.assignStatus()}" /> -->
+<!-- 					</p:column> -->
 
 
 					<p:column style="width:3rem;text-align: center">
