@@ -8,6 +8,7 @@ import java.util.Objects;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;

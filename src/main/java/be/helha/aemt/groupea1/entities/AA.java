@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import be.helha.aemt.groupea1.exception.AllHoursAssignmedException;
+import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,10 +50,10 @@ public class AA implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private EFraction fraction ;
 
-	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE})
+	@OneToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private List<Assignment> assignments = new ArrayList<>();
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private UE ue;
 
 	public  AA() {}
