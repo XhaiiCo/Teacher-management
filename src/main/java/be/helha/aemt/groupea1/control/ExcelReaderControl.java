@@ -10,17 +10,22 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import be.helha.aemt.groupea1.ejb.AAEJB;
 import be.helha.aemt.groupea1.ejb.DepartmentEJB;
+import be.helha.aemt.groupea1.ejb.MissionEJB;
 import be.helha.aemt.groupea1.ejb.SectionEJB;
 import be.helha.aemt.groupea1.ejb.TeacherEJB;
 import be.helha.aemt.groupea1.ejb.UEEJB;
 import be.helha.aemt.groupea1.entities.AA;
 import be.helha.aemt.groupea1.entities.Department;
 import be.helha.aemt.groupea1.entities.EFraction;
+import be.helha.aemt.groupea1.entities.MissionDepartment;
+import be.helha.aemt.groupea1.entities.MissionSection;
+import be.helha.aemt.groupea1.entities.MissionTransversale;
 import be.helha.aemt.groupea1.entities.Section;
 import be.helha.aemt.groupea1.entities.Teacher;
 import be.helha.aemt.groupea1.entities.UE;
 import be.helha.aemt.groupea1.exception.HoursNotWantedException;
 import be.helha.aemt.groupea1.exception.InvalidEmailException;
+import be.helha.aemt.groupea1.exception.InvalidHoursException;
 import be.helha.aemt.groupea1.exception.NumberNegatifException;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
@@ -52,6 +57,9 @@ public class ExcelReaderControl implements Serializable {
     @EJB
     private AAEJB aaEJB;
     
+    @EJB
+    private MissionEJB missionEJB;
+    
     /*Function to upload the excel file that will be save in the workbook variable
     and then the different import function will convert datas in each page in entities*/ 
     public void doImportDatasFromExcel() {
@@ -62,6 +70,7 @@ public class ExcelReaderControl implements Serializable {
     	this.importTeachers();
     	this.importUEs();
     	this.importAAs();
+    	this.importMissions();
     }
     
     public void uploadFile() 
@@ -91,7 +100,7 @@ public class ExcelReaderControl implements Serializable {
     	Cell cell = row.getCell(index);
     	if(cell == null) 
     	{
-    	    return "";
+    	    return null;
     	} 
     	else 
     	{
@@ -239,6 +248,47 @@ public class ExcelReaderControl implements Serializable {
     }
     
     public void importMissions() {
+    	Sheet sheet = workbook.getSheet("Missions");
+    	
+    	if(sheet == null) return;
+    	
+    	for(int i = 1; i <= sheet.getLastRowNum(); i++) 
+		{
+    		Row row = sheet.getRow(i);
+    		
+    		String typeMission = row.getCell(0).getStringCellValue();
+    		String yearRangeMission = row.getCell(1).getStringCellValue();
+    		String entitledMission = row.getCell(2).getStringCellValue();
+    		int hoursMission = (int) row.getCell(3).getNumericCellValue();
+    		String departmentName = this.checkBlankCell(row, 4);
+    		String sectionName = this.checkBlankCell(row, 5);
+    		
+    		try 
+    		{
+	    		if(typeMission.equals("MissionDepartment"))
+	    		{
+	    			Department department = new Department(departmentName);
+	    			
+					missionEJB.add(new MissionDepartment(yearRangeMission, entitledMission, hoursMission, department));
+	    		}
+	    		else if(typeMission.equals("MissionSection")) 
+	    		{
+	    			Department department = new Department(departmentName);
+	    			Section section = new Section(department, sectionName);
+	    			    			
+	    			missionEJB.add(new MissionSection(yearRangeMission, entitledMission, hoursMission, section));
+	    		}
+	    		else if(typeMission.equals("MissionTransversale")) 
+	    		{
+	    			missionEJB.add(new MissionTransversale(yearRangeMission, entitledMission, hoursMission));
+	    		}
+			} 
+    		catch (InvalidHoursException e) 
+    		{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     	
     }
 }

@@ -23,7 +23,7 @@ import java.util.Scanner;
 @SessionScoped
 public class ExcelGeneratorControl extends HttpServlet implements Serializable {
 		
-    public void generateExcelTemplate() throws ServletException, IOException 
+    public void generateExcelTemplate()
     {
     	HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
     	
@@ -72,9 +72,17 @@ public class ExcelGeneratorControl extends HttpServlet implements Serializable {
         response.setHeader("Content-Disposition", "attachment; filename=template.xls");
         
         //Write the workbook to the output stream
-        OutputStream out = response.getOutputStream();
-        workbook.write(out);
-        out.flush();
+		try 
+		{
+			OutputStream out = response.getOutputStream();
+			workbook.write(out);
+	        out.flush();
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 }
