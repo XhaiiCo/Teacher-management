@@ -11,15 +11,13 @@
 <h:body>
 	<ui:include src="navbar.xhtml" />
 
-	<h1>Accueil</h1>
-	<br />
-	<h:outputText
-		value="Prénom : #{utilisateurControl.connectedUser.prenom}"></h:outputText>
-	<br />
-	<h:outputText value="Nom : #{utilisateurControl.connectedUser.nom}"></h:outputText>
-	<br />
-	<h:outputText value="Role : #{utilisateurControl.connectedUser.role}"></h:outputText>
-	<br />
-
+	<div class="card" style="padding: 60px;">
+		<h1>Accueil</h1>
+		<h2>Bienvenue #{utilisateurControl.connectedUser.nom}
+			#{utilisateurControl.connectedUser.prenom}</h2>
+		<h3>Vous avez le rôle de
+			#{utilisateurControl.connectedUser.role.text}</h3>
+		<br />
+	</div>
 </h:body>
 </html>
