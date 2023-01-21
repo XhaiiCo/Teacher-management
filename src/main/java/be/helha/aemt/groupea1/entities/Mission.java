@@ -44,7 +44,14 @@ public abstract class Mission implements Serializable {
 		setHours(hours);
 		setTeachers(teachers);
 	}
-
+	
+	public Mission(String academicYear, String entitled, int hours) throws InvalidHoursException {
+		this.academicYear = academicYear;
+		this.entitled = entitled;
+		setHours(hours);
+		this.teachers = new ArrayList<Teacher>();
+	}
+	
 	public abstract String getType();
 	public abstract String getName();
 

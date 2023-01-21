@@ -27,6 +27,11 @@ public class MissionSection extends Mission {
 		this.section = section;
 	}
 
+	public MissionSection(String academicYear, String entitled, int hours, Section section) throws InvalidHoursException {
+		super(academicYear, entitled, hours);
+		this.section = section;
+	}
+	
 	public String getType() {
 		return MissionSection.TYPE;
 	}
