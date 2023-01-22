@@ -12,19 +12,22 @@
 	<ui:include src="../navbar.xhtml" />
 
 	<div class="card" style="padding: 60px;">
+		
+		<h:form>
+			<h:commandButton value="Télécharger le template"
+				action="#{excelGeneratorControl.generateExcelTemplate}" />
+		</h:form>
+		<br/>
 		<h:form enctype="multipart/form-data">
 			<h:inputFile id="file" value="#{excelReaderControl.file}" />
 			<h:commandButton value="Importer"
 				action="#{excelReaderControl.doImportDatasFromExcel}" />
 		</h:form>
-		<br />
-		<h:form>
-			<h:commandButton value="Télécharger le template"
-				action="#{excelGeneratorControl.generateExcelTemplate}" />
-		</h:form>
-		<p>
-			Explication
-		</p>
+		
+		<p>Etape 1 : télécharger le template déjà structuré de la bonne façon.</p>
+		<p>Etape 2 : remplir le fichier avec les données que l'on voudrait ajouter.</p>
+		<p>Etape 3 : choisir le fichier que nous venons de modifier.</p>
+		<p>Etape 4 : cliquer sur importer.</p>
 	</div>
 </h:body>
 </html>
