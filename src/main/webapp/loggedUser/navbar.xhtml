@@ -17,14 +17,14 @@
 					outcome="/DDOM/userCRUD"
 					rendered="#{utilisateurControl.hasAccessToTheDDOMFunction()}" />
 
-				<p:menuitem value="UE" icon="pi pi-fw pi-user"
+				<p:menuitem value="UE" icon="pi pi-fw pi-list"
 					outcome="/S/gestionUE" />
 
 				<p:menuitem value="Attributions/AA" icon="pi pi-fw pi-user-plus"
 					outcome="/DDE/assignation"
 					rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}" />
 
-				<p:menuitem value="Missions" icon="pi pi-fw pi-list"
+				<p:menuitem value="Missions" icon="pi pi-fw pi-user-plus"
 					outcome="/DDE/missionCRUD"
 					rendered="#{utilisateurControl.hasAccessToTheDDEFunction()}" />
 
