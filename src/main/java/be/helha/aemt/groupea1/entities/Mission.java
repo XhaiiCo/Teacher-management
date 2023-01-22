@@ -35,8 +35,6 @@ public abstract class Mission implements Serializable {
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	private List<Teacher> teachers = new ArrayList<>();
 
-	private String assigned = "Pas attribuée";
-
 	public Mission (){
 	}
 
@@ -45,28 +43,22 @@ public abstract class Mission implements Serializable {
 		this.entitled = entitled;
 		setHours(hours);
 		setTeachers(teachers);
-		this.setAssigned();
 	}
-	
+
 	public Mission(String academicYear, String entitled, int hours) throws InvalidHoursException {
 		this.academicYear = academicYear;
 		this.entitled = entitled;
 		setHours(hours);
 		this.teachers = new ArrayList<Teacher>();
-		this.setAssigned();
 	}
 
 	public String getAssigned() {
-		return assigned;
+		if (this.teachers.isEmpty())
+			return "Non attribuée";
+		else
+			return "Terminée";
 	}
 
-	public void setAssigned() {
-		if (this.teachers.isEmpty())
-			this.assigned = "Non attribuée";
-		else
-			this.assigned = "Attribuée";
-	}
-	
 	public abstract String getType();
 	public abstract String getName();
 
@@ -111,14 +103,11 @@ public abstract class Mission implements Serializable {
 	public boolean addTeacher(Teacher teacher) {
 		if(this.teachers.contains(teacher))
 			return false ;
-		this.assigned = "Attribuée";
 		return this.teachers.add(teacher) ;
 	}
-	
+
 	public void removeTeacher(Teacher teacher) {
 		this.teachers.remove(teacher);
-		if (this.teachers.isEmpty())
-			this.assigned = "Non attribuée";
 	}
 
 	public void setTeachers(List<Teacher> teachers) {

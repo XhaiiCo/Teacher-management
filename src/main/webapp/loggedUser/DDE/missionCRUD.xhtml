@@ -99,11 +99,6 @@ th[aria-label="Enseignants"] {
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Statut de l'attribution" sortBy="#{ mission.getAssigned() }"
-						filterBy="#{ mission.getAssigned() }" filterMatchMode="contains">
-						<h:outputText value="#{ mission.getAssigned() }" />
-					</p:column>
-
 					<p:column headerText="Enseignants">
 						<p:orderList value="#{mission.teachers}" controlsLocation="none"
 							var="teacher" converter="teacherConverter" itemValue="#{teacher}"
@@ -119,6 +114,11 @@ th[aria-label="Enseignants"] {
 						sortBy="#{ mission.getName() }" filterBy="#{ mission.getName() }"
 						filterMatchMode="contains">
 						<h:outputText value="#{ mission.getName() }" />
+					</p:column>
+
+					<p:column headerText="Statut de l'attribution" sortBy="#{ mission.getAssigned() }"
+						filterBy="#{ mission.getAssigned() }" filterMatchMode="contains">
+						<h:outputText value="#{ mission.getAssigned() }" />
 					</p:column>
 
 					<p:column style="width:6rem">
